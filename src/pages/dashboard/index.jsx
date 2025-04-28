@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Card from '@/components/ui/Card'
-import Loading from '@/components/Loading'
+import Loading from '@/components/ui/Loading'
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true)

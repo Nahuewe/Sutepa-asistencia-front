@@ -11,7 +11,7 @@ import Footer from '@/components/partials/footer'
 import MobileMenu from '../components/partials/sidebar/MobileMenu'
 import useMobileMenu from '@/hooks/useMobileMenu'
 import { ToastContainer } from 'react-toastify'
-import Loading from '@/components/Loading'
+import Loading from '@/components/ui/Loading'
 import { motion } from 'framer-motion'
 import { useSelector } from 'react-redux'
 const Layout = () => {
@@ -95,7 +95,6 @@ const Layout = () => {
           </div>
         </div>
 
-        {/* Ahora SIEMPRE mostramos el Footer */}
         <Footer className={width > breakpoints.xl ? switchHeaderClass() : ''} />
       </div>
     </>

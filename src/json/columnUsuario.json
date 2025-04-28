@@ -13,7 +13,7 @@
     },
     {
         "label": "Legajo",
-        "field": "username"
+        "field": "legajo"
     },
     {
         "label": "Seccional",

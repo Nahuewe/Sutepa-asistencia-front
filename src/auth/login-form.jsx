@@ -9,7 +9,7 @@ import * as yup from 'yup'
 
 const schema = yup
   .object({
-    username: yup.string().required('El usuario es requerido'),
+    legajo: yup.string().required('El usuario es requerido'),
     password: yup.string().required('La contraseña es requerida').min(2, 'La contraseña debe contener al menos 6 caracteres')
   })
   .required()
@@ -47,14 +47,14 @@ function LoginForm () {
           Usuario
         </label>
         <Textinput
-          name='username'
+          name='legajo'
           type='text'
           register={register}
-          error={errors.username}
+          error={errors.legajo}
           className='h-[48px]'
           placeholder='Legajo'
           onChange={(e) => {
-            setValue('username', e.target.value)
+            setValue('legajo', e.target.value)
           }}
         />
       </div>

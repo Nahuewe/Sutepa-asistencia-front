@@ -21,7 +21,7 @@ const profileLabel = () => {
 
       <div className='flex-none text-slate-600 dark:text-white text-sm font-normal items-center lg:flex hidden overflow-hidden text-ellipsis whitespace-nowrap'>
         <span className='overflow-hidden text-ellipsis whitespace-nowrap max-w-[120px] block'>
-          {user.nombre} {user.apellido}
+          {user.nombre.toUpperCase()} {user.apellido.toUpperCase()}
         </span>
         <span className='text-base inline-block ltr:ml-[10px] rtl:mr-[10px]'>
           <Icon icon='heroicons-outline:chevron-down' />
@@ -37,7 +37,7 @@ const Profile = () => {
 
   const ProfileMenu = [
     {
-      label: `${user.apellido} ${user.nombre}`,
+      label: `${user.apellido.toUpperCase()} ${user.nombre.toUpperCase()}`,
       icon: 'heroicons-outline:ticket',
       action: null
     },
