@@ -7,6 +7,8 @@ import Layout from '@/layout/Layout'
 import Login from '@/pages/auth/Login'
 import Error from '@/pages/404'
 import Loading from '@/components/ui/Loading'
+import { Ingreso } from './pages/gestion/Ingreso'
+import QRScanner from './components/QR/QRscanner'
 const Dashboard = lazy(() => import('@/pages/dashboard'))
 
 function App () {
@@ -42,8 +44,14 @@ function App () {
                   <Route path='dashboard' element={<Dashboard />} />
                   <Route path='*' element={<Navigate to='/404' />} />
 
-                  <Route path='votacion' element={<Users />} />
+                  {/* Gestion */}
+                  <Route path='ingreso' element={<Ingreso />} />
+                  {/* <Route path='egreso' element={<Egreso />} /> */}
 
+                  {/* QR */}
+                  <Route path='qrscanner' element={<QRScanner />} />
+
+                  {/* Usuarios */}
                   <Route path='usuarios' element={<Users />} />
                   <Route path='usuarios/crear' element={<CreateUser />} />
                   <Route path='usuarios/editar/:id' element={<CreateUser />} />

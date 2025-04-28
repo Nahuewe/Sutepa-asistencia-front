@@ -8,6 +8,11 @@ export const menuItems = [
     icon: 'heroicons-outline:presentation-chart-line',
     link: 'dashboard'
   },
+  {
+    title: 'Ingreso',
+    icon: 'heroicons-outline:qr-code',
+    link: 'ingreso'
+  },
   // {
   //   title: 'Alumnos',
   //   icon: 'heroicons-outline:user-plus',
