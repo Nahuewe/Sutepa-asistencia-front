@@ -1,0 +1,74 @@
+.profileAnimation-enter {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+.profileAnimation-enter-active {
+  opacity: 1;
+  transform: translateX(-120px);
+  transition: opacity 300ms, transform 300ms;
+}
+.profileAnimation-exit {
+  opacity: 1;
+}
+.profileAnimation-exit-active {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.slide-in-left-enter {
+  opacity: 0;
+  transform: scale(0.9);
+}
+.slide-in-left-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+.slide-in-left-exit {
+  opacity: 1;
+}
+.slide-in-left-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.animate--text {
+	padding: 5px;
+	font-size: 0.9em;
+	text-transform: uppercase;
+	font-weight: 400;
+	background-image: linear-gradient(-225deg, #1a2b4e 0%, #815b22 29%, #7c3030 67%, #592a2d 100%);
+
+	background-size: auto auto;
+	background-clip: border-box;
+	background-size: 200% auto;
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	animation: textclip 2s linear infinite;
+	text-align: center; 
+}
+
+.animate--text--dark {
+	padding: 5px;
+	font-size: 0.9em;
+	text-transform: uppercase;
+	font-weight: 400;
+	background-image: linear-gradient(-225deg, #d1c8c2 0%, #ebdfc9 29%, #aaa46a 67%, #cfa398 100%);
+	background-size: auto auto;
+	background-clip: border-box;
+	background-size: 200% auto;
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	animation: textclip 2s linear infinite;
+	text-align: center; 
+}
+  
+@keyframes textclip {
+	to {
+	  	background-position: 200% center; 
+	} 
+}

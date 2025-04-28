@@ -1,0 +1,18 @@
+[
+    {
+        "label": "Nombre",
+        "field": "nombre"
+    },
+    {
+        "label": "Apellido",
+        "field": "apellido"
+    },
+    {
+        "label": "Usuario",
+        "field": "username"
+    },
+    {
+        "label": "Seccional",
+        "field": "seccional"
+    }
+]
