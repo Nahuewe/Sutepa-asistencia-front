@@ -7,11 +7,11 @@ export const useAuthStore = () => {
   const { status, user } = useSelector(state => state.auth)
   const dispatch = useDispatch()
 
-  const startLogin = async ({ password }) => {
+  const startLogin = async ({ username, password }) => {
     dispatch(onChecking())
 
     try {
-      const { data: { token, user } } = await sutepaApi.post('/login', { password })
+      const { data: { token, user } } = await sutepaApi.post('/login', { username, password })
 
       if (user) {
         localStorage.setItem('token', token)

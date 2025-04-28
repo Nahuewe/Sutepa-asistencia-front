@@ -22,7 +22,19 @@ export const useGetParameters = () => {
     }
   }
 
+  const startSelectSeccionales = async () => {
+    try {
+      const response = await sutepaApi.get('/seccionales')
+      const { data } = response.data
+
+      return formatObject(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return {
-    startSelectRoles
+    startSelectRoles,
+    startSelectSeccionales
   }
 }

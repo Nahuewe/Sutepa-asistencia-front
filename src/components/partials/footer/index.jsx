@@ -18,7 +18,7 @@ const Footer = ({ className = 'custom-class' }) => {
       <div className='site-footer px-6 m-0 bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-300 py-4'>
         <div className='grid md:grid-cols-2 grid-cols-1 items-center'>
           <div className='text-sm text-center md:text-start'>
-            Copyright &copy; <span>{(new Date().getFullYear())} Escuela para Adultos EDJA N°4</span>
+            Copyright &copy; <span>{(new Date().getFullYear())} Sindicato Unido de Trabajadores y Empleados de PAMI</span>
           </div>
           <div className='text-sm text-center md:text-end'>
             <a target='_blank' rel='noreferrer' className='animate--text dark:animate--text--dark' href='https://linktr.ee/Nahuel_Soria_Parodi'>

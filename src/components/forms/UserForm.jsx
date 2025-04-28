@@ -15,7 +15,8 @@ const FormValidationSaving = yup
     apellido: yup.string().required('El apellido es requerido'),
     username: yup.string().required('El usuario es requerido'),
     password: yup.string().required('La contraseña es requerida'),
-    roles_id: yup.string().notOneOf([''], 'Debe seleccionar un rol')
+    roles_id: yup.string().notOneOf([''], 'Debe seleccionar un rol'),
+    seccional_id: yup.string().notOneOf([''], 'Debe seleccionar una seccional')
   })
   .required()
 
@@ -24,23 +25,24 @@ const FormValidationUpdate = yup
     nombre: yup.string().required('El nombre es requerido'),
     apellido: yup.string().required('El apellido es requerido'),
     username: yup.string().required('El usuario es requerido'),
-    roles_id: yup.string().notOneOf([''], 'Debe seleccionar un rol')
+    roles_id: yup.string().notOneOf([''], 'Debe seleccionar un rol'),
+    seccional_id: yup.string().notOneOf([''], 'Debe seleccionar una seccional')
   })
   .required()
 
 export const UserForm = ({ fnAction, activeUser = null }) => {
   const { user } = useSelector((state) => state.auth)
   const [roles, setRoles] = useState([])
+  const [seccionales, setSeccionales] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [showPassword, setShowPassword] = useState(false)
-  const { startSelectRoles } = useGetParameters()
+  const { startSelectRoles, startSelectSeccionales } = useGetParameters()
 
   const {
     register,
     formState: { errors, isSubmitting },
     handleSubmit,
-    setValue,
-    watch
+    setValue
   } = useForm({
     resolver: yupResolver(activeUser ? FormValidationUpdate : FormValidationSaving)
   })
@@ -51,7 +53,9 @@ export const UserForm = ({ fnAction, activeUser = null }) => {
 
   async function loadingInit () {
     const rolesData = await startSelectRoles()
+    const seccionalesData = await startSelectSeccionales()
     setRoles(rolesData)
+    setSeccionales(seccionalesData)
 
     if (activeUser) {
       Object.entries(activeUser).forEach(([key, value]) => {
@@ -59,6 +63,7 @@ export const UserForm = ({ fnAction, activeUser = null }) => {
       })
 
       setValue('roles_id', activeUser.roles_id)
+      setValue('seccional_id', activeUser.seccional_id)
       setValue('username', activeUser.user)
     }
 
@@ -68,17 +73,6 @@ export const UserForm = ({ fnAction, activeUser = null }) => {
   useEffect(() => {
     loadingInit()
   }, [])
-
-  const nombre = watch('nombre')
-  const apellido = watch('apellido')
-
-  useEffect(() => {
-    if (nombre && apellido) {
-      const firstSurname = apellido.split(' ')[0].toLowerCase()
-      const username = `${nombre.charAt(0).toLowerCase()}${firstSurname}`
-      setValue('username', username)
-    }
-  }, [nombre, apellido, setValue])
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
@@ -125,12 +119,25 @@ export const UserForm = ({ fnAction, activeUser = null }) => {
             </div>
 
             <div>
+              <label htmlFor='dni' className='form-label space-y-2'>
+                DNI
+                <Textinput
+                  name='dni'
+                  type='text'
+                  placeholder='DNI'
+                  register={register}
+                  error={errors.dni}
+                  disabled={!isEditable}
+                />
+              </label>
+            </div>
+
+            <div>
               <label htmlFor='username' className='form-label space-y-2'>
                 Usuario
                 <strong className='obligatorio'>(*)</strong>
                 <Textinput
                   name='username'
-                  disabled
                   type='text'
                   placeholder='Usuario'
                   register={register}
@@ -179,28 +186,6 @@ export const UserForm = ({ fnAction, activeUser = null }) => {
 
             <div>
               <label htmlFor='roles_id' className='form-label space-y-2'>
-                Correo
-                <Textinput
-                  name='correo'
-                  placeholder='Correo'
-                  register={register}
-                  error={errors.correo}
-                  disabled={!isEditable}
-                />
-              </label>
-            </div>
-
-            <Textinput
-              name='telefono'
-              label='Teléfono'
-              placeholder='Teléfono'
-              register={register}
-              error={errors.telefono}
-              disabled={!isEditable}
-            />
-
-            <div>
-              <label htmlFor='roles_id' className='form-label space-y-2'>
                 Roles
                 <strong className='obligatorio'>(*)</strong>
                 <Select
@@ -209,6 +194,21 @@ export const UserForm = ({ fnAction, activeUser = null }) => {
                   register={register}
                   error={errors.roles_id}
                   placeholder='Seleccione un rol'
+                  disabled={!isEditable}
+                />
+              </label>
+            </div>
+
+            <div>
+              <label htmlFor='seccional_id' className='form-label space-y-2'>
+                Seccional
+                <strong className='obligatorio'>(*)</strong>
+                <Select
+                  name='seccional_id'
+                  options={seccionales}
+                  register={register}
+                  error={errors.seccional_id}
+                  placeholder='Seleccione una seccional'
                   disabled={!isEditable}
                 />
               </label>

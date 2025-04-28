@@ -126,7 +126,7 @@
 }
 .menu-item-active {
   .menu-link {
-    @apply bg-blue-600 dark:bg-blue-600;
+    @apply bg-red-600 dark:bg-red-600;
     .icon-box,
     .menu-icon,
     .text-box {

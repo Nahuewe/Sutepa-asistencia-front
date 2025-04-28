@@ -1,11 +1,9 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 import Dropdown from '@/components/ui/Dropdown'
 import Icon from '@/components/ui/Icon'
 import { Menu } from '@headlessui/react'
 import { useAuthStore } from '@/helpers/useAuthStore'
-import { useSelector, useDispatch } from 'react-redux'
-import { setActiveUser } from '@/store/user'
+import { useSelector } from 'react-redux'
 import { getTipoRoles } from '@/constant/datos-id'
 
 const profileLabel = () => {
@@ -35,23 +33,18 @@ const profileLabel = () => {
 
 const Profile = () => {
   const { startLogout } = useAuthStore()
-  const dispatch = useDispatch()
   const { user } = useSelector(state => state.auth)
-  const navigate = useNavigate()
 
   const ProfileMenu = [
+    {
+      label: `${user.apellido} ${user.nombre}`,
+      icon: 'heroicons-outline:ticket',
+      action: null
+    },
     {
       label: `${getTipoRoles(user.roles_id)}`,
       icon: 'heroicons-outline:badge-check',
       action: null
-    },
-    {
-      label: 'Cambiar contraseña',
-      icon: 'heroicons-outline:key',
-      action: () => {
-        navigate('/usuarios')
-        dispatch(setActiveUser(user.id))
-      }
     },
     {
       label: 'Cerrar Sesión',

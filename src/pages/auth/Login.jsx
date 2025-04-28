@@ -26,14 +26,13 @@ const Login = () => {
                   <img src={LogoSutepa} alt='Logo SUTEPA' className='w-36 md:w-52 pb-6 inline-block mx-auto pointer-events-none' />
                   <h4 className='font-medium text-white'>Iniciar Sesión</h4>
                   <div className='text-white text-base'>
-                    Completa los datos para ingresar al sistema
+                    El usuario y la contraseña son tu numero de legajo.
                   </div>
                 </div>
                 <LoginForm />
               </div>
               <div className='auth-footer text-center'>
                 Copyright &copy; <span>{(new Date().getFullYear())} Sindicato Unido de Trabajadores y Empleados de PAMI</span>
-                {/* <a target='_blank' rel='noreferrer' className='animate--text--dark' href='https://linktr.ee/Nahuel_Soria_Parodi'> → Nahuel Soria Parodi - Todos los derechos reservados ← </a> */}
               </div>
             </div>
           </div>

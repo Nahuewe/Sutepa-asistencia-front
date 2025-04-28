@@ -9,7 +9,8 @@ import * as yup from 'yup'
 
 const schema = yup
   .object({
-    password: yup.string().required('El legajo es requerida').min(2, 'El legajo debe contener al menos 6 caracteres')
+    username: yup.string().required('El usuario es requerido'),
+    password: yup.string().required('La contraseña es requerida').min(2, 'La contraseña debe contener al menos 6 caracteres')
   })
   .required()
 
@@ -43,6 +44,23 @@ function LoginForm () {
     <form onSubmit={handleSubmit(onSubmit)} className='relative space-y-2'>
       <div>
         <label htmlFor='default-picker' className='form-label text-white'>
+          Usuario
+        </label>
+        <Textinput
+          name='username'
+          type='text'
+          register={register}
+          error={errors.username}
+          className='h-[48px]'
+          placeholder='Legajo'
+          onChange={(e) => {
+            setValue('username', e.target.value)
+          }}
+        />
+      </div>
+
+      <div>
+        <label htmlFor='default-picker' className='form-label text-white'>
           Contraseña
         </label>
         <Textinput
@@ -51,7 +69,7 @@ function LoginForm () {
           register={register}
           error={errors.password}
           className='h-[48px]'
-          placeholder='Contraseña'
+          placeholder='Legajo'
           onChange={(e) => {
             setValue('password', e.target.value)
           }}
@@ -87,7 +105,7 @@ function LoginForm () {
             )}
       </button>
 
-      <button className='btn bg-red-600 hover:bg-red-800 block w-full text-center mt-2 text-white'>Iniciar Sesión</button>
+      <button className='btn bg-indigo-600 hover:bg-indigo-800 block w-full text-center mt-2 text-white'>Iniciar Sesión</button>
     </form>
   )
 }

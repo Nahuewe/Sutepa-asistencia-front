@@ -3,23 +3,21 @@ export const menuItems = [
     isHeadr: true,
     title: 'menu'
   },
-
   {
     title: 'Dashboard',
     icon: 'heroicons-outline:presentation-chart-line',
     link: 'dashboard'
   },
-
-  {
-    title: 'Alumnos',
-    icon: 'heroicons-outline:user-plus',
-    link: 'alumnos'
-  },
-  {
-    title: 'Docentes',
-    icon: 'heroicons-outline:user-circle',
-    link: 'docentes'
-  },
+  // {
+  //   title: 'Alumnos',
+  //   icon: 'heroicons-outline:user-plus',
+  //   link: 'alumnos'
+  // },
+  // {
+  //   title: 'Docentes',
+  //   icon: 'heroicons-outline:user-circle',
+  //   link: 'docentes'
+  // },
   {
     title: 'Usuarios',
     icon: 'heroicons-outline:users',
@@ -32,23 +30,21 @@ export const menuNormal = [
     isHeadr: true,
     title: 'menu'
   },
-
   {
     title: 'Dashboard',
     icon: 'heroicons-outline:presentation-chart-line',
     link: 'dashboard'
-  },
-
-  {
-    title: 'Alumnos',
-    icon: 'heroicons-outline:user-plus',
-    link: 'alumnos'
-  },
-  {
-    title: 'Docentes',
-    icon: 'heroicons-outline:user-circle',
-    link: 'docentes'
   }
+  // {
+  //   title: 'Alumnos',
+  //   icon: 'heroicons-outline:user-plus',
+  //   link: 'alumnos'
+  // },
+  // {
+  //   title: 'Docentes',
+  //   icon: 'heroicons-outline:user-circle',
+  //   link: 'docentes'
+  // }
 ]
 
 export const topMenu = [

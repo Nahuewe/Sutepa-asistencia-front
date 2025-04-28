@@ -23,7 +23,7 @@ const SidebarLogo = ({ menuHover }) => {
       
       `}
     >
-      <Link to='/usuarios'>
+      <Link to='/'>
         <div className='flex items-center space-x-4'>
           <div className='logo-icon'>
             {!isDark && !isSemiDark

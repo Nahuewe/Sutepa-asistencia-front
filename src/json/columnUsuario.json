@@ -8,11 +8,23 @@
         "field": "apellido"
     },
     {
-        "label": "Usuario",
+        "label": "DNI",
+        "field": "dni"
+    },
+    {
+        "label": "Legajo",
         "field": "username"
     },
     {
         "label": "Seccional",
         "field": "seccional"
+    },
+    {
+        "label": "Rol",
+        "field": "rol"
+    },
+    {
+        "label": "Acciones",
+        "field": "acciones"
     }
 ]

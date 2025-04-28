@@ -46,68 +46,60 @@ const Layout = () => {
       <MobileMenu
         user={user}
         className={`${
-          width < breakpoints.xl && mobileMenu
-            ? 'left-0 visible opacity-100  z-[9999]'
-            : 'left-[-300px] invisible opacity-0  z-[-999] '
-        }`}
+      width < breakpoints.xl && mobileMenu
+        ? 'left-0 visible opacity-100  z-[9999]'
+        : 'left-[-300px] invisible opacity-0  z-[-999] '
+    }`}
       />
-      {/* mobile menu overlay */}
+
       {width < breakpoints.xl && mobileMenu && (
         <div
           className='overlay bg-slate-900/50 backdrop-filter backdrop-blur-sm opacity-100 fixed inset-0 z-[999]'
           onClick={() => setMobileMenu(false)}
         />
       )}
-      {/* <Settings /> */}
-      <div
-        className={`content-wrapper transition-all duration-150 ${
-          width > 1280 ? switchHeaderClass() : ''
-        }`}
-      >
-        {/* md:min-h-screen will h-full */}
-        <div className='page-content   page-min-height'>
-          <div
-            className={
-              contentWidth === 'boxed' ? 'container mx-auto' : 'container-fluid'
-            }
-          >
-            <Suspense fallback={<Loading />}>
-              <motion.div
-                key={location.pathname}
-                initial='pageInitial'
-                animate='pageAnimate'
-                exit='pageExit'
-                variants={{
-                  pageInitial: {
-                    opacity: 0,
-                    y: 50
-                  },
-                  pageAnimate: {
-                    opacity: 1,
-                    y: 0
-                  },
-                  pageExit: {
-                    opacity: 0,
-                    y: -50
-                  }
-                }}
-                transition={{
-                  type: 'tween',
-                  ease: 'easeInOut',
-                  duration: 0.5
-                }}
-              >
-                <Outlet />
-              </motion.div>
-            </Suspense>
+
+      <div className='flex flex-col page-min-height'>
+        <div
+          className={`content-wrapper transition-all duration-150 flex-1 ${
+        width > 1280 ? switchHeaderClass() : ''
+      }`}
+        >
+          <div className='page-content'>
+            <div
+              className={
+            contentWidth === 'boxed' ? 'container mx-auto' : 'container-fluid'
+          }
+            >
+              <Suspense fallback={<Loading />}>
+                <motion.div
+                  key={location.pathname}
+                  initial='pageInitial'
+                  animate='pageAnimate'
+                  exit='pageExit'
+                  variants={{
+                    pageInitial: { opacity: 0, y: 50 },
+                    pageAnimate: { opacity: 1, y: 0 },
+                    pageExit: { opacity: 0, y: -50 }
+                  }}
+                  transition={{
+                    type: 'tween',
+                    ease: 'easeInOut',
+                    duration: 0.5
+                  }}
+                >
+                  <Outlet />
+                </motion.div>
+              </Suspense>
+            </div>
           </div>
         </div>
-      </div>
-      {/* {width < breakpoints.md && <MobileFooter />} */}
-      {width > breakpoints.md && (
+
+        {/* Ahora SIEMPRE mostramos el Footer */}
         <Footer className={width > breakpoints.xl ? switchHeaderClass() : ''} />
-      )}
+      </div>
     </>
+
   )
 }
 
