@@ -3,10 +3,9 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { createIngreso, getIngreso } from '@/services/registroService'
+import { createIngreso, getIngreso, getIngresoExcel, searchRegistro } from '@/services/registroService'
 import { TextInput } from 'flowbite-react'
 import { formatearFechaArgentina } from '@/constant/datos-id'
-import { searchRegistro } from '../../services/registroService'
 import Card from '@/components/ui/Card'
 import Loading from '@/components/ui/Loading'
 import columnRegistro from '@/json/columnRegistro'
@@ -23,6 +22,22 @@ export const Ingreso = () => {
   const [debouncedSearch, setDebouncedSearch] = useState(search)
   const { user } = useSelector((state) => state.auth)
   const usuarioDesdeQR = location.state?.usuarioDesdeQR
+
+  const descargarExcel = async () => {
+    try {
+      const blob = await getIngresoExcel()
+      const url = window.URL.createObjectURL(new Blob([blob]))
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', 'ingresos.xlsx')
+      document.body.appendChild(link)
+      link.click()
+      link.parentNode.removeChild(link)
+      window.URL.revokeObjectURL(url)
+    } catch (error) {
+      console.error('Error descargando Excel:', error)
+    }
+  }
 
   const fetchRegistro = async () => {
     return debouncedSearch
@@ -97,11 +112,7 @@ export const Ingreso = () => {
                         onChange={onSearch}
                         value={search}
                       />
-
-                      <div
-                        type='button'
-                        className='absolute top-3 right-2'
-                      >
+                      <div type='button' className='absolute top-3 right-2'>
                         <svg xmlns='http://www.w3.org/2000/svg' className='icon icon-tabler icon-tabler-search dark:stroke-white' width='16' height='16' viewBox='0 0 24 24' strokeWidth='1.5' stroke='#000000' fill='none' strokeLinecap='round' strokeLinejoin='round'>
                           <path stroke='none' d='M0 0h24v24H0z' fill='none' />
                           <path d='M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0' />
@@ -109,6 +120,15 @@ export const Ingreso = () => {
                         </svg>
                       </div>
                     </div>
+
+                    {[1].includes(user.roles_id) && (
+                      <button
+                        onClick={descargarExcel}
+                        className='bg-green-600 hover:bg-green-800 text-white py-2 px-6 rounded-lg'
+                      >
+                        Exportar Excel
+                      </button>
+                    )}
 
                     {[1, 2].includes(user.roles_id) && (
                       <div className='flex flex-col md:flex-row items-start md:items-center gap-4'>
@@ -123,6 +143,7 @@ export const Ingreso = () => {
                         </div>
                       </div>
                     )}
+
                   </div>
                 </div>
               </Card>

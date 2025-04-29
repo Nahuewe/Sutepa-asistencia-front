@@ -1,11 +1,11 @@
 [
     {
-        "label": "Nombre",
-        "field": "nombre"
-    },
-    {
         "label": "Apellido",
         "field": "apellido"
+    },
+    {
+        "label": "Nombre",
+        "field": "nombre"
     },
     {
         "label": "DNI",

@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { sutepaApi } from '@/api'
 
 export const createIngreso = async (form) => {
@@ -18,6 +17,22 @@ export const getIngreso = async (page) => {
 
 export const getEgreso = async (page) => {
   const response = await sutepaApi.get(`/egreso?page=${page}`)
+  return response.data
+}
+
+export const getIngresoExcel = async () => {
+  const response = await sutepaApi.get(
+    '/ingreso/exportar',
+    { responseType: 'blob' }
+  )
+  return response.data
+}
+
+export const getEgresoExcel = async () => {
+  const response = await sutepaApi.get(
+    '/egreso/exportar',
+    { responseType: 'blob' }
+  )
   return response.data
 }
 

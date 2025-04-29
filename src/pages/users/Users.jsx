@@ -130,8 +130,8 @@ export const Users = () => {
                             (filteredUsers && filteredUsers.length > 0)
                               ? (filteredUsers.map((usuario) => (
                                 <tr key={usuario.id}>
-                                  <td className='table-td'>{usuario.nombre || '-'}</td>
-                                  <td className='table-td'>{usuario.apellido || '-'}</td>
+                                  <td className='table-td'>{usuario.apellido.toUpperCase() || '-'}</td>
+                                  <td className='table-td'>{usuario.nombre.toUpperCase() || '-'}</td>
                                   <td className='table-td'>{usuario.dni || '-'}</td>
                                   <td className='table-td'>{usuario.legajo || '-'}</td>
                                   <td className='table-td'>{usuario.seccional || '-'}</td>
