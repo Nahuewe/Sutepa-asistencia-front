@@ -52,8 +52,8 @@ function App () {
                   {/* Gestion */}
                   <Route path='ingreso' element={<Ingreso />} />
                   <Route path='egreso' element={<Egreso />} />
-                  <Route path='qrscanner/ingreso' element={<QRScanner tipo='ingreso' />} />
-                  <Route path='qrscanner/egreso' element={<QRScanner tipo='egreso' />} />
+                  <Route path='QR/ingreso' element={<QRScanner tipo='ingreso' />} />
+                  <Route path='QR/egreso' element={<QRScanner tipo='egreso' />} />
 
                   {/* Asistentes */}
                   <Route path='asistentes' element={<Users />} />

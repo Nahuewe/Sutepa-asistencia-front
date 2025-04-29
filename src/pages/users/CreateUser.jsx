@@ -5,12 +5,12 @@ import { useGetParameters } from '@/helpers'
 import { createUser, getUserById, updateUser } from '@/services/userService'
 import { toast } from 'react-toastify'
 import { Card } from 'flowbite-react'
+import { useSelector } from 'react-redux'
 import Textinput from '@/components/ui/Textinput'
 import Numberinput from '@/components/ui/Numberinput'
 import Select from '@/components/ui/Select'
 import Button from '@/components/ui/Button'
 import Loading from '@/components/ui/Loading'
-import { useSelector } from 'react-redux'
 
 export const CreateUser = () => {
   const location = useLocation()
@@ -24,6 +24,7 @@ export const CreateUser = () => {
   const [roles, setRoles] = useState([])
   const [seccionales, setSeccionales] = useState([])
   const [dni, setDni] = useState('')
+  const [legajo, setLegajo] = useState('')
   const { user } = useSelector((state) => state.auth)
   const navigate = useNavigate()
   const {
@@ -60,6 +61,17 @@ export const CreateUser = () => {
       console.error('Error en la actualización de Afiliado:', errorMessage)
       toast.error(`No se pudo crear el usuario: ${errorMessage}`)
     }
+  }
+
+  const handleLegajoChange = (e) => {
+    const value = e.target.value
+    const cleanedValue = value.replace(/[^\d]/g, '')
+
+    const maxLength = 7
+    const legajoLimited = cleanedValue.slice(0, maxLength)
+
+    setLegajo(legajoLimited)
+    setValue('legajo', legajoLimited)
   }
 
   const handleDniChange = (e) => {
@@ -177,12 +189,14 @@ export const CreateUser = () => {
                   <label htmlFor='legajo' className='form-label space-y-2'>
                     Legajo
                     <strong className='obligatorio'>(*)</strong>
-                    <Textinput
+                    <Numberinput
                       name='legajo'
                       type='text'
                       placeholder='Legajo'
                       register={register}
                       error={errors.legajo}
+                      value={legajo}
+                      onChange={handleLegajoChange}
                       disabled={!isEditable}
                     />
                   </label>
@@ -249,7 +263,7 @@ export const CreateUser = () => {
                       name='seccional_id'
                       options={seccionales}
                       register={register}
-                      error={errors.seccional_id}
+                      error={errors.seccional}
                       placeholder='Seleccione una seccional'
                       disabled={!isEditable}
                     />

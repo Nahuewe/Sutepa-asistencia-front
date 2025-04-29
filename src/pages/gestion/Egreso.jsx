@@ -2,21 +2,51 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
-import { createEgreso, getEgreso } from '@/services/registroService'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { createEgreso, getEgreso, searchRegistro } from '@/services/registroService'
 import { TextInput } from 'flowbite-react'
 import { formatearFechaArgentina } from '@/constant/datos-id'
 import Card from '@/components/ui/Card'
 import Loading from '@/components/ui/Loading'
 import columnRegistro from '@/json/columnRegistro'
+import Pagination from '@/components/ui/Pagination'
 
 export const Egreso = () => {
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const location = useLocation()
-  const [page] = useState(1)
   const [search, setSearch] = useState('')
   const { user } = useSelector((state) => state.auth)
   const usuarioDesdeQR = location.state?.usuarioDesdeQR
+  const queryParams = new URLSearchParams(location.search)
+  const initialPage = parseInt(queryParams.get('page')) || 1
+  const [currentPage, setCurrentPage] = useState(initialPage)
+  const [debouncedSearch, setDebouncedSearch] = useState(search)
+
+  const fetchRegistro = async () => {
+    return debouncedSearch
+      ? searchRegistro(debouncedSearch, currentPage)
+      : getEgreso(currentPage)
+  }
+
+  const { data: egresos, isLoading: isLoadingEgresos } = useQuery({
+    queryKey: ['egreso', currentPage, debouncedSearch],
+    queryFn: () => fetchRegistro(currentPage),
+    keepPreviousData: true
+  })
+
+  const onPageChange = (page) => {
+    setCurrentPage(page)
+    navigate(`?page=${page}`)
+  }
+
+  function registrarEgreso () {
+    navigate(`/QR/egreso?page=${currentPage}`)
+  }
+
+  const onSearch = (event) => {
+    setSearch(event.target.value)
+  }
 
   useEffect(() => {
     if (usuarioDesdeQR) {
@@ -25,31 +55,28 @@ export const Egreso = () => {
         legajo: usuarioDesdeQR.legajo,
         nombre: usuarioDesdeQR.nombre,
         apellido: usuarioDesdeQR.apellido,
-        roles_id: usuarioDesdeQR.roles_id,
+        seccional: usuarioDesdeQR.seccional,
         seccional_id: usuarioDesdeQR.seccional_id
       })
         .then(() => {
-          console.log('Ingreso registrado:', usuarioDesdeQR)
+          queryClient.invalidateQueries(['egreso'])
           navigate(location.pathname, { replace: true, state: {} })
         })
         .catch(err => {
-          console.error('Error registrando ingreso:', err)
+          console.error('Error registrando egreso:', err)
         })
     }
-  }, [usuarioDesdeQR, navigate, location])
+  }, [usuarioDesdeQR, navigate, location, queryClient])
 
-  const { data: egresos, isLoading: isLoadingEgresos } = useQuery({
-    queryKey: ['egreso', page],
-    queryFn: () => getEgreso(page)
-  })
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search)
+    }, 1000)
 
-  function addEgreso () {
-    navigate('/qrscanner/egreso')
-  }
-
-  const onSearch = (event) => {
-    setSearch(event.target.value)
-  }
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [search])
 
   return (
     <>
@@ -87,7 +114,7 @@ export const Egreso = () => {
                         <div className='flex gap-2 items-center'>
                           <button
                             type='button'
-                            onClick={addEgreso}
+                            onClick={registrarEgreso}
                             className='bg-indigo-600 hover:bg-indigo-800 text-white items-center text-center py-2 px-6 rounded-lg'
                           >
                             Escanear
@@ -115,8 +142,8 @@ export const Egreso = () => {
                         </thead>
                         <tbody className='bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700'>
                           {
-                            (egresos && egresos.length > 0)
-                              ? (egresos.map((egreso) => (
+                            (egresos?.data && egresos?.data.length > 0)
+                              ? (egresos?.data.map((egreso) => (
                                 <tr key={egreso.id}>
                                   <td className='table-td'>{egreso.asistente?.apellido || '-'}</td>
                                   <td className='table-td'>{egreso.asistente?.nombre || '-'}</td>
@@ -130,6 +157,19 @@ export const Egreso = () => {
                           }
                         </tbody>
                       </table>
+
+                      <div className='flex justify-center mt-8'>
+                        <Pagination
+                          paginate={{
+                            current_page: egresos?.meta?.current_page,
+                            last_page: egresos?.meta?.last_page,
+                            total: egresos?.meta?.total
+                          }}
+                          onPageChange={onPageChange}
+                          text
+                        />
+                      </div>
+
                     </div>
                   </div>
                 </div>

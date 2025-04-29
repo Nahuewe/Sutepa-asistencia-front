@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { createIngreso, getIngreso } from '@/services/registroService'
 import { TextInput } from 'flowbite-react'
 import { formatearFechaArgentina } from '@/constant/datos-id'
@@ -14,6 +14,7 @@ import Pagination from '@/components/ui/Pagination'
 
 export const Ingreso = () => {
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const [search, setSearch] = useState('')
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
@@ -31,7 +32,8 @@ export const Ingreso = () => {
 
   const { data: ingresos, isLoading: isLoadingIngresos } = useQuery({
     queryKey: ['ingreso', currentPage, debouncedSearch],
-    queryFn: () => fetchRegistro(currentPage)
+    queryFn: () => fetchRegistro(currentPage),
+    keepPreviousData: true
   })
 
   const onPageChange = (page) => {
@@ -40,7 +42,7 @@ export const Ingreso = () => {
   }
 
   function registrarIngreso () {
-    navigate(`/qrscanner/ingreso?page=${currentPage}`)
+    navigate(`/QR/ingreso?page=${currentPage}`)
   }
 
   const onSearch = (event) => {
@@ -54,19 +56,18 @@ export const Ingreso = () => {
         legajo: usuarioDesdeQR.legajo,
         nombre: usuarioDesdeQR.nombre,
         apellido: usuarioDesdeQR.apellido,
-        roles_id: usuarioDesdeQR.roles_id,
         seccional: usuarioDesdeQR.seccional,
         seccional_id: usuarioDesdeQR.seccional_id
       })
         .then(() => {
-          console.log('Ingreso registrado:', usuarioDesdeQR)
+          queryClient.invalidateQueries(['ingreso'])
           navigate(location.pathname, { replace: true, state: {} })
         })
         .catch(err => {
           console.error('Error registrando ingreso:', err)
         })
     }
-  }, [usuarioDesdeQR, navigate, location])
+  }, [usuarioDesdeQR, navigate, location, queryClient])
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -142,18 +143,18 @@ export const Ingreso = () => {
                         </thead>
                         <tbody className='bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700'>
                           {
-                            (ingresos && ingresos.length > 0)
-                              ? (ingresos.map((ingreso) => (
+                            (ingresos?.data && ingresos.data.length > 0)
+                              ? ingresos.data.map((ingreso) => (
                                 <tr key={ingreso.id}>
-                                  <td className='table-td'>{ingreso.asistente?.apellido || '-'}</td>
-                                  <td className='table-td'>{ingreso.asistente?.nombre || '-'}</td>
-                                  <td className='table-td'>{ingreso.asistente?.dni || '-'}</td>
-                                  <td className='table-td'>{ingreso.asistente?.legajo || '-'}</td>
-                                  <td className='table-td'>{ingreso.asistente?.seccional || '-'}</td>
-                                  <td className='table-td'>{formatearFechaArgentina(ingreso.registrado_en || '-')}</td>
+                                  <td className='table-td'>{ingreso?.asistente?.apellido || '-'}</td>
+                                  <td className='table-td'>{ingreso?.asistente?.nombre || '-'}</td>
+                                  <td className='table-td'>{ingreso?.asistente?.dni || '-'}</td>
+                                  <td className='table-td'>{ingreso?.asistente?.legajo || '-'}</td>
+                                  <td className='table-td'>{ingreso?.asistente?.seccional || '-'}</td>
+                                  <td className='table-td'>{formatearFechaArgentina(ingreso?.registrado_en || '-')}</td>
                                 </tr>
-                                )))
-                              : (<tr><td colSpan='10' className='text-center py-2 dark:bg-gray-800'>No se encontraron resultados</td></tr>)
+                              ))
+                              : <tr><td colSpan='10' className='text-center py-2 dark:bg-gray-800'>No se encontraron resultados</td></tr>
                           }
                         </tbody>
                       </table>

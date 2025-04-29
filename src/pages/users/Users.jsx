@@ -29,7 +29,8 @@ export const Users = () => {
 
   const { data: usuarios, isLoading } = useQuery({
     queryKey: ['user', currentPage, debouncedSearch],
-    queryFn: () => fetchUsers(currentPage)
+    queryFn: () => fetchUsers(currentPage),
+    keepPreviousData: true
   })
 
   const filteredUsers = user.roles_id === 1 ? usuarios?.data : usuarios?.data.filter(users => users.id === user.id)
@@ -75,6 +76,7 @@ export const Users = () => {
                     <div className='relative'>
                       <TextInput
                         name='search'
+                        type='text'
                         placeholder='Buscar'
                         onChange={onSearch}
                         value={search}

@@ -33,11 +33,9 @@ const QRScanner = ({ tipo }) => {
       setScanResult(data)
 
       if (tipo === 'ingreso') {
-        // Notificar de ingreso
         toast.success(`Ingreso de ${data.apellido} ${data.nombre}`)
         navigate('/ingreso', { state: { usuarioDesdeQR: data } })
       } else {
-        // Notificar de egreso
         toast.success(`Egreso de ${data.apellido} ${data.nombre}`)
         navigate('/egreso', { state: { usuarioDesdeQR: data } })
       }
@@ -55,7 +53,7 @@ const QRScanner = ({ tipo }) => {
   }
 
   return (
-    <div className='flex flex-col items-center gap-4'>
+    <div className='flex flex-col items-center gap-4 mt-8'>
       <div id='qr-reader' style={{ width: '300px', height: '300px' }} ref={scannerRef} />
       <p className='text-center'>{status}</p>
       {scanResult && (
