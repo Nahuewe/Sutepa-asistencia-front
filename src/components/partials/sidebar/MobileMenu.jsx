@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { menuItems, menuNormal } from '@/constant/data' // Menu de los usuarios
+import { menuAdmin, menuIngreso, menuEgreso, menuAfiliado } from '@/constant/data'
 import Navmenu from './Navmenu'
 import SimpleBar from 'simplebar-react'
 import useSemiDark from '@/hooks/useSemiDark'
@@ -23,9 +23,25 @@ const MobileMenu = ({ className = 'custom-class', user }) => {
     scrollableNodeRef.current.addEventListener('scroll', handleScroll)
   }, [scrollableNodeRef])
 
+  const getMenuByRole = (roleId) => {
+    switch (roleId) {
+      case 1:
+        return menuAdmin
+      case 2:
+        return menuIngreso
+      case 3:
+        return menuEgreso
+      case 4:
+        return menuAfiliado
+      default:
+        return []
+    }
+  }
+
   const [isSemiDark] = useSemiDark()
   const [isDark] = useDarkMode()
   const [mobileMenu, setMobileMenu] = useMobileMenu()
+
   return (
     <div
       className={`${className} fixed  top-0 bg-white dark:bg-slate-800 shadow-lg  h-full   w-[248px]`}
@@ -62,8 +78,7 @@ const MobileMenu = ({ className = 'custom-class', user }) => {
         className='sidebar-menu px-4 h-[calc(100%-80px)]'
         scrollableNodeProps={{ ref: scrollableNodeRef }}
       >
-        {/* Opciones de menu */}
-        <Navmenu menus={(user.roles_id === 1) ? menuItems : menuNormal} />
+        <Navmenu menus={getMenuByRole(user.roles_id)} />
       </SimpleBar>
     </div>
   )

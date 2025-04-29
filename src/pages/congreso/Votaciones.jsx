@@ -11,7 +11,7 @@ import Pagination from '@/components/ui/Pagination'
 import Loading from '@/components/ui/Loading'
 import columnUsuario from '@/json/columnUsuario'
 
-export const Users = () => {
+export const Votaciones = () => {
   const { user } = useSelector((state) => state.auth)
   const navigate = useNavigate()
   const location = useLocation()
@@ -29,7 +29,8 @@ export const Users = () => {
 
   const { data: usuarios, isLoading } = useQuery({
     queryKey: ['user', currentPage, debouncedSearch],
-    queryFn: () => fetchUsers(currentPage)
+    queryFn: () => fetchUsers(currentPage),
+    keepPreviousData: true
   })
 
   const filteredUsers = user.roles_id === 1 ? usuarios?.data : usuarios?.data.filter(users => users.id === user.id)
@@ -70,7 +71,7 @@ export const Users = () => {
             <>
               <Card>
                 <div className='mb-4 md:flex md:justify-between'>
-                  <h1 className='text-2xl font-semibold dark:text-white mb-4 md:mb-0'>Listado de Asistentes</h1>
+                  <h1 className='text-2xl font-semibold dark:text-white mb-4 md:mb-0'>Listado de Votaciones</h1>
                   <div className='flex flex-col md:flex-row items-start md:items-center gap-4'>
                     <div className='relative'>
                       <TextInput
@@ -92,7 +93,7 @@ export const Users = () => {
                       </div>
                     </div>
 
-                    {[1].includes(user.roles_id) && (
+                    {user.roles_id === 1 && (
                       <div className='flex flex-col md:flex-row items-start md:items-center gap-4'>
                         <div className='flex gap-2 items-center'>
                           <button

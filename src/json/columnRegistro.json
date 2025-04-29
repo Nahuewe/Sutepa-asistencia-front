@@ -1,0 +1,26 @@
+[
+    {
+        "label": "Apellido",
+        "field": "apellido"
+    },
+    {
+        "label": "Nombre",
+        "field": "nombre"
+    },
+    {
+        "label": "DNI",
+        "field": "dni"
+    },
+    {
+        "label": "Legajo",
+        "field": "legajo"
+    },
+    {
+        "label": "Seccional",
+        "field": "seccional"
+    },
+    {
+        "label": "Fecha y Hora",
+        "field": "registrado_en"
+    }
+]

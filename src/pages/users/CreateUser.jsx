@@ -6,9 +6,11 @@ import { createUser, getUserById, updateUser } from '@/services/userService'
 import { toast } from 'react-toastify'
 import { Card } from 'flowbite-react'
 import Textinput from '@/components/ui/Textinput'
+import Numberinput from '@/components/ui/Numberinput'
 import Select from '@/components/ui/Select'
 import Button from '@/components/ui/Button'
 import Loading from '@/components/ui/Loading'
+import { useSelector } from 'react-redux'
 
 export const CreateUser = () => {
   const location = useLocation()
@@ -21,6 +23,8 @@ export const CreateUser = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [roles, setRoles] = useState([])
   const [seccionales, setSeccionales] = useState([])
+  const [dni, setDni] = useState('')
+  const { user } = useSelector((state) => state.auth)
   const navigate = useNavigate()
   const {
     register,
@@ -37,15 +41,46 @@ export const CreateUser = () => {
         }
         await updateUser(id, items)
         toast.info('Usuario editado exitosamente')
-        navigate(`/usuarios?page=${currentPage}`)
+        navigate(`/asistentes?page=${currentPage}`)
       } else {
         await createUser(items)
         toast.success('Usuario creado exitosamente')
-        navigate('/usuarios')
+        navigate('/asistentes')
       }
     } catch (error) {
-      toast.error('Completa todos los campos')
+      let errorMessage = 'Error desconocido'
+      if (error.response && error.response.data && error.response.data.errors) {
+        const errors = error.response.data.errors
+        const firstErrorKey = Object.keys(errors)[0]
+        errorMessage = errors[firstErrorKey][0]
+      } else {
+        errorMessage = error.message
+      }
+
+      console.error('Error en la actualización de Afiliado:', errorMessage)
+      toast.error(`No se pudo crear el usuario: ${errorMessage}`)
     }
+  }
+
+  const handleDniChange = (e) => {
+    const value = e.target.value
+    const cleanedValue = value.replace(/[^\d]/g, '')
+    const dniFormat = /^(\d{1,2})(\d{3})(\d{3})$/
+    let formattedDni = ''
+    const maxLength = 8
+
+    if (cleanedValue.length > maxLength) {
+      return
+    }
+
+    if (cleanedValue.length > 1 && cleanedValue.length <= 9) {
+      formattedDni = cleanedValue.replace(dniFormat, '$1.$2.$3')
+    } else {
+      formattedDni = cleanedValue
+    }
+
+    setDni(formattedDni)
+    setValue('dni', formattedDni)
   }
 
   const loadUser = async () => {
@@ -79,6 +114,8 @@ export const CreateUser = () => {
     setShowPassword(!showPassword)
   }
 
+  const isEditable = user.roles_id === 1
+
   return (
     <>
       {isLoading
@@ -99,6 +136,7 @@ export const CreateUser = () => {
                       placeholder='Nombre'
                       register={register}
                       error={errors.nombre}
+                      disabled={!isEditable}
                     />
                   </label>
                 </div>
@@ -113,6 +151,7 @@ export const CreateUser = () => {
                       placeholder='Apellido'
                       register={register}
                       error={errors.apellido}
+                      disabled={!isEditable}
                     />
                   </label>
                 </div>
@@ -120,12 +159,16 @@ export const CreateUser = () => {
                 <div>
                   <label htmlFor='dni' className='form-label space-y-2'>
                     DNI
-                    <Textinput
+                    <strong className='obligatorio'>(*)</strong>
+                    <Numberinput
                       name='dni'
                       type='text'
                       placeholder='DNI'
                       register={register}
                       error={errors.dni}
+                      value={dni}
+                      onChange={handleDniChange}
+                      disabled={!isEditable}
                     />
                   </label>
                 </div>
@@ -140,6 +183,7 @@ export const CreateUser = () => {
                       placeholder='Legajo'
                       register={register}
                       error={errors.legajo}
+                      disabled={!isEditable}
                     />
                   </label>
                 </div>
@@ -192,6 +236,7 @@ export const CreateUser = () => {
                       register={register}
                       error={errors.roles_id}
                       placeholder='Seleccione un rol'
+                      disabled={!isEditable}
                     />
                   </label>
                 </div>
@@ -206,6 +251,7 @@ export const CreateUser = () => {
                       register={register}
                       error={errors.seccional_id}
                       placeholder='Seleccione una seccional'
+                      disabled={!isEditable}
                     />
                   </label>
                 </div>
@@ -215,7 +261,7 @@ export const CreateUser = () => {
               <div className='ltr:text-right rtl:text-left'>
                 <button
                   className='btn-danger items-center text-center py-2 px-6 rounded-lg'
-                  onClick={() => navigate(`/usuarios?page=${currentPage}`)}
+                  onClick={() => navigate(`/asistentes?page=${currentPage}`)}
                 >
                   Volver
                 </button>

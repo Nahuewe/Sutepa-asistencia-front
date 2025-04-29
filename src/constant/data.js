@@ -1,55 +1,79 @@
-export const menuItems = [
+export const menuAdmin = [
   {
     isHeadr: true,
     title: 'menu'
   },
   {
     title: 'Dashboard',
-    icon: 'heroicons-outline:presentation-chart-line',
+    icon: 'heroicons-outline:presentation-chart-bar',
     link: 'dashboard'
+  },
+  {
+    title: 'Votaciones',
+    icon: 'heroicons-outline:pencil-square',
+    link: 'votacion'
   },
   {
     title: 'Ingreso',
     icon: 'heroicons-outline:qr-code',
     link: 'ingreso'
   },
-  // {
-  //   title: 'Alumnos',
-  //   icon: 'heroicons-outline:user-plus',
-  //   link: 'alumnos'
-  // },
-  // {
-  //   title: 'Docentes',
-  //   icon: 'heroicons-outline:user-circle',
-  //   link: 'docentes'
-  // },
   {
-    title: 'Usuarios',
-    icon: 'heroicons-outline:users',
-    link: 'usuarios'
+    title: 'Egreso',
+    icon: 'heroicons-outline:qr-code',
+    link: 'egreso'
+  },
+  {
+    title: 'Asistentes',
+    icon: 'heroicons-outline:user-group',
+    link: 'asistentes'
   }
 ]
 
-export const menuNormal = [
+export const menuIngreso = [
   {
     isHeadr: true,
     title: 'menu'
   },
   {
-    title: 'Dashboard',
-    icon: 'heroicons-outline:presentation-chart-line',
-    link: 'dashboard'
+    title: 'Ingreso',
+    icon: 'heroicons-outline:qr-code',
+    link: 'ingreso'
+  },
+  {
+    title: 'Votaciones',
+    icon: 'heroicons-outline:pencil-square',
+    link: 'votacion'
   }
-  // {
-  //   title: 'Alumnos',
-  //   icon: 'heroicons-outline:user-plus',
-  //   link: 'alumnos'
-  // },
-  // {
-  //   title: 'Docentes',
-  //   icon: 'heroicons-outline:user-circle',
-  //   link: 'docentes'
-  // }
+]
+
+export const menuEgreso = [
+  {
+    isHeadr: true,
+    title: 'menu'
+  },
+  {
+    title: 'Egreso',
+    icon: 'heroicons-outline:qr-code',
+    link: 'egreso'
+  },
+  {
+    title: 'Votaciones',
+    icon: 'heroicons-outline:pencil-square',
+    link: 'votacion'
+  }
+]
+
+export const menuAfiliado = [
+  {
+    isHeadr: true,
+    title: 'menu'
+  },
+  {
+    title: 'Votaciones',
+    icon: 'heroicons-outline:pencil-square',
+    link: 'votacion'
+  }
 ]
 
 export const topMenu = [

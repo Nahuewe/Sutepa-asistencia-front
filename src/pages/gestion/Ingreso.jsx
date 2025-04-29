@@ -3,33 +3,35 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-import { getUser, searchUser } from '@/services/userService'
+import { createIngreso, getIngreso } from '@/services/registroService'
 import { TextInput } from 'flowbite-react'
+import { formatearFechaArgentina } from '@/constant/datos-id'
+import { searchRegistro } from '../../services/registroService'
 import Card from '@/components/ui/Card'
-import Pagination from '@/components/ui/Pagination'
 import Loading from '@/components/ui/Loading'
-import columnUsuario from '@/json/columnUsuario'
+import columnRegistro from '@/json/columnRegistro'
+import Pagination from '@/components/ui/Pagination'
 
 export const Ingreso = () => {
   const navigate = useNavigate()
+  const [search, setSearch] = useState('')
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
   const initialPage = parseInt(queryParams.get('page')) || 1
   const [currentPage, setCurrentPage] = useState(initialPage)
-  const [search, setSearch] = useState('')
   const [debouncedSearch, setDebouncedSearch] = useState(search)
   const { user } = useSelector((state) => state.auth)
+  const usuarioDesdeQR = location.state?.usuarioDesdeQR
 
-  const fetchUsers = async () => {
+  const fetchRegistro = async () => {
     return debouncedSearch
-      ? searchUser(debouncedSearch, currentPage)
-      : getUser(currentPage)
+      ? searchRegistro(debouncedSearch, currentPage)
+      : getIngreso(currentPage)
   }
 
-  const { data: usuarios, isLoading } = useQuery({
-    queryKey: ['user', currentPage, debouncedSearch],
-    queryFn: () => fetchUsers(currentPage),
-    keepPreviousData: true
+  const { data: ingresos, isLoading: isLoadingIngresos } = useQuery({
+    queryKey: ['ingreso', currentPage, debouncedSearch],
+    queryFn: () => fetchRegistro(currentPage)
   })
 
   const onPageChange = (page) => {
@@ -37,13 +39,34 @@ export const Ingreso = () => {
     navigate(`?page=${page}`)
   }
 
+  function registrarIngreso () {
+    navigate(`/qrscanner/ingreso?page=${currentPage}`)
+  }
+
   const onSearch = (event) => {
     setSearch(event.target.value)
   }
 
-  function addUser () {
-    navigate('/qrscanner')
-  }
+  useEffect(() => {
+    if (usuarioDesdeQR) {
+      createIngreso({
+        dni: usuarioDesdeQR.dni,
+        legajo: usuarioDesdeQR.legajo,
+        nombre: usuarioDesdeQR.nombre,
+        apellido: usuarioDesdeQR.apellido,
+        roles_id: usuarioDesdeQR.roles_id,
+        seccional: usuarioDesdeQR.seccional,
+        seccional_id: usuarioDesdeQR.seccional_id
+      })
+        .then(() => {
+          console.log('Ingreso registrado:', usuarioDesdeQR)
+          navigate(location.pathname, { replace: true, state: {} })
+        })
+        .catch(err => {
+          console.error('Error registrando ingreso:', err)
+        })
+    }
+  }, [usuarioDesdeQR, navigate, location])
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -58,13 +81,13 @@ export const Ingreso = () => {
   return (
     <>
       {
-        (isLoading)
+        (isLoadingIngresos)
           ? <Loading className='mt-28 md:mt-64' />
           : (
             <>
               <Card>
                 <div className='mb-4 md:flex md:justify-between'>
-                  <h1 className='text-2xl font-semibold dark:text-white mb-4 md:mb-0'>Listado de Usuarios que Ingresaron</h1>
+                  <h1 className='text-2xl font-semibold dark:text-white mb-4 md:mb-0'>Listado de Asistentes que Ingresaron</h1>
                   <div className='flex flex-col md:flex-row items-start md:items-center gap-4'>
                     <div className='relative'>
                       <TextInput
@@ -91,7 +114,7 @@ export const Ingreso = () => {
                         <div className='flex gap-2 items-center'>
                           <button
                             type='button'
-                            onClick={addUser}
+                            onClick={registrarIngreso}
                             className='bg-indigo-600 hover:bg-indigo-800 text-white items-center text-center py-2 px-6 rounded-lg'
                           >
                             Escanear
@@ -110,7 +133,7 @@ export const Ingreso = () => {
                       <table className='min-w-full divide-y divide-slate-100 table-fixed dark:divide-slate-700'>
                         <thead className='bg-slate-200 dark:bg-slate-700'>
                           <tr>
-                            {columnUsuario.map((column, i) => (
+                            {columnRegistro.map((column, i) => (
                               <th key={i} scope='col' className='table-th'>
                                 {column.label}
                               </th>
@@ -119,15 +142,15 @@ export const Ingreso = () => {
                         </thead>
                         <tbody className='bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700'>
                           {
-                            (usuarios && usuarios.length > 0)
-                              ? (usuarios.map((usuario) => (
-                                <tr key={usuario.id}>
-                                  <td className='table-td'>{usuario.nombre || '-'}</td>
-                                  <td className='table-td'>{usuario.apellido || '-'}</td>
-                                  <td className='table-td'>{usuario.dni || '-'}</td>
-                                  <td className='table-td'>{usuario.legajo || '-'}</td>
-                                  <td className='table-td'>{usuario.seccional || '-'}</td>
-                                  <td className='table-td'>{usuario.created_at || '-'}</td>
+                            (ingresos && ingresos.length > 0)
+                              ? (ingresos.map((ingreso) => (
+                                <tr key={ingreso.id}>
+                                  <td className='table-td'>{ingreso.asistente?.apellido || '-'}</td>
+                                  <td className='table-td'>{ingreso.asistente?.nombre || '-'}</td>
+                                  <td className='table-td'>{ingreso.asistente?.dni || '-'}</td>
+                                  <td className='table-td'>{ingreso.asistente?.legajo || '-'}</td>
+                                  <td className='table-td'>{ingreso.asistente?.seccional || '-'}</td>
+                                  <td className='table-td'>{formatearFechaArgentina(ingreso.registrado_en || '-')}</td>
                                 </tr>
                                 )))
                               : (<tr><td colSpan='10' className='text-center py-2 dark:bg-gray-800'>No se encontraron resultados</td></tr>)
@@ -135,21 +158,17 @@ export const Ingreso = () => {
                         </tbody>
                       </table>
 
-                      {
-                        user.roles_id === 1 && (
-                          <div className='flex justify-center mt-8'>
-                            <Pagination
-                              paginate={{
-                                current_page: usuarios?.meta?.current_page,
-                                last_page: usuarios?.meta?.last_page,
-                                total: usuarios?.meta?.total
-                              }}
-                              onPageChange={onPageChange}
-                              text
-                            />
-                          </div>
-                        )
-                      }
+                      <div className='flex justify-center mt-8'>
+                        <Pagination
+                          paginate={{
+                            current_page: ingresos?.meta?.current_page,
+                            last_page: ingresos?.meta?.last_page,
+                            total: ingresos?.meta?.total
+                          }}
+                          onPageChange={onPageChange}
+                          text
+                        />
+                      </div>
 
                     </div>
                   </div>

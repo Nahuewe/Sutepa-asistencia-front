@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react'
 import SidebarLogo from './Logo'
 import Navmenu from './Navmenu'
-import { menuItems, menuNormal } from '@/constant/data'
+import { menuAdmin, menuIngreso, menuEgreso, menuAfiliado } from '@/constant/data'
 import SimpleBar from 'simplebar-react'
 import useSidebar from '@/hooks/useSidebar'
 import useSemiDark from '@/hooks/useSemiDark'
@@ -22,13 +22,26 @@ const Sidebar = ({ user }) => {
     scrollableNodeRef.current.addEventListener('scroll', handleScroll)
   }, [scrollableNodeRef])
 
-  const [collapsed, setMenuCollapsed] = useSidebar()
-  const [menuHover, setMenuHover] = useState(false)
+  const getMenuByRole = (roleId) => {
+    switch (roleId) {
+      case 1:
+        return menuAdmin
+      case 2:
+        return menuIngreso
+      case 3:
+        return menuEgreso
+      case 4:
+        return menuAfiliado
+      default:
+        return []
+    }
+  }
 
-  // semi dark option
+  const [collapsed] = useSidebar()
+  const [menuHover, setMenuHover] = useState(false)
   const [isSemiDark] = useSemiDark()
-  // skin
   const [skin] = useSkin()
+
   return (
     <div className={isSemiDark ? 'dark' : ''}>
       <div
@@ -60,8 +73,7 @@ const Sidebar = ({ user }) => {
           className='sidebar-menu px-4 h-[calc(100%-80px)]'
           scrollableNodeProps={{ ref: scrollableNodeRef }}
         >
-          {/* Opciones de menu */}
-          <Navmenu menus={(user.roles_id === 1) ? menuItems : menuNormal} />
+          <Navmenu menus={getMenuByRole(user.roles_id)} />
         </SimpleBar>
       </div>
     </div>
