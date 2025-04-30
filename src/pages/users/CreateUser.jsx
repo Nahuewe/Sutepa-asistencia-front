@@ -126,6 +126,10 @@ export const CreateUser = () => {
     setShowPassword(!showPassword)
   }
 
+  if (user.roles_id !== 1) {
+    return <p className='text-red-600 font-semibold'>No tenés permisos para crear usuarios.</p>
+  }
+
   const isEditable = user.roles_id === 1
 
   return (

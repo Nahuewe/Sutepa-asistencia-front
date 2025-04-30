@@ -11,7 +11,7 @@ export const menuAdmin = [
   {
     title: 'Votaciones',
     icon: 'heroicons-outline:pencil-square',
-    link: 'votacion'
+    link: 'votaciones'
   },
   {
     title: 'Ingreso',
@@ -43,7 +43,7 @@ export const menuIngreso = [
   {
     title: 'Votaciones',
     icon: 'heroicons-outline:pencil-square',
-    link: 'votacion'
+    link: 'votaciones'
   }
 ]
 
@@ -60,7 +60,7 @@ export const menuEgreso = [
   {
     title: 'Votaciones',
     icon: 'heroicons-outline:pencil-square',
-    link: 'votacion'
+    link: 'votaciones'
   }
 ]
 
@@ -72,7 +72,7 @@ export const menuAfiliado = [
   {
     title: 'Votaciones',
     icon: 'heroicons-outline:pencil-square',
-    link: 'votacion'
+    link: 'votaciones'
   }
 ]
 

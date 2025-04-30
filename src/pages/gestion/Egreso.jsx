@@ -94,6 +94,10 @@ export const Egreso = () => {
     }
   }, [search])
 
+  if (user.roles_id !== 1 && user.roles_id !== 3) {
+    return <p className='text-red-600 font-semibold'>No tenés permisos para registrar egresos.</p>
+  }
+
   return (
     <>
       {

@@ -94,6 +94,10 @@ export const Ingreso = () => {
     }
   }, [search])
 
+  if (user.roles_id !== 1 && user.roles_id !== 2) {
+    return <p className='text-red-600 font-semibold'>No tenés permisos para registrar ingresos.</p>
+  }
+
   return (
     <>
       {

@@ -11,6 +11,7 @@ import Login from '@/pages/auth/Login'
 import Error from '@/pages/404'
 import Loading from '@/components/ui/Loading'
 import QRScanner from './components/QR/QRscanner'
+import { CreateVotaciones } from './pages/congreso/CreateVotaciones'
 const Dashboard = lazy(() => import('@/pages/dashboard'))
 
 function App () {
@@ -40,14 +41,15 @@ function App () {
               )
             : (
               <>
-                <Route path='/' element={<Navigate to='/votacion' />} />
+                <Route path='/' element={<Navigate to='/votaciones' />} />
 
                 <Route path='/*' element={<Layout />}>
                   <Route path='dashboard' element={<Dashboard />} />
                   <Route path='*' element={<Navigate to='/404' />} />
 
                   {/* Votacion */}
-                  <Route path='votacion' element={<Votaciones />} />
+                  <Route path='votaciones' element={<Votaciones />} />
+                  <Route path='votaciones/crear' element={<CreateVotaciones />} />
 
                   {/* Gestion */}
                   <Route path='ingreso' element={<Ingreso />} />
