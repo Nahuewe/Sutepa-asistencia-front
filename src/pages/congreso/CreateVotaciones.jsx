@@ -36,7 +36,6 @@ export const CreateVotaciones = () => {
   const onSubmit = async (data) => {
     try {
       await createVotacion(data)
-      toast.success('Votación creada exitosamente')
       navigate('/votaciones')
     } catch (error) {
       const responseErrors = error?.response?.data?.errors
@@ -133,7 +132,7 @@ export const CreateVotaciones = () => {
           </button>
           <Button
             type='submit'
-            text={isSubmitting ? 'Guardando...' : 'Guardar'}
+            text={isSubmitting ? 'Creando...' : 'Crear'}
             className={`bg-green-500 ${isSubmitting ? 'cursor-not-allowed opacity-50' : 'hover:bg-green-700'} text-white py-2 px-6 rounded-lg`}
             disabled={isSubmitting}
             onClick={handleSubmit(onSubmit)}

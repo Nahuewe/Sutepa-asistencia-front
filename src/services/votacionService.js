@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { sutepaApi } from '@/api'
 
 export const getVotacion = async (page = 1) => {
@@ -6,7 +7,12 @@ export const getVotacion = async (page = 1) => {
 }
 
 export const getVotacionById = async (id) => {
-  const response = await sutepaApi.get(`/votacion/${id}`)
+  const response = await sutepaApi.get(`/votaciones/${id}`)
+  return response.data
+}
+
+export const getConteoVotacion = async (id) => {
+  const response = await sutepaApi.get(`/votaciones/${id}/conteo`)
   return response.data
 }
 
@@ -20,10 +26,24 @@ export const createVoto = async (form) => {
   return response.data
 }
 
-export const get = async () => {
-  const response = await sutepaApi.get(
-    '/votacion/exportar',
-    { responseType: 'blob' }
-  )
+export const verificarVotoUsuario = async ({ votacion_id, asistente_id }) => {
+  const response = await sutepaApi.post('/votos/verificar', {
+    votacion_id,
+    asistente_id
+  })
+  return response.data
+}
+
+export const getVotacionExcel = async () => {
+  const response = await sutepaApi.get('/votaciones/exportar', {
+    responseType: 'blob'
+  })
+  return response.data
+}
+
+export const getVotoExcel = async () => {
+  const response = await sutepaApi.get('/votos/exportar', {
+    responseType: 'blob'
+  })
   return response.data
 }
