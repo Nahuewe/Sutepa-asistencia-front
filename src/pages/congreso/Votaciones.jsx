@@ -194,13 +194,13 @@ export const Votaciones = () => {
                           <p className='font-semibold'>Negativo</p>
                           <p className='text-xl font-bold'>{conteoVotos.negativo}</p>
                         </div>
-                        <div className='flex-1 min-w-[120px] bg-yellow-100 text-yellow-900 dark:bg-yellow-900 dark:text-yellow-50 px-4 py-3 rounded-lg text-center'>
+                        <div className='flex-1 min-w-[120px] bg-cyan-100 text-cyan-900 dark:bg-cyan-900 dark:text-cyan-50 px-4 py-3 rounded-lg text-center'>
                           <p className='font-semibold'>Abstención</p>
                           <p className='text-xl font-bold'>{conteoVotos.abstencion}</p>
                         </div>
                       </div>
 
-                      {!isLoadingVotacion && tiempoRestante > 0 && (
+                      {!isLoadingVotacion && tiempoRestante > 0 && !yaVoto && (
                         <p className='text-lg font-semibold text-center text-gray-500 dark:text-gray-400'>
                           Tiempo restante: <span className='font-medium'>{tiempoRestante}s</span>
                         </p>
@@ -221,7 +221,7 @@ export const Votaciones = () => {
                             Negativo
                           </button>
                           <button
-                            className='bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-4 rounded-lg transition'
+                            className='bg-cyan-500 hover:bg-cyan-600 text-white font-medium py-2 px-4 rounded-lg transition'
                             onClick={() => handleVoto(ultimaVotacion.id, 'abstencion')}
                           >
                             Abstenerse

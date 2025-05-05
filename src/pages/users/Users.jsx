@@ -100,7 +100,7 @@ export const Users = () => {
                           <button
                             type='button'
                             onClick={addUser}
-                            className='bg-blue-600 hover:bg-blue-800 text-white items-center text-center py-2 px-6 rounded-lg'
+                            className='bg-indigo-600 hover:bg-blue-800 text-white items-center text-center py-2 px-6 rounded-lg'
                           >
                             Agregar
                           </button>
