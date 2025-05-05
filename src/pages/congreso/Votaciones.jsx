@@ -14,7 +14,6 @@ export const Votaciones = () => {
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
   const initialPage = parseInt(queryParams.get('page')) || 1
-  const page = parseInt(new URLSearchParams(location.search).get('page') || '1', 10)
   const [currentPage] = useState(initialPage)
   const [tiempoRestante, setTiempoRestante] = useState(15)
   const [yaVoto, setYaVoto] = useState(false)
@@ -60,12 +59,11 @@ export const Votaciones = () => {
   }
 
   const { data: votaciones } = useQuery({
-    queryKey: ['votaciones', page],
-    queryFn: () => getVotacion(page),
+    queryKey: ['votaciones', initialPage],
+    queryFn: () => getVotacion(initialPage),
     keepPreviousData: true
   })
 
-  // 2) Determinar la última votación activa
   const ultima = useMemo(() => {
     if (!votaciones?.data?.length) return null
     return [...votaciones.data].sort(
@@ -73,7 +71,6 @@ export const Votaciones = () => {
     )[0]
   }, [votaciones])
 
-  // 3) Traer sólo usuarios con cuenta que NO votaron esa votación
   const { data: usuariosSinVotar = [], refetch: refetchSinVotar } = useQuery({
     queryKey: ['sinVotar', ultima?.id],
     queryFn: async () => {
@@ -83,7 +80,6 @@ export const Votaciones = () => {
     enabled: !!ultima?.id
   })
 
-  // 4) Refrescar votos existentes y estado “ya votó”
   const refetchVerificacion = async () => {
     if (!ultima) return
     const { ya_voto } = await verificarVotoUsuario({
@@ -96,7 +92,6 @@ export const Votaciones = () => {
     setUsuariosQueVotaron(respuestas)
   }
 
-  // 5) Unificar función de voto (propio o admin)
   const handleVoto = async (votacionId, respuesta, asistenteId = user.id) => {
     if (asistenteId === user.id && yaVoto) {
       return toast.error('Ya has votado en esta votación.')
@@ -104,7 +99,7 @@ export const Votaciones = () => {
     await createVoto({ votacion_id: votacionId, respuesta, asistente_id: asistenteId })
     toast.success(`Voto registrado: ${respuesta}`)
     if (asistenteId === user.id) setYaVoto(true)
-    queryClient.invalidateQueries(['votaciones', page])
+    queryClient.invalidateQueries(['votaciones', initialPage])
     await Promise.all([refetchVerificacion(), refetchSinVotar()])
   }
   useEffect(() => {
@@ -314,8 +309,13 @@ export const Votaciones = () => {
 
                           <Card className='p-4'>
                             <h3 className='font-semibold mb-2'>Asignar Votos a Quienes No Votaron</h3>
-                            <table className='w-full text-left'>
-                              <thead><tr><th>Nombre</th><th>Acción</th></tr></thead>
+                            <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
+                              <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+                                <tr>
+                                  <th>Nombre</th>
+                                  <th>Acción</th>
+                                </tr>
+                              </thead>
                               <tbody>
                                 {usuariosSinVotar.map(u => (
                                   <tr key={u.id}>
