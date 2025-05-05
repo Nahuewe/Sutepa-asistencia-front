@@ -1,8 +1,9 @@
 export const tipoRoles = {
   1: 'ADMINISTRADOR',
-  2: 'INGRESO',
-  3: 'EGRESO',
-  4: 'AFILIADO'
+  2: 'SECRETARIO',
+  3: 'INGRESO',
+  4: 'EGRESO',
+  5: 'AFILIADO'
 }
 
 export const formatDate = (dateString) => {

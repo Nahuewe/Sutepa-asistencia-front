@@ -94,7 +94,7 @@ export const Ingreso = () => {
     }
   }, [search])
 
-  if (user.roles_id !== 1 && user.roles_id !== 2) {
+  if (user.roles_id !== 1 && user.roles_id !== 3) {
     return <p className='text-red-600 font-semibold'>No tenés permisos para registrar ingresos.</p>
   }
 
@@ -134,7 +134,7 @@ export const Ingreso = () => {
                       </button>
                     )}
 
-                    {[1, 2].includes(user.roles_id) && (
+                    {[1, 3].includes(user.roles_id) && (
                       <div className='flex flex-col md:flex-row items-start md:items-center gap-4'>
                         <div className='flex gap-2 items-center'>
                           <button

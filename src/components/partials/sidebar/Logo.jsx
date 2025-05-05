@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 import useDarkMode from '@/hooks/useDarkMode'
 import useSemiDark from '@/hooks/useSemiDark'
@@ -7,10 +6,9 @@ import LogoSutepa from '@/assets/images/logo/logo-sutepa.webp'
 
 const SidebarLogo = ({ menuHover }) => {
   const [isDark] = useDarkMode()
-  // semi dark
   const [isSemiDark] = useSemiDark()
-  // skin
   const [skin] = useSkin()
+
   return (
     <div
       className={` logo-segment flex justify-between items-center bg-white dark:bg-slate-800 z-[9] py-6  px-4 

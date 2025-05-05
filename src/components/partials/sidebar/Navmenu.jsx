@@ -1,8 +1,8 @@
+/* eslint-disable array-callback-return */
 import React, { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { Collapse } from 'react-collapse'
 import Icon from '@/components/ui/Icon'
-import { useDispatch } from 'react-redux'
 
 const Navmenu = ({ menus }) => {
   const [activeSubmenu, setActiveSubmenu] = useState(null)
@@ -17,7 +17,6 @@ const Navmenu = ({ menus }) => {
 
   const location = useLocation()
   const locationName = location.pathname.replace('/', '')
-  const dispatch = useDispatch()
   useEffect(() => {
     let submenuIndex = null
     menus.map((item, i) => {
@@ -49,7 +48,6 @@ const Navmenu = ({ menus }) => {
               ${activeSubmenu === i ? 'open' : ''}
               ${locationName === item.link ? 'menu-item-active' : ''}`}
           >
-            {/* single menu with no childred */}
             {!item.child && !item.isHeadr && (
               <NavLink className='menu-link' to={item.link}>
                 <span className='menu-icon flex-grow-0'>
@@ -59,11 +57,11 @@ const Navmenu = ({ menus }) => {
                 {item.badge && <span className='menu-badge'>{item.badge}</span>}
               </NavLink>
             )}
-            {/* only for menulabel */}
+
             {item.isHeadr && !item.child && (
               <div className='menulabel'>{item.title}</div>
             )}
-            {/*    !!sub menu parent   */}
+
             {item.child && (
               <div
                 className={`menu-link ${
@@ -90,6 +88,7 @@ const Navmenu = ({ menus }) => {
                 </div>
               </div>
             )}
+
             <Collapse isOpened={activeSubmenu === i}>
               <ul className='sub-menu '>
                 {item.child?.map((subItem, j) => (

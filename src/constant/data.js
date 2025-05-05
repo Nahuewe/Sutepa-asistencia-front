@@ -30,6 +30,18 @@ export const menuAdmin = [
   }
 ]
 
+export const menuSecretario = [
+  {
+    isHeadr: true,
+    title: 'menu'
+  },
+  {
+    title: 'Votaciones',
+    icon: 'heroicons-outline:pencil-square',
+    link: 'votaciones'
+  }
+]
+
 export const menuIngreso = [
   {
     isHeadr: true,

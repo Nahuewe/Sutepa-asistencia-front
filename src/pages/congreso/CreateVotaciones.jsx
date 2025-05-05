@@ -5,7 +5,8 @@ import { toast } from 'react-toastify'
 import { Card } from 'flowbite-react'
 import { useSelector } from 'react-redux'
 import { createVotacion, getVotacionById } from '@/services/votacionService'
-import { SelectForm } from '@/components/forms'
+import { SelectForm } from '@/components/ui/SelectForm'
+import ordenesDiarias from '@/json/ordenesDiarias'
 import Textinput from '@/components/ui/Textinput'
 import Button from '@/components/ui/Button'
 import Loading from '@/components/ui/Loading'
@@ -68,7 +69,7 @@ export const CreateVotaciones = () => {
     if (id) loadVotacion()
   }, [id])
 
-  if (user.roles_id !== 1) {
+  if (user.roles_id !== 1 && user.roles_id !== 2) {
     return <p className='text-red-600 font-semibold'>No tenés permisos para crear votaciones.</p>
   }
 
@@ -80,6 +81,27 @@ export const CreateVotaciones = () => {
       <>
         <Card>
           <form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
+            <div>
+              <label htmlFor='plantilla' className='form-label block font-medium'>
+                Seleccionar plantilla
+              </label>
+              <SelectForm
+                name='plantilla'
+                className='w-full border border-gray-300 rounded-lg p-2'
+                register={() => {}}
+                options={ordenesDiarias.map(({ id, nombre }) => ({ id, nombre }))}
+                onChange={(e) => {
+                  const seleccionada = ordenesDiarias.find(p => p.id === e.target.value)
+                  if (seleccionada) {
+                    setValue('tipo', seleccionada.tipo)
+                    setValue('identificador', seleccionada.identificador)
+                    setValue('contenido', seleccionada.contenido)
+                  }
+                }}
+                placeholder='Seleccione una plantilla...'
+              />
+            </div>
+
             <div>
               <label htmlFor='tipo' className='form-label block font-medium'>
                 Tipo de Votación <strong className='text-red-500'>(*)</strong>

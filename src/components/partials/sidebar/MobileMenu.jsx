@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { menuAdmin, menuIngreso, menuEgreso, menuAfiliado } from '@/constant/data'
+import { menuAdmin, menuSecretario, menuIngreso, menuEgreso, menuAfiliado } from '@/constant/data'
 import Navmenu from './Navmenu'
 import SimpleBar from 'simplebar-react'
 import useSemiDark from '@/hooks/useSemiDark'
@@ -28,10 +28,12 @@ const MobileMenu = ({ className = 'custom-class', user }) => {
       case 1:
         return menuAdmin
       case 2:
-        return menuIngreso
+        return menuSecretario
       case 3:
-        return menuEgreso
+        return menuIngreso
       case 4:
+        return menuEgreso
+      case 5:
         return menuAfiliado
       default:
         return []

@@ -6,7 +6,6 @@ import { BrowserRouter } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Provider } from 'react-redux'
 import 'simplebar-react/dist/simplebar.min.css'
-import 'flatpickr/dist/themes/material_blue.css'
 import '../src/assets/scss/app.scss'
 import 'react-toastify/dist/ReactToastify.css'
 

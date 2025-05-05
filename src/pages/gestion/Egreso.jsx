@@ -94,7 +94,7 @@ export const Egreso = () => {
     }
   }, [search])
 
-  if (user.roles_id !== 1 && user.roles_id !== 3) {
+  if (user.roles_id !== 1 && user.roles_id !== 4) {
     return <p className='text-red-600 font-semibold'>No tenés permisos para registrar egresos.</p>
   }
 
@@ -138,7 +138,7 @@ export const Egreso = () => {
                       </button>
                     )}
 
-                    {[1, 3].includes(user.roles_id) && (
+                    {[1, 4].includes(user.roles_id) && (
                       <div className='flex flex-col md:flex-row items-start md:items-center gap-4'>
                         <div className='flex gap-2 items-center'>
                           <button

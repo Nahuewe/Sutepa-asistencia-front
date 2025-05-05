@@ -11,8 +11,13 @@ export const getVotacionById = async (id) => {
   return response.data
 }
 
-export const getConteoVotacion = async (id) => {
-  const response = await sutepaApi.get(`/votaciones/${id}/conteo`)
+export const getCantidadVotos = async (id) => {
+  const response = await sutepaApi.get(`/votaciones/${id}/respuestas`)
+  return response.data
+}
+
+export const getUsuariosNoVotaron = async (votacionId) => {
+  const response = await sutepaApi.get(`/votaciones/${votacionId}/no-votaron`)
   return response.data
 }
 

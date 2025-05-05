@@ -1,0 +1,31 @@
+[
+    {
+      "id": "orden1",
+      "nombre": "Orden del Día Nº1",
+      "tipo": "ORDEN DEL DIA",
+      "identificador": "OD1",
+      "contenido": "Tratamiento del presupuesto anual 2025."
+    },
+    {
+      "id": "orden2",
+      "nombre": "Orden del Día Nº2",
+      "tipo": "ORDEN DEL DIA",
+      "identificador": "OD2",
+      "contenido": "Actualización del reglamento interno del consejo."
+    },
+    {
+      "id": "mocion1",
+      "nombre": "Moción de urgencia",
+      "tipo": "MOCION",
+      "identificador": "M1",
+      "contenido": "Tratamiento inmediato del estado de emergencia sanitaria."
+    },
+    {
+      "id": "orden3",
+      "nombre": "Orden del Día Nº3",
+      "tipo": "ORDEN DEL DIA",
+      "identificador": "OD3",
+      "contenido": "Revisión del convenio colectivo de trabajo."
+    }
+  ]
+  
