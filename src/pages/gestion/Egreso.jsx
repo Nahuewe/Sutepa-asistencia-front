@@ -3,13 +3,15 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { createEgreso, getEgreso, searchRegistro, getEgresoExcel } from '@/services/registroService'
+import { createEgreso, getEgreso, searchRegistro } from '@/services/registroService'
+import { descargarEgresoExcel } from '@/export/ExportarArchivos'
 import { TextInput } from 'flowbite-react'
 import { formatearFechaArgentina } from '@/constant/datos-id'
 import Card from '@/components/ui/Card'
 import Loading from '@/components/ui/Loading'
 import columnRegistro from '@/json/columnRegistro'
 import Pagination from '@/components/ui/Pagination'
+import ExportButton from '@/components/buttons/ExportButton'
 
 export const Egreso = () => {
   const navigate = useNavigate()
@@ -22,22 +24,6 @@ export const Egreso = () => {
   const initialPage = parseInt(queryParams.get('page')) || 1
   const [currentPage, setCurrentPage] = useState(initialPage)
   const [debouncedSearch, setDebouncedSearch] = useState(search)
-
-  const descargarExcel = async () => {
-    try {
-      const blob = await getEgresoExcel()
-      const url = window.URL.createObjectURL(new Blob([blob]))
-      const link = document.createElement('a')
-      link.href = url
-      link.setAttribute('download', 'egresos.xlsx')
-      document.body.appendChild(link)
-      link.click()
-      link.parentNode.removeChild(link)
-      window.URL.revokeObjectURL(url)
-    } catch (error) {
-      console.error('Error descargando Excel:', error)
-    }
-  }
 
   const fetchRegistro = async () => {
     return debouncedSearch
@@ -130,12 +116,12 @@ export const Egreso = () => {
                     </div>
 
                     {[1].includes(user.roles_id) && (
-                      <button
-                        onClick={descargarExcel}
-                        className='bg-green-600 hover:bg-green-800 text-white py-2 px-6 rounded-lg'
-                      >
-                        Exportar Excel
-                      </button>
+                      <ExportButton
+                        descargaFn={descargarEgresoExcel}
+                        nombreArchivo='Egresos'
+                        textoBoton='Exportar Excel de Egresos'
+                        textoExportando='Exportando Egresos...'
+                      />
                     )}
 
                     {[1, 4].includes(user.roles_id) && (

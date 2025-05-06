@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 import { sutepaApi } from '@/api'
 
-export const getVotacion = async (page = 1) => {
-  const response = await sutepaApi.get(`/votaciones?page=${page}`)
+export const getVotacion = async () => {
+  const response = await sutepaApi.get('/votaciones')
   return response.data
 }
 
