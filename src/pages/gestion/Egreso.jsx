@@ -87,7 +87,7 @@ export const Egreso = () => {
   return (
     <>
       {
-        (isLoadingEgresos)
+        (isLoadingEgresos && !debouncedSearch)
           ? <Loading className='mt-28 md:mt-64' />
           : (
             <>

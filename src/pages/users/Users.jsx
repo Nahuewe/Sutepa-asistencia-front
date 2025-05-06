@@ -65,7 +65,7 @@ export const Users = () => {
   return (
     <>
       {
-        (isLoading)
+        (isLoading && !debouncedSearch)
           ? <Loading className='mt-28 md:mt-64' />
           : (
             <>

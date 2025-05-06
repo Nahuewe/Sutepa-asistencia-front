@@ -87,7 +87,7 @@ export const Ingreso = () => {
   return (
     <>
       {
-        (isLoadingIngresos)
+        (isLoadingIngresos && !debouncedSearch)
           ? <Loading className='mt-28 md:mt-64' />
           : (
             <>
@@ -188,7 +188,7 @@ export const Ingreso = () => {
               </Card>
             </>
             )
-      }
+}
     </>
   )
 }

@@ -12,6 +12,7 @@ import ExportButton from '@/components/buttons/ExportButton'
 
 export const Votaciones = () => {
   const { user } = useSelector((state) => state.auth)
+  const [respuestaVotada, setRespuestaVotada] = useState(null)
   const [tiempoRestante, setTiempoRestante] = useState(20)
   const [loading, setLoading] = useState(true)
   const queryClient = useQueryClient()
@@ -77,7 +78,7 @@ export const Votaciones = () => {
     }
 
     await createVoto({ votacion_id: votacionId, respuesta, asistente_id: asistenteId })
-    toast.success(`Voto registrado: ${respuesta}`)
+    setRespuestaVotada(respuesta)
 
     queryClient.invalidateQueries({ queryKey: ['verificacion', votacionId] })
     queryClient.invalidateQueries({ queryKey: ['usuariosVotaron', votacionId] })
@@ -105,11 +106,24 @@ export const Votaciones = () => {
   }, [ultima, queryClient])
 
   useEffect(() => {
+    setRespuestaVotada(null)
+  }, [ultima?.id])
+
+  useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false)
     }, 1000)
     return () => clearTimeout(timer)
   }, [])
+
+  useEffect(() => {
+    if (!yaVoto || respuestaVotada) return
+
+    const votoUsuario = usuariosQueVotaron.find(usuario => usuario.asistente_id === user.id)
+    if (votoUsuario) {
+      setRespuestaVotada(votoUsuario.respuesta)
+    }
+  }, [yaVoto, respuestaVotada, usuariosQueVotaron, user.id])
 
   if (loading) {
     return <Loading />
@@ -194,11 +208,15 @@ export const Votaciones = () => {
                       </div>
                     )}
 
-                    {tiempoRestante === 0 && [3, 4, 5].includes(user.roles_id) && (
-                      <div className='text-center mt-4'>
-                        <p className='text-lg font-semibold text-red-600 dark:text-red-400'>
-                          La votación ya finalizó.
-                        </p>
+                    {respuestaVotada && [3, 4, 5].includes(user.roles_id) && (
+                      <div className={`text-center mt-4 font-semibold text-lg ${respuestaVotada === 'afirmativo'
+                        ? 'text-green-600'
+                        : respuestaVotada === 'negativo'
+                          ? 'text-red-600'
+                          : 'text-cyan-600'
+                      }`}
+                      >
+                        Tu voto fue: {respuestaVotada.charAt(0).toUpperCase() + respuestaVotada.slice(1)}
                       </div>
                     )}
 
@@ -263,8 +281,8 @@ export const Votaciones = () => {
                                 </td>
                               </tr>
 
-                              <tr className='bg-blue-50 border-b dark:bg-blue-900 dark:bg-opacity-20 dark:border-gray-700'>
-                                <th scope='row' className='px-6 py-4 font-medium text-blue-700 dark:text-blue-400 whitespace-nowrap'>
+                              <tr className='bg-cyan-50 border-b dark:bg-cyan-900 dark:bg-opacity-20 dark:border-gray-700'>
+                                <th scope='row' className='px-6 py-4 font-medium text-cyan-700 dark:text-cyan-400 whitespace-nowrap'>
                                   Abstención
                                 </th>
                                 <td className='px-6 py-4'>
@@ -272,13 +290,13 @@ export const Votaciones = () => {
                                     {usuariosQueVotaron
                                       .filter(usuario => usuario.respuesta === 'abstencion')
                                       .map(usuario => (
-                                        <span key={usuario.asistente_id} className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'>
+                                        <span key={usuario.asistente_id} className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-cyan-100 text-cyan-800 dark:bg-cyan-900 dark:text-cyan-200'>
                                           {usuario.apellido} {usuario.nombre}
                                         </span>
                                       ))}
                                   </div>
                                 </td>
-                                <td className='px-6 py-4 text-right font-bold text-blue-700 dark:text-blue-400'>
+                                <td className='px-6 py-4 text-right font-bold text-cyan-700 dark:text-cyan-400'>
                                   {usuariosQueVotaron.filter(usuario => usuario.respuesta === 'abstencion').length}
                                 </td>
                               </tr>
@@ -325,7 +343,7 @@ export const Votaciones = () => {
                                         const colorMap = {
                                           afirmativo: 'bg-green-500 hover:bg-green-600',
                                           negativo: 'bg-red-500 hover:bg-red-600',
-                                          abstencion: 'bg-blue-500 hover:bg-blue-600'
+                                          abstencion: 'bg-cyan-500 hover:bg-cyan-600'
                                         }
                                         return (
                                           <button
