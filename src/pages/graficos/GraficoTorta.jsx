@@ -22,7 +22,7 @@ const pieParams = {
 
 const getPieSize = () =>
   window.innerWidth < 768
-    ? { height: 300, width: 300 }
+    ? { height: 250, width: 250 }
     : { height: 500, width: 500 }
 
 const colorMap = {

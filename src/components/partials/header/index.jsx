@@ -92,6 +92,7 @@ const Header = ({ className = 'custom-class' }) => {
               {/* <SearchModal /> */}
             </div>
           )}
+          <span className='text-red-600 dark:text-red-400 hidden md:block font-extrabold'>Sindicato Unido de Trabajadores y Empleados de PAMI</span>
           {/* For Horizontal  */}
           {menuType === 'horizontal' && (
             <div className='flex items-center space-x-4 rtl:space-x-reverse'>
