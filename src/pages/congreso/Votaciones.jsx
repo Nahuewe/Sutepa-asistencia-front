@@ -7,7 +7,6 @@ import { descargarVotacionesExcel, descargarVotosExcel } from '@/export/Exportar
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 import Loading from '@/components/ui/Loading'
-import Card from '@/components/ui/Card'
 import ExportButton from '@/components/buttons/ExportButton'
 
 export const Votaciones = () => {
@@ -132,37 +131,36 @@ export const Votaciones = () => {
   return (
     <>
       {[1, 2].includes(user.roles_id) && (
-        <Card className='mb-4 px-4 py-6 sm:px-6'>
-          <div className='mb-4 flex flex-col gap-y-4 sm:flex-row sm:items-center sm:justify-between'>
-            <h1 className='text-xl sm:text-2xl font-semibold text-gray-800 dark:text-white'>
-              Listado de Votaciones
-            </h1>
-            <div className='flex flex-col sm:flex-row gap-2 sm:gap-4'>
-              {user.roles_id === 1 && (
-                <>
-                  <ExportButton
-                    descargaFn={descargarVotacionesExcel}
-                    nombreArchivo='Votaciones'
-                    textoBoton='Exportar Excel de Votaciones'
-                    textoExportando='Exportando Votaciones...'
-                  />
-                  <ExportButton
-                    descargaFn={descargarVotosExcel}
-                    nombreArchivo='Votos'
-                    textoBoton='Exportar Excel de Votos'
-                    textoExportando='Exportando Votos...'
-                  />
-                </>
-              )}
-              <button
-                onClick={addVotacion}
-                className='bg-indigo-600 hover:bg-indigo-800 text-white items-center text-center py-2 px-6 rounded-lg'
-              >
-                Agregar
-              </button>
-            </div>
+        <div className='flex flex-col gap-y-4 sm:flex-row sm:items-center sm:justify-between p-6 rounded-2xl shadow-md bg-white dark:bg-gray-800 space-y-6 mb-4'>
+          <h1 className='text-xl sm:text-2xl font-semibold text-gray-800 dark:text-white'>
+            Listado de Votaciones
+          </h1>
+          <div className='flex flex-col sm:flex-row gap-2 sm:gap-4'>
+            {user.roles_id === 1 && (
+              <>
+                <ExportButton
+                  descargaFn={descargarVotacionesExcel}
+                  nombreArchivo='Votaciones'
+                  textoBoton='Exportar Excel de Votaciones'
+                  textoExportando='Exportando Votaciones...'
+                />
+                <ExportButton
+                  descargaFn={descargarVotosExcel}
+                  nombreArchivo='Votos'
+                  textoBoton='Exportar Excel de Votos'
+                  textoExportando='Exportando Votos...'
+                  colors={{ normal: 'bg-yellow-600 hover:bg-yellow-800', exporting: 'bg-red-500 hover:bg-red-600' }}
+                />
+              </>
+            )}
+            <button
+              onClick={addVotacion}
+              className='bg-indigo-600 hover:bg-indigo-800 text-white items-center text-center py-2 px-6 rounded-lg'
+            >
+              Agregar
+            </button>
           </div>
-        </Card>
+        </div>
       )}
 
       <div className='space-y-6'>
@@ -172,7 +170,7 @@ export const Votaciones = () => {
                 const ultimaVotacion = ultima
                 return (
                   <div key={ultimaVotacion.id} className='p-6 rounded-2xl shadow-md bg-white dark:bg-gray-800 space-y-6'>
-                    <div className='space-y-1'>
+                    <div className='space-y-1 ml-1'>
                       <h2 className='text-2xl font-bold text-gray-900 dark:text-white'>{ultimaVotacion.tipo} - {ultimaVotacion.identificador}</h2>
                       {[1, 2].includes(user.roles_id) && (
                         <p className='text-gray-600 dark:text-gray-300'>{ultimaVotacion.contenido}</p>
@@ -222,11 +220,11 @@ export const Votaciones = () => {
 
                     {[1, 2].includes(user.roles_id) && (
                       <>
-                        <h2 className='text-lg font-semibold text-gray-800 dark:text-white mb-4'>Estado de la Votación</h2>
+                        <h2 className='text-lg ml-1 font-semibold text-gray-800 dark:text-white mb-4'>Estado de la Votación</h2>
                         <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
                           <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
 
-                            <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+                            <thead className='text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400'>
                               <tr>
                                 <th scope='col' className='px-6 py-3'>
                                   Tipo de voto
@@ -241,7 +239,7 @@ export const Votaciones = () => {
                             </thead>
 
                             <tbody>
-                              <tr className='bg-green-50 border-b dark:bg-green-900 dark:bg-opacity-20 dark:border-gray-700'>
+                              <tr className='bg-green-200 dark:bg-green-900 dark:bg-opacity-20 dark:border-gray-700'>
                                 <th scope='row' className='px-6 py-4 font-medium text-green-700 dark:text-green-400 whitespace-nowrap'>
                                   Afirmativo
                                 </th>
@@ -250,8 +248,8 @@ export const Votaciones = () => {
                                     {usuariosQueVotaron
                                       .filter(usuario => usuario.respuesta === 'afirmativo')
                                       .map(usuario => (
-                                        <span key={usuario.asistente_id} className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'>
-                                          {usuario.apellido} {usuario.nombre}
+                                        <span key={usuario.asistente_id} className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-300 text-green-950 dark:bg-green-900 dark:text-green-200'>
+                                          {usuario.apellido}, {usuario.nombre}
                                         </span>
                                       ))}
                                   </div>
@@ -261,7 +259,7 @@ export const Votaciones = () => {
                                 </td>
                               </tr>
 
-                              <tr className='bg-red-50 border-b dark:bg-red-900 dark:bg-opacity-20 dark:border-gray-700'>
+                              <tr className='bg-red-200 dark:bg-red-900 dark:bg-opacity-20 dark:border-gray-700'>
                                 <th scope='row' className='px-6 py-4 font-medium text-red-700 dark:text-red-400 whitespace-nowrap'>
                                   Negativo
                                 </th>
@@ -270,8 +268,8 @@ export const Votaciones = () => {
                                     {usuariosQueVotaron
                                       .filter(usuario => usuario.respuesta === 'negativo')
                                       .map(usuario => (
-                                        <span key={usuario.asistente_id} className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'>
-                                          {usuario.apellido} {usuario.nombre}
+                                        <span key={usuario.asistente_id} className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-300 text-red-950 dark:bg-red-900 dark:text-red-200'>
+                                          {usuario.apellido}, {usuario.nombre}
                                         </span>
                                       ))}
                                   </div>
@@ -281,7 +279,7 @@ export const Votaciones = () => {
                                 </td>
                               </tr>
 
-                              <tr className='bg-cyan-50 border-b dark:bg-cyan-900 dark:bg-opacity-20 dark:border-gray-700'>
+                              <tr className='bg-cyan-200 dark:bg-cyan-900 dark:bg-opacity-20 dark:border-gray-700'>
                                 <th scope='row' className='px-6 py-4 font-medium text-cyan-700 dark:text-cyan-400 whitespace-nowrap'>
                                   Abstención
                                 </th>
@@ -290,8 +288,8 @@ export const Votaciones = () => {
                                     {usuariosQueVotaron
                                       .filter(usuario => usuario.respuesta === 'abstencion')
                                       .map(usuario => (
-                                        <span key={usuario.asistente_id} className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-cyan-100 text-cyan-800 dark:bg-cyan-900 dark:text-cyan-200'>
-                                          {usuario.apellido} {usuario.nombre}
+                                        <span key={usuario.asistente_id} className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-cyan-300 text-cyan-950 dark:bg-cyan-900 dark:text-cyan-200'>
+                                          {usuario.apellido}, {usuario.nombre}
                                         </span>
                                       ))}
                                   </div>
@@ -301,15 +299,15 @@ export const Votaciones = () => {
                                 </td>
                               </tr>
 
-                              <tr className='bg-gray-50 dark:bg-gray-700'>
+                              <tr className='bg-gray-300 dark:bg-gray-700'>
                                 <th scope='row' className='px-6 py-4 font-medium text-gray-700 dark:text-gray-400 whitespace-nowrap'>
                                   No votaron
                                 </th>
                                 <td className='px-6 py-4'>
                                   <div className='flex flex-wrap gap-2'>
                                     {usuariosSinVotar.map(usuario => (
-                                      <span key={usuario.asistente_id} className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'>
-                                        {usuario.apellido} {usuario.nombre}
+                                      <span key={usuario.asistente_id} className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-950 dark:bg-gray-800 dark:text-gray-300'>
+                                        {usuario.apellido}, {usuario.nombre}
                                       </span>
                                     ))}
                                   </div>
@@ -324,42 +322,44 @@ export const Votaciones = () => {
 
                         {tiempoRestante === 0 && usuariosSinVotar.length > 0 && (
                           <div>
-                            <h3 className='text-lg font-semibold text-gray-800 dark:text-white mb-4'>
+                            <h3 className='text-lg ml-1 font-semibold text-gray-800 dark:text-white mb-4'>
                               Asignar votos a quienes no votaron
                             </h3>
-                            <table className='w-full text-sm text-left text-gray-700 dark:text-gray-300'>
-                              <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
-                                <tr>
-                                  <th className='px-4 py-2'>Nombre</th>
-                                  <th className='px-4 py-2'>Acción</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {usuariosSinVotar.map(usuario => (
-                                  <tr key={usuario.asistente_id} className='border-b dark:border-gray-600'>
-                                    <td className='px-4 py-2'>{usuario.apellido} {usuario.nombre}</td>
-                                    <td className='px-4 py-2 flex flex-wrap gap-2'>
-                                      {['afirmativo', 'negativo', 'abstencion'].map(respuesta => {
-                                        const colorMap = {
-                                          afirmativo: 'bg-green-500 hover:bg-green-600',
-                                          negativo: 'bg-red-500 hover:bg-red-600',
-                                          abstencion: 'bg-cyan-500 hover:bg-cyan-600'
-                                        }
-                                        return (
-                                          <button
-                                            key={respuesta}
-                                            onClick={() => handleVoto(ultima.id, respuesta, usuario.asistente_id)}
-                                            className={`text-white text-xs px-3 py-1 rounded ${colorMap[respuesta]} transition-colors`}
-                                          >
-                                            {respuesta.charAt(0).toUpperCase() + respuesta.slice(1)}
-                                          </button>
-                                        )
-                                      })}
-                                    </td>
+                            <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
+                              <table className='w-full text-sm text-left text-gray-700 dark:text-gray-300'>
+                                <thead className='text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400'>
+                                  <tr>
+                                    <th className='px-4 py-2'>Nombre</th>
+                                    <th className='px-4 py-2'>Acción</th>
                                   </tr>
-                                ))}
-                              </tbody>
-                            </table>
+                                </thead>
+                                <tbody>
+                                  {usuariosSinVotar.map(usuario => (
+                                    <tr key={usuario.asistente_id} className='bg-gray-50 dark:bg-gray-900 dark:bg-opacity-20 dark:border-gray-700 text-black dark:text-white'>
+                                      <td className='px-4 py-2'>{usuario.apellido}, {usuario.nombre}</td>
+                                      <td className='px-4 py-2 flex flex-wrap gap-2'>
+                                        {['afirmativo', 'negativo', 'abstencion'].map(respuesta => {
+                                          const colorMap = {
+                                            afirmativo: 'bg-green-600 hover:bg-green-700',
+                                            negativo: 'bg-red-600 hover:bg-red-700',
+                                            abstencion: 'bg-cyan-600 hover:bg-cyan-700'
+                                          }
+                                          return (
+                                            <button
+                                              key={respuesta}
+                                              onClick={() => handleVoto(ultima.id, respuesta, usuario.asistente_id)}
+                                              className={`text-white text-xs px-4 py-3 rounded ${colorMap[respuesta]} transition-colors rounded-lg`}
+                                            >
+                                              {respuesta.charAt(0).toUpperCase() + respuesta.slice(1)}
+                                            </button>
+                                          )
+                                        })}
+                                      </td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
                           </div>
                         )}
                       </>

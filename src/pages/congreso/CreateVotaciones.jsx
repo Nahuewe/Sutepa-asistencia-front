@@ -6,7 +6,8 @@ import { Card } from 'flowbite-react'
 import { useSelector } from 'react-redux'
 import { createVotacion, getVotacionById } from '@/services/votacionService'
 import { SelectForm } from '@/components/ui/SelectForm'
-import ordenesDiarias from '@/json/ordenesDiarias'
+import { useQuery } from '@tanstack/react-query'
+import { fetchOrdenesDiarias } from '@/services/ordenesDiariasService'
 import Textinput from '@/components/ui/Textinput'
 import Button from '@/components/ui/Button'
 import Loading from '@/components/ui/Loading'
@@ -26,6 +27,12 @@ export const CreateVotaciones = () => {
   const [isLoading, setIsLoading] = useState(false)
   const { user } = useSelector((state) => state.auth)
   const navigate = useNavigate()
+
+  const { data: orden } = useQuery({
+    queryKey: ['ordenDiaria', currentPage],
+    queryFn: () => fetchOrdenesDiarias(currentPage),
+    keepPreviousData: true
+  })
 
   const {
     register,
@@ -82,23 +89,26 @@ export const CreateVotaciones = () => {
         <Card>
           <form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
             <div>
-              <label htmlFor='plantilla' className='form-label block font-medium'>
-                Seleccionar plantilla
+              <label htmlFor='orden del dia' className='form-label block font-medium'>
+                Seleccionar orden del día
               </label>
               <SelectForm
-                name='plantilla'
+                name='orden del dia'
                 className='w-full border border-gray-300 rounded-lg p-2'
-                register={() => {}}
-                options={ordenesDiarias.map(({ id, nombre }) => ({ id, nombre }))}
+                options={
+                  orden?.data?.map(({ id, identificador, contenido }) => ({
+                    id,
+                    nombre: `${identificador} - ${contenido}`
+                  })) || []
+                }
                 onChange={(e) => {
-                  const seleccionada = ordenesDiarias.find(p => p.id === e.target.value)
+                  const seleccionada = orden?.data?.find(p => String(p.id) === e.target.value)
                   if (seleccionada) {
-                    setValue('tipo', seleccionada.tipo)
+                    setValue('tipo', 'ORDEN DEL DIA')
                     setValue('identificador', seleccionada.identificador)
                     setValue('contenido', seleccionada.contenido)
                   }
                 }}
-                placeholder='Seleccione una plantilla...'
               />
             </div>
 

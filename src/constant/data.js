@@ -3,15 +3,20 @@ export const menuAdmin = [
     isHeadr: true,
     title: 'menu'
   },
-  {
-    title: 'Dashboard',
-    icon: 'heroicons-outline:presentation-chart-bar',
-    link: 'dashboard'
-  },
+  // {
+  //   title: 'Dashboard',
+  //   icon: 'heroicons-outline:presentation-chart-bar',
+  //   link: 'dashboard'
+  // },
   {
     title: 'Votaciones',
     icon: 'heroicons-outline:pencil-square',
     link: 'votaciones'
+  },
+  {
+    title: 'Orden Del Día',
+    icon: 'heroicons-outline:clipboard-document-list',
+    link: 'ordenes-diarias'
   },
   {
     title: 'Ingreso',
@@ -39,6 +44,11 @@ export const menuSecretario = [
     title: 'Votaciones',
     icon: 'heroicons-outline:pencil-square',
     link: 'votaciones'
+  },
+  {
+    title: 'Orden Diaria',
+    icon: 'heroicons-outline:clipboard-document-list',
+    link: 'ordenes-diarias'
   }
 ]
 

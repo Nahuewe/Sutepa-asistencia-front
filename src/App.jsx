@@ -7,6 +7,8 @@ import { Egreso } from '@/pages/gestion/Egreso'
 import { Users } from '@/pages/users/Users'
 import { CreateUser } from '@/pages/users/CreateUser'
 import { CreateVotaciones } from '@/pages/congreso/CreateVotaciones'
+import { OrdenesDiarias } from '@/pages/ordenes_diarias/OrdenesDiarias'
+import { CreateOrdenesDiarias } from '@/pages/ordenes_diarias/CreateOrdenesDiarias'
 import Layout from '@/layout/Layout'
 import Login from '@/pages/auth/Login'
 import Error from '@/pages/404'
@@ -61,6 +63,11 @@ function App () {
                   <Route path='asistentes' element={<Users />} />
                   <Route path='asistentes/crear' element={<CreateUser />} />
                   <Route path='asistentes/editar/:id' element={<CreateUser />} />
+
+                  {/* Ordenes Diarias */}
+                  <Route path='ordenes-diarias' element={<OrdenesDiarias />} />
+                  <Route path='ordenes-diarias/crear' element={<CreateOrdenesDiarias />} />
+                  <Route path='ordenes-diarias/editar/:id' element={<CreateOrdenesDiarias />} />
                 </Route>
 
                 <Route path='*' element={<Navigate to='/404' />} />

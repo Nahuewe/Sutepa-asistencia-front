@@ -1,0 +1,18 @@
+[
+    {
+        "label": "Tipo",
+        "field": "tipo"
+    },
+    {
+        "label": "Identificador",
+        "field": "identificador"
+    },
+    {
+        "label": "Contenido",
+        "field": "contenido"
+    },
+    {
+        "label": "Acciones",
+        "field": "acciones"
+    }
+]
