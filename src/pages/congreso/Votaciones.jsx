@@ -9,6 +9,7 @@ import { toast } from 'react-toastify'
 import { GraficoTorta } from '@/pages/graficos/GraficoTorta'
 import Loading from '@/components/ui/Loading'
 import ExportButton from '@/components/buttons/ExportButton'
+import { GraficoLinea } from '../graficos/GraficoLinea'
 
 export const Votaciones = () => {
   const { user } = useSelector((state) => state.auth)
@@ -20,6 +21,7 @@ export const Votaciones = () => {
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
   const initialPage = parseInt(queryParams.get('page')) || 1
+  const [inicioVotacion, setInicioVotacion] = useState(Date.now())
 
   function addVotacion () {
     navigate('/votaciones/crear')
@@ -53,11 +55,9 @@ export const Votaciones = () => {
 
   const { data: usuariosQueVotaron = [] } = useQuery({
     queryKey: ['usuariosVotaron', ultima?.id],
-    queryFn: () => {
-      if (!ultima) return []
-      return getCantidadVotos(ultima.id)
-    },
-    enabled: !!ultima?.id
+    queryFn: () => getCantidadVotos(ultima.id),
+    enabled: !!ultima?.id,
+    refetchInterval: tiempoRestante > 0 ? 1000 : false
   })
 
   const { data: usuariosSinVotar = [] } = useQuery({
@@ -104,6 +104,11 @@ export const Votaciones = () => {
 
     return () => clearInterval(interval)
   }, [ultima, queryClient])
+
+  useEffect(() => {
+    if (!ultima) return
+    setInicioVotacion(Date.now() - (20 - tiempoRestante) * 1000)
+  }, [ultima, tiempoRestante])
 
   useEffect(() => {
     setRespuestaVotada(null)
@@ -364,11 +369,16 @@ export const Votaciones = () => {
                           </div>
                         )}
 
-                        {tiempoRestante === 0 && usuariosSinVotar.length === 0 && (
-                          <div className='flex flex-start'>
-                            <GraficoTorta votos={usuariosQueVotaron} noVotaron={usuariosSinVotar} />
-                          </div>
-                        )}
+                        {tiempoRestante === 0 && usuariosSinVotar.length === 0
+                          ? (
+                            <div className='flex flex-wrap md:flex-nowrap justify-between gap-4'>
+                              <GraficoTorta votos={usuariosQueVotaron} noVotaron={usuariosSinVotar} />
+                              <GraficoLinea votos={usuariosQueVotaron} duracion={20} inicio={inicioVotacion} />
+                            </div>
+                            )
+                          : (
+                            <GraficoLinea votos={usuariosQueVotaron} duracion={20} inicio={inicioVotacion} />
+                            )}
                       </>
                     )}
                   </div>

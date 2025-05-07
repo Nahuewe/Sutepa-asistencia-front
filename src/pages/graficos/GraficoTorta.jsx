@@ -1,6 +1,6 @@
+import { useState } from 'react'
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts'
 import Loading from '@/components/ui/Loading'
-import { useState } from 'react'
 
 const pieParams = {
   slotProps: {
@@ -23,7 +23,7 @@ const pieParams = {
 const getPieSize = () =>
   window.innerWidth < 768
     ? { height: 250, width: 250 }
-    : { height: 500, width: 500 }
+    : { height: 350, width: 500 }
 
 const colorMap = {
   afirmativo: '#22c55e',
