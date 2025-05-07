@@ -6,6 +6,7 @@ import { getVotacion, createVoto, verificarVotoUsuario, getCantidadVotos, getUsu
 import { descargarVotacionesExcel, descargarVotosExcel } from '@/export/ExportarArchivos'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
+import { GraficoTorta } from '@/pages/graficos/GraficoTorta'
 import Loading from '@/components/ui/Loading'
 import ExportButton from '@/components/buttons/ExportButton'
 
@@ -360,6 +361,12 @@ export const Votaciones = () => {
                                 </tbody>
                               </table>
                             </div>
+                          </div>
+                        )}
+
+                        {tiempoRestante === 0 && usuariosSinVotar.length === 0 && (
+                          <div className='flex flex-start'>
+                            <GraficoTorta votos={usuariosQueVotaron} noVotaron={usuariosSinVotar} />
                           </div>
                         )}
                       </>

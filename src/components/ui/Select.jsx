@@ -23,7 +23,7 @@ const Select = ({
   size,
   ...rest
 }) => {
-  options = options || Array(3).fill('option') // Asegúrate de que `options` esté en el formato correcto
+  options = options || Array(3).fill('option')
 
   return (
     <div className={`formGroup ${error ? 'has-error' : ''} ${horizontal ? 'flex' : ''} ${validate ? 'is-valid' : ''}`}>
