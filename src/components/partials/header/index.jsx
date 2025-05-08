@@ -61,7 +61,6 @@ const Header = ({ className = 'custom-class' }) => {
         `}
       >
         <div className='flex justify-between items-center h-full'>
-          {/* For Vertical  */}
 
           {menuType === 'vertical' && (
             <div className='flex items-center md:space-x-4 space-x-2 rtl:space-x-reverse'>
@@ -80,7 +79,7 @@ const Header = ({ className = 'custom-class' }) => {
                 </button>
               )}
               {width < breakpoints.xl && <Logo />}
-              {/* open mobile menu handlaer */}
+
               {width < breakpoints.xl && width >= breakpoints.md && (
                 <div
                   className='cursor-pointer text-slate-900 dark:text-white text-2xl'
@@ -89,15 +88,15 @@ const Header = ({ className = 'custom-class' }) => {
                   <Icon icon='heroicons-outline:menu-alt-3' />
                 </div>
               )}
-              {/* <SearchModal /> */}
+
             </div>
           )}
           <span className='text-red-600 dark:text-red-400 hidden md:block font-extrabold'>Sindicato Unido de Trabajadores y Empleados de PAMI</span>
-          {/* For Horizontal  */}
+
           {menuType === 'horizontal' && (
             <div className='flex items-center space-x-4 rtl:space-x-reverse'>
               <Logo />
-              {/* open mobile menu handlaer */}
+
               {width <= breakpoints.xl && (
                 <div
                   className='cursor-pointer text-slate-900 dark:text-white text-2xl'
@@ -109,12 +108,9 @@ const Header = ({ className = 'custom-class' }) => {
             </div>
           )}
           <div className='nav-tools flex items-center space-x-3 rtl:space-x-reverse'>
-            {/* <Language /> */}
+
             <SwitchDark />
-            {/* <MonoChrome /> */}
-            {/* {width >= breakpoints.md && <Message />} */}
-            {/* {width >= breakpoints.md && <Notification />} */}
-            {/* {width >= breakpoints.md && <Profile />} */}
+
             <Profile />
             {width <= breakpoints.md && (
               <div

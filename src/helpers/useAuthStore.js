@@ -56,11 +56,9 @@ export const useAuthStore = () => {
   }
 
   return {
-    //* Propiedades
     status,
     user,
 
-    //* Metodos
     startLogin,
     checkAuthToken,
     startLogout

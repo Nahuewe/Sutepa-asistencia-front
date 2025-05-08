@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react'
+import { menuAdmin, menuSecretario, menuIngreso, menuEgreso, menuAfiliado } from '@/constant/data'
 import SidebarLogo from './Logo'
 import Navmenu from './Navmenu'
-import { menuAdmin, menuSecretario, menuIngreso, menuEgreso, menuAfiliado } from '@/constant/data'
 import SimpleBar from 'simplebar-react'
 import useSidebar from '@/hooks/useSidebar'
 import useSemiDark from '@/hooks/useSemiDark'

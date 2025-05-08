@@ -1,5 +1,8 @@
 import React, { Suspense } from 'react'
 import { Outlet } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import { motion } from 'framer-motion'
+import { useSelector } from 'react-redux'
 import Header from '@/components/partials/header'
 import Sidebar from '@/components/partials/sidebar'
 import useWidth from '@/hooks/useWidth'
@@ -10,10 +13,8 @@ import useMenuHidden from '@/hooks/useMenuHidden'
 import Footer from '@/components/partials/footer'
 import MobileMenu from '../components/partials/sidebar/MobileMenu'
 import useMobileMenu from '@/hooks/useMobileMenu'
-import { ToastContainer } from 'react-toastify'
 import Loading from '@/components/ui/Loading'
-import { motion } from 'framer-motion'
-import { useSelector } from 'react-redux'
+
 const Layout = () => {
   const { user } = useSelector(state => state.auth)
   const { width, breakpoints } = useWidth()
@@ -28,11 +29,10 @@ const Layout = () => {
       return 'ltr:ml-[248px] rtl:mr-[248px]'
     }
   }
-  // content width
+
   const [contentWidth] = useContentWidth()
   const [menuType] = useMenulayout()
   const [menuHidden] = useMenuHidden()
-  // mobile menu
   const [mobileMenu, setMobileMenu] = useMobileMenu()
 
   return (

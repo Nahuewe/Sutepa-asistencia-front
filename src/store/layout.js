@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-// theme config import
 import themeConfig from '@/configs/themeConfig'
 
 const initialDarkMode = () => {
@@ -33,10 +32,6 @@ const initialType = () => {
   return item ? JSON.parse(item) : themeConfig.layout.type
 }
 
-const initialMonochrome = () => {
-  const item = window.localStorage.getItem('monochrome')
-  return item ? JSON.parse(item) : themeConfig.layout.isMonochrome
-}
 const initialState = {
   isRTL: initialRtl(),
   darkMode: initialDarkMode(),
@@ -50,7 +45,6 @@ const initialState = {
   navBarType: themeConfig.layout.navBarType,
   footerType: themeConfig.layout.footerType,
   mobileMenu: themeConfig.layout.mobileMenu,
-  isMonochrome: initialMonochrome(),
   showModal: false,
   showDeleteModal: false
 }
@@ -59,75 +53,77 @@ export const layoutSlice = createSlice({
   name: 'layout',
   initialState,
   reducers: {
-    // handle dark mode
+
     handleDarkMode: (state, action) => {
       state.darkMode = action.payload
       window.localStorage.setItem('darkMode', action.payload)
     },
-    // handle sidebar collapsed
+
     handleSidebarCollapsed: (state, action) => {
       state.isCollapsed = action.payload
       window.localStorage.setItem('sidebarCollapsed', action.payload)
     },
-    // handle customizer
+
     handleCustomizer: (state, action) => {
       state.customizer = action.payload
     },
-    // handle semiDark
+
     handleSemiDarkMode: (state, action) => {
       state.semiDarkMode = action.payload
       window.localStorage.setItem('semiDarkMode', action.payload)
     },
-    // handle rtl
+
     handleRtl: (state, action) => {
       state.isRTL = action.payload
       window.localStorage.setItem('direction', JSON.stringify(action.payload))
     },
-    // handle skin
+
     handleSkin: (state, action) => {
       state.skin = action.payload
       window.localStorage.setItem('skin', JSON.stringify(action.payload))
     },
-    // handle content width
+
     handleContentWidth: (state, action) => {
       state.contentWidth = action.payload
     },
-    // handle type
+
     handleType: (state, action) => {
       state.type = action.payload
       window.localStorage.setItem('type', JSON.stringify(action.payload))
     },
-    // handle menu hidden
+
     handleMenuHidden: (state, action) => {
       state.menuHidden = action.payload
     },
-    // handle navbar type
+
     handleNavBarType: (state, action) => {
       state.navBarType = action.payload
     },
-    // handle footer type
+
     handleFooterType: (state, action) => {
       state.footerType = action.payload
     },
+
     handleMobileMenu: (state, action) => {
       state.mobileMenu = action.payload
     },
-    handleMonoChrome: (state, action) => {
-      state.isMonochrome = action.payload
-      window.localStorage.setItem('monochrome', JSON.stringify(action.payload))
-    },
+
     handleShowModal: (state) => {
       state.showModal = !state.showModal
     },
+
     handleShowEdit: (state) => {
       state.showEdit = !state.showEdit
     },
+
     handleShowDelete: (state) => {
       state.showDelete = !state.showDelete
     },
+
     handleShowAuxModal: (state) => {
       state.showAuxModal = !state.showAuxModal
     },
+
     handleShowConfirm: (state) => {
       state.showConfirm = !state.showConfirm
     }
@@ -147,7 +143,6 @@ export const {
   handleNavBarType,
   handleFooterType,
   handleMobileMenu,
-  handleMonoChrome,
   handleShowModal,
   handleShowEdit,
   handleShowDelete,

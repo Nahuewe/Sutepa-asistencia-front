@@ -6,7 +6,7 @@ import { getVotacion, createVoto, verificarVotoUsuario, getCantidadVotos, getUsu
 import { descargarVotacionesExcel, descargarVotosExcel } from '@/export/ExportarArchivos'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
-import { UltimaVotacion } from '@/components/util/UltimaVotacion'
+import { UltimaVotacion } from '@/components/votacion/UltimaVotacion'
 import Loading from '@/components/ui/Loading'
 import ExportButton from '@/components/buttons/ExportButton'
 

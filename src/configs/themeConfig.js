@@ -2,7 +2,6 @@ const themeConfig = {
   app: {
     name: 'Dashcode React'
   },
-  // layout
   layout: {
     isRTL: false,
     darkMode: false,
@@ -12,7 +11,6 @@ const themeConfig = {
     type: 'vertical',
     navBarType: 'sticky',
     footerType: 'static',
-    isMonochrome: false,
     menu: {
       isCollapsed: false,
       isHidden: false

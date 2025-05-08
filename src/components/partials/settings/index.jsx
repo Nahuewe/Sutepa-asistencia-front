@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react'
-import Icon from '@/components/ui/Icon'
 import { useSelector, useDispatch } from 'react-redux'
 import { Transition } from '@headlessui/react'
 import { handleCustomizer } from '@/store/layout'
+import Icon from '@/components/ui/Icon'
 import SimpleBar from 'simplebar-react'
 import Semidark from './Tools/Semidark'
 import RtlSwicth from './Tools/Rtl'
@@ -19,7 +19,6 @@ import useWidth from '@/hooks/useWidth'
 const Setings = () => {
   const isOpen = useSelector((state) => state.layout.customizer)
   const dispatch = useDispatch()
-  // ** Toggles  Customizer Open
   const setCustomizer = (val) => dispatch(handleCustomizer(val))
 
   const { width, breakpoints } = useWidth()
