@@ -52,13 +52,33 @@ export const ResultadoGanador = ({ resultadoGanador, usuariosQueVotaron }) => {
       >
         Resultado: {esEmpate ? 'EMPATE' : respuestaGanadora.toUpperCase()}
       </h2>
-      <p
-        className={`text-xl mt-2 ${
-          respuestaGanadora ? subTextColor[respuestaGanadora] : 'text-gray-700 dark:text-gray-300'
-        }`}
-      >
-        Con {votosGanadores} voto{votosGanadores !== 1 ? 's' : ''} de {totalVotantes}
-      </p>
+
+      {esEmpate
+        ? (
+          <div className='text-xl mt-2'>
+            {respuestasMaximas.map((respuesta) => (
+              <p
+                key={respuesta}
+                className={`${subTextColor[respuesta]} capitalize`}
+              >
+                {respuesta}: {conteo[respuesta]} voto
+                {conteo[respuesta] !== 1 ? 's' : ''}
+              </p>
+            ))}
+            <p className='mt-2 text-gray-700 dark:text-gray-300'>
+              De un total de {totalVotantes} votantes
+            </p>
+          </div>
+          )
+        : (
+          <p
+            className={`text-xl mt-2 ${
+            respuestaGanadora ? subTextColor[respuestaGanadora] : 'text-gray-700 dark:text-gray-300'
+          }`}
+          >
+            Con {votosGanadores} voto{votosGanadores !== 1 ? 's' : ''} de {totalVotantes}
+          </p>
+          )}
     </div>
   )
 }
