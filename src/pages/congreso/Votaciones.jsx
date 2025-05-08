@@ -1,40 +1,50 @@
 /* eslint-disable camelcase */
 import { useEffect, useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { getVotacion, createVoto, verificarVotoUsuario, getCantidadVotos, getUsuariosNoVotaron } from '@/services/votacionService'
 import { descargarVotacionesExcel, descargarVotosExcel } from '@/export/ExportarArchivos'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 import { GraficoTorta } from '@/pages/graficos/GraficoTorta'
+import { GraficoLinea } from '@/pages/graficos/GraficoLinea'
+import { VotoUsuario } from '@/components/util/VotoUsuario'
+import { VotacionStatusTable } from '@/components/util/VotacionStatusTable'
+import { TiempoRestante } from '@/components/util/TiempoRestante'
+import { VotoButton } from '@/components/buttons/VotoButton'
+import { NoVotantesTable } from '@/components/util/NoVotantesTable'
 import Loading from '@/components/ui/Loading'
 import ExportButton from '@/components/buttons/ExportButton'
-import { GraficoLinea } from '../graficos/GraficoLinea'
+
+const DURACION_VOTACION = 23
 
 export const Votaciones = () => {
-  const { user } = useSelector((state) => state.auth)
-  const [respuestaVotada, setRespuestaVotada] = useState(null)
-  const [tiempoRestante, setTiempoRestante] = useState(20)
-  const [loading, setLoading] = useState(true)
   const queryClient = useQueryClient()
   const navigate = useNavigate()
-  const location = useLocation()
-  const queryParams = new URLSearchParams(location.search)
-  const initialPage = parseInt(queryParams.get('page')) || 1
+  const { user } = useSelector((state) => state.auth)
+  const [respuestaVotada, setRespuestaVotada] = useState(null)
+  const [loading, setLoading] = useState(true)
   const [inicioVotacion, setInicioVotacion] = useState(Date.now())
+  const [tiempoRestante, setTiempoRestante] = useState(DURACION_VOTACION)
+
+  const invalidarVotacion = (id) => {
+    queryClient.invalidateQueries({ queryKey: ['verificacion', id] })
+    queryClient.invalidateQueries({ queryKey: ['usuariosVotaron', id] })
+    queryClient.invalidateQueries({ queryKey: ['sinVotar', id] })
+  }
 
   function addVotacion () {
     navigate('/votaciones/crear')
     queryClient.invalidateQueries({ queryKey: ['votaciones'] })
   }
 
-  const { data: votaciones } = useQuery({
-    queryKey: ['votaciones', initialPage],
-    queryFn: () => getVotacion(initialPage),
+  const { data: votaciones, refetch: refetchVotaciones } = useQuery({
+    queryKey: ['votaciones'],
+    queryFn: () => getVotacion(),
     keepPreviousData: true
   })
 
-  const ultima = useMemo(() => {
+  const ultimaVotacion = useMemo(() => {
     if (!votaciones?.data?.length) return null
     return [...votaciones.data].sort(
       (a, b) => new Date(b.activa_hasta) - new Date(a.activa_hasta)
@@ -42,32 +52,32 @@ export const Votaciones = () => {
   }, [votaciones])
 
   const { data: verificacionData } = useQuery({
-    queryKey: ['verificacion', ultima?.id, user.id],
+    queryKey: ['verificacion', ultimaVotacion?.id, user.id],
     queryFn: async () => {
-      if (!ultima) return { ya_voto: false }
+      if (!ultimaVotacion) return { ya_voto: false }
       return verificarVotoUsuario({
-        votacion_id: ultima.id,
+        votacion_id: ultimaVotacion.id,
         asistente_id: user.id
       })
     },
-    enabled: !!ultima?.id
+    enabled: !!ultimaVotacion?.id
   })
 
   const { data: usuariosQueVotaron = [] } = useQuery({
-    queryKey: ['usuariosVotaron', ultima?.id],
-    queryFn: () => getCantidadVotos(ultima.id),
-    enabled: !!ultima?.id,
+    queryKey: ['usuariosVotaron', ultimaVotacion?.id],
+    queryFn: () => getCantidadVotos(ultimaVotacion.id),
+    enabled: !!ultimaVotacion?.id,
     refetchInterval: tiempoRestante > 0 ? 1000 : false
   })
 
   const { data: usuariosSinVotar = [] } = useQuery({
-    queryKey: ['sinVotar', ultima?.id],
+    queryKey: ['sinVotar', ultimaVotacion?.id],
     queryFn: async () => {
-      if (!ultima) return []
-      const raw = await getUsuariosNoVotaron(ultima.id)
+      if (!ultimaVotacion) return []
+      const raw = await getUsuariosNoVotaron(ultimaVotacion.id)
       return raw.map(usuario => ({ ...usuario, id: usuario.asistente_id }))
     },
-    enabled: !!ultima?.id
+    enabled: !!ultimaVotacion?.id
   })
 
   const yaVoto = verificacionData?.ya_voto || false
@@ -79,47 +89,8 @@ export const Votaciones = () => {
 
     await createVoto({ votacion_id: votacionId, respuesta, asistente_id: asistenteId })
     setRespuestaVotada(respuesta)
-
-    queryClient.invalidateQueries({ queryKey: ['verificacion', votacionId] })
-    queryClient.invalidateQueries({ queryKey: ['usuariosVotaron', votacionId] })
-    queryClient.invalidateQueries({ queryKey: ['sinVotar', votacionId] })
+    invalidarVotacion(votacionId)
   }
-
-  useEffect(() => {
-    if (!ultima) return
-
-    const activaHasta = new Date(ultima.activa_hasta).getTime()
-
-    const interval = setInterval(() => {
-      const diff = Math.max(0, Math.floor((activaHasta - Date.now()) / 1000))
-      setTiempoRestante(diff)
-
-      if (diff === 0) {
-        clearInterval(interval)
-        queryClient.invalidateQueries({ queryKey: ['verificacion', ultima.id] })
-        queryClient.invalidateQueries({ queryKey: ['usuariosVotaron', ultima.id] })
-        queryClient.invalidateQueries({ queryKey: ['sinVotar', ultima.id] })
-      }
-    }, 1000)
-
-    return () => clearInterval(interval)
-  }, [ultima, queryClient])
-
-  useEffect(() => {
-    if (!ultima) return
-    setInicioVotacion(Date.now() - (20 - tiempoRestante) * 1000)
-  }, [ultima, tiempoRestante])
-
-  useEffect(() => {
-    setRespuestaVotada(null)
-  }, [ultima?.id])
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false)
-    }, 1000)
-    return () => clearTimeout(timer)
-  }, [])
 
   useEffect(() => {
     if (!yaVoto || respuestaVotada) return
@@ -129,6 +100,63 @@ export const Votaciones = () => {
       setRespuestaVotada(votoUsuario.respuesta)
     }
   }, [yaVoto, respuestaVotada, usuariosQueVotaron, user.id])
+
+  useEffect(() => {
+    if (!ultimaVotacion) return
+
+    const activaHasta = new Date(ultimaVotacion.activa_hasta).getTime()
+    const initialRemainingTime = Math.max(0, Math.floor((activaHasta - Date.now()) / 1000))
+    setTiempoRestante(initialRemainingTime)
+
+    const interval = setInterval(() => {
+      const diff = Math.max(0, Math.floor((activaHasta - Date.now()) / 1000))
+      setTiempoRestante(diff)
+
+      if (diff === 0) {
+        clearInterval(interval)
+        invalidarVotacion(ultimaVotacion.id)
+      }
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [ultimaVotacion, queryClient])
+
+  useEffect(() => {
+    const channel = window.Echo.channel('votacions')
+
+    channel.listen('.nueva-votacion', () => {
+      refetchVotaciones()
+      toast.info('¡Se ha creado una nueva votación!')
+    })
+
+    channel.listen('.voto-registrado', (e) => {
+      if (ultimaVotacion?.id === e.votacion.id) {
+        invalidarVotacion(ultimaVotacion.id)
+      }
+    })
+
+    return () => {
+      window.Echo.channel('votacions').stopListening('.nueva-votacion')
+      window.Echo.channel('votacions').stopListening('.voto-registrado')
+      window.Echo.leave('votacions')
+    }
+  }, [ultimaVotacion?.id, refetchVotaciones])
+
+  useEffect(() => {
+    if (!ultimaVotacion) return
+    setInicioVotacion(Date.now() - (DURACION_VOTACION - tiempoRestante) * 1000)
+  }, [ultimaVotacion, tiempoRestante])
+
+  useEffect(() => {
+    setRespuestaVotada(null)
+  }, [ultimaVotacion?.id])
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false)
+    }, 1000)
+    return () => clearTimeout(timer)
+  }, [])
 
   if (loading) {
     return <Loading />
@@ -173,7 +201,6 @@ export const Votaciones = () => {
         {votaciones?.data?.length > 0
           ? (
               (() => {
-                const ultimaVotacion = ultima
                 return (
                   <div key={ultimaVotacion.id} className='p-6 rounded-2xl shadow-md bg-white dark:bg-gray-800 space-y-6'>
                     <div className='space-y-1 ml-1'>
@@ -184,188 +211,52 @@ export const Votaciones = () => {
                     </div>
 
                     {tiempoRestante > 0 && !yaVoto && (
-                      <p className='text-lg font-semibold text-center text-gray-500 dark:text-gray-400'>
-                        Tiempo restante: <span className='font-medium'>{tiempoRestante}s</span>
-                      </p>
+                      <TiempoRestante tiempo={tiempoRestante} />
                     )}
 
                     {tiempoRestante > 0 && !yaVoto && (
                       <div className='grid grid-cols-1 sm:grid-cols-3 gap-3'>
-                        <button
-                          className='bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition'
+                        <VotoButton
+                          texto='Afirmativo'
+                          color='bg-green-600 hover:bg-green-700'
                           onClick={() => handleVoto(ultimaVotacion.id, 'afirmativo')}
-                        >
-                          Afirmativo
-                        </button>
-                        <button
-                          className='bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition'
+                          disabled={!!respuestaVotada}
+                        />
+                        <VotoButton
+                          texto='Negativo'
+                          color='bg-red-600 hover:bg-red-700'
                           onClick={() => handleVoto(ultimaVotacion.id, 'negativo')}
-                        >
-                          Negativo
-                        </button>
-                        <button
-                          className='bg-cyan-500 hover:bg-cyan-600 text-white font-medium py-2 px-4 rounded-lg transition'
+                          disabled={!!respuestaVotada}
+                        />
+                        <VotoButton
+                          texto='Abstenerse'
+                          color='bg-cyan-500 hover:bg-cyan-600'
                           onClick={() => handleVoto(ultimaVotacion.id, 'abstencion')}
-                        >
-                          Abstenerse
-                        </button>
+                          disabled={!!respuestaVotada}
+                        />
                       </div>
                     )}
 
                     {respuestaVotada && [3, 4, 5].includes(user.roles_id) && (
-                      <div className={`text-center mt-4 font-semibold text-lg ${respuestaVotada === 'afirmativo'
-                        ? 'text-green-600'
-                        : respuestaVotada === 'negativo'
-                          ? 'text-red-600'
-                          : 'text-cyan-600'
-                      }`}
-                      >
-                        Tu voto fue: {respuestaVotada.charAt(0).toUpperCase() + respuestaVotada.slice(1)}
-                      </div>
+                      <VotoUsuario respuesta={respuestaVotada} />
                     )}
 
                     {[1, 2].includes(user.roles_id) && (
                       <>
                         <h2 className='text-lg ml-1 font-semibold text-gray-800 dark:text-white mb-4'>Estado de la Votación</h2>
-                        <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
-                          <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
 
-                            <thead className='text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400'>
-                              <tr>
-                                <th scope='col' className='px-6 py-3'>
-                                  Tipo de voto
-                                </th>
-                                <th scope='col' className='px-6 py-3'>
-                                  Afiliados
-                                </th>
-                                <th scope='col' className='px-6 py-3 text-right'>
-                                  Total
-                                </th>
-                              </tr>
-                            </thead>
-
-                            <tbody>
-                              <tr className='bg-green-200 dark:bg-green-900 dark:bg-opacity-20 dark:border-gray-700'>
-                                <th scope='row' className='px-6 py-4 font-medium text-green-700 dark:text-green-400 whitespace-nowrap'>
-                                  Afirmativo
-                                </th>
-                                <td className='px-6 py-4'>
-                                  <div className='flex flex-wrap gap-2'>
-                                    {usuariosQueVotaron
-                                      .filter(usuario => usuario.respuesta === 'afirmativo')
-                                      .map(usuario => (
-                                        <span key={usuario.asistente_id} className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-300 text-green-950 dark:bg-green-900 dark:text-green-200'>
-                                          {usuario.apellido}, {usuario.nombre}
-                                        </span>
-                                      ))}
-                                  </div>
-                                </td>
-                                <td className='px-6 py-4 text-right font-bold text-green-700 dark:text-green-400'>
-                                  {usuariosQueVotaron.filter(usuario => usuario.respuesta === 'afirmativo').length}
-                                </td>
-                              </tr>
-
-                              <tr className='bg-red-200 dark:bg-red-900 dark:bg-opacity-20 dark:border-gray-700'>
-                                <th scope='row' className='px-6 py-4 font-medium text-red-700 dark:text-red-400 whitespace-nowrap'>
-                                  Negativo
-                                </th>
-                                <td className='px-6 py-4'>
-                                  <div className='flex flex-wrap gap-2'>
-                                    {usuariosQueVotaron
-                                      .filter(usuario => usuario.respuesta === 'negativo')
-                                      .map(usuario => (
-                                        <span key={usuario.asistente_id} className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-300 text-red-950 dark:bg-red-900 dark:text-red-200'>
-                                          {usuario.apellido}, {usuario.nombre}
-                                        </span>
-                                      ))}
-                                  </div>
-                                </td>
-                                <td className='px-6 py-4 text-right font-bold text-red-700 dark:text-red-400'>
-                                  {usuariosQueVotaron.filter(usuario => usuario.respuesta === 'negativo').length}
-                                </td>
-                              </tr>
-
-                              <tr className='bg-cyan-200 dark:bg-cyan-900 dark:bg-opacity-20 dark:border-gray-700'>
-                                <th scope='row' className='px-6 py-4 font-medium text-cyan-700 dark:text-cyan-400 whitespace-nowrap'>
-                                  Abstención
-                                </th>
-                                <td className='px-6 py-4'>
-                                  <div className='flex flex-wrap gap-2'>
-                                    {usuariosQueVotaron
-                                      .filter(usuario => usuario.respuesta === 'abstencion')
-                                      .map(usuario => (
-                                        <span key={usuario.asistente_id} className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-cyan-300 text-cyan-950 dark:bg-cyan-900 dark:text-cyan-200'>
-                                          {usuario.apellido}, {usuario.nombre}
-                                        </span>
-                                      ))}
-                                  </div>
-                                </td>
-                                <td className='px-6 py-4 text-right font-bold text-cyan-700 dark:text-cyan-400'>
-                                  {usuariosQueVotaron.filter(usuario => usuario.respuesta === 'abstencion').length}
-                                </td>
-                              </tr>
-
-                              <tr className='bg-gray-300 dark:bg-gray-700'>
-                                <th scope='row' className='px-6 py-4 font-medium text-gray-700 dark:text-gray-400 whitespace-nowrap'>
-                                  No votaron
-                                </th>
-                                <td className='px-6 py-4'>
-                                  <div className='flex flex-wrap gap-2'>
-                                    {usuariosSinVotar.map(usuario => (
-                                      <span key={usuario.asistente_id} className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-950 dark:bg-gray-800 dark:text-gray-300'>
-                                        {usuario.apellido}, {usuario.nombre}
-                                      </span>
-                                    ))}
-                                  </div>
-                                </td>
-                                <td className='px-6 py-4 text-right font-bold text-gray-700 dark:text-gray-400'>
-                                  {usuariosSinVotar.length}
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
+                        <VotacionStatusTable usuariosQueVotaron={usuariosQueVotaron} usuariosSinVotar={usuariosSinVotar} />
 
                         {tiempoRestante === 0 && usuariosSinVotar.length > 0 && (
                           <div>
                             <h3 className='text-lg ml-1 font-semibold text-gray-800 dark:text-white mb-4'>
                               Asignar votos a quienes no votaron
                             </h3>
-                            <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
-                              <table className='w-full text-sm text-left text-gray-700 dark:text-gray-300'>
-                                <thead className='text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400'>
-                                  <tr>
-                                    <th className='px-4 py-2'>Nombre</th>
-                                    <th className='px-4 py-2'>Acción</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {usuariosSinVotar.map(usuario => (
-                                    <tr key={usuario.asistente_id} className='bg-gray-50 dark:bg-gray-900 dark:bg-opacity-20 dark:border-gray-700 text-black dark:text-white'>
-                                      <td className='px-4 py-2'>{usuario.apellido}, {usuario.nombre}</td>
-                                      <td className='px-4 py-2 flex flex-wrap gap-2'>
-                                        {['afirmativo', 'negativo', 'abstencion'].map(respuesta => {
-                                          const colorMap = {
-                                            afirmativo: 'bg-green-600 hover:bg-green-700',
-                                            negativo: 'bg-red-600 hover:bg-red-700',
-                                            abstencion: 'bg-cyan-600 hover:bg-cyan-700'
-                                          }
-                                          return (
-                                            <button
-                                              key={respuesta}
-                                              onClick={() => handleVoto(ultima.id, respuesta, usuario.asistente_id)}
-                                              className={`text-white text-xs px-4 py-3 rounded ${colorMap[respuesta]} transition-colors rounded-lg`}
-                                            >
-                                              {respuesta.charAt(0).toUpperCase() + respuesta.slice(1)}
-                                            </button>
-                                          )
-                                        })}
-                                      </td>
-                                    </tr>
-                                  ))}
-                                </tbody>
-                              </table>
-                            </div>
+                            <NoVotantesTable
+                              usuariosSinVotar={usuariosSinVotar}
+                              votacionId={ultimaVotacion.id}
+                              onVoto={handleVoto}
+                            />
                           </div>
                         )}
 
@@ -373,11 +264,11 @@ export const Votaciones = () => {
                           ? (
                             <div className='flex flex-wrap md:flex-nowrap justify-between gap-4'>
                               <GraficoTorta votos={usuariosQueVotaron} noVotaron={usuariosSinVotar} />
-                              <GraficoLinea votos={usuariosQueVotaron} duracion={20} inicio={inicioVotacion} />
+                              <GraficoLinea votos={usuariosQueVotaron} duracion={DURACION_VOTACION} inicio={inicioVotacion} />
                             </div>
                             )
                           : (
-                            <GraficoLinea votos={usuariosQueVotaron} duracion={20} inicio={inicioVotacion} />
+                            <GraficoLinea votos={usuariosQueVotaron} duracion={DURACION_VOTACION} inicio={inicioVotacion} />
                             )}
                       </>
                     )}
