@@ -46,7 +46,7 @@ export const GraficoLinea = ({ votos, duracion = 20, inicio }) => {
           dataKey: 'votos',
           label: 'Votos por Segundo',
           valueFormatter: v => `${v}`,
-          curve: 'step',
+          curve: 'catmullRom',
           color: '#4f46e5'
         }]}
         {...lineParams}

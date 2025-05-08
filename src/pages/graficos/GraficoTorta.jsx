@@ -14,8 +14,7 @@ const pieParams = {
         borderRadius: '8px',
         padding: '8px 12px',
         fontSize: '0.875rem'
-      },
-      render: ({ datum }) => `${datum.value} votos`
+      }
     }
   }
 }
