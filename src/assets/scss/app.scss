@@ -86,6 +86,7 @@
 
 @layer components {
   @import "components/auth";
+  @import "components/animation";
   @import "components/button";
   @import "components/badge";
   @import "components/card";
@@ -128,7 +129,7 @@ textarea {
 
 ::-webkit-scrollbar-thumb {
   background-color: #0e7490;
-  border-radius: 6px; 
+  border-radius: 6px;
 }
 
 ::-webkit-scrollbar-track {

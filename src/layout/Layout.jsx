@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import React, { Suspense } from 'react'
+import { Suspense } from 'react'
 import { useSelector } from 'react-redux'
 import { Outlet } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
