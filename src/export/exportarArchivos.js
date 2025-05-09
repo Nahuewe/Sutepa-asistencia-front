@@ -1,5 +1,5 @@
-import { getVotacionExcel, getVotoExcel } from '@/services/votacionService'
 import { getIngresoExcel, getEgresoExcel } from '@/services/registroService'
+import { getVotacionExcel, getVotoExcel } from '@/services/votacionService'
 
 export const descargarVotacionesExcel = async () => {
   try {

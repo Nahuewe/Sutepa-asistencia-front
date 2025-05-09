@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
+import LogoSutepa from '@/assets/images/logo/logo-sutepa.webp'
 import useDarkMode from '@/hooks/useDarkMode'
 import useSemiDark from '@/hooks/useSemiDark'
 import useSkin from '@/hooks/useSkin'
-import LogoSutepa from '@/assets/images/logo/logo-sutepa.webp'
 
 const SidebarLogo = ({ menuHover }) => {
   const [isDark] = useDarkMode()

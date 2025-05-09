@@ -12,7 +12,7 @@ const themeConfig = {
     navBarType: 'sticky',
     footerType: 'static',
     menu: {
-      isCollapsed: false,
+      isCollapsed: true,
       isHidden: false
     },
     mobileMenu: false,

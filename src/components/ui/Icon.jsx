@@ -1,5 +1,5 @@
-import React from "react";
-import { Icon } from "@iconify/react";
+import { Icon } from '@iconify/react'
+
 const Icons = ({ icon, className, width, rotate, hFlip, vFlip }) => {
   return (
     <>
@@ -13,7 +13,7 @@ const Icons = ({ icon, className, width, rotate, hFlip, vFlip }) => {
         style={{ pointerEvents: 'none' }}
       />
     </>
-  );
-};
+  )
+}
 
-export default Icons;
+export default Icons

@@ -15,20 +15,29 @@ module.exports = {
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parserOptions: {
     ecmaVersion: 2020,
-    sourceType: 'module'
-  },
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true
+    }
+  },  
   settings: {
     react: {
       version: 'detect'
     }
   },
-  plugins: ['react-refresh'],
+  plugins: ['react-refresh', 'import'],
   rules: {
+    'import/order': ['warn', {
+      'groups': ['builtin', 'external', 'internal'],
+      'alphabetize': { order: 'asc', caseInsensitive: true }
+    }],
+    'import/no-duplicates': 'warn',
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true }
     ],
-    'react/prop-types': 'off', // Evita que muestre error en las props
-    'react-hooks/exhaustive-deps': 'off' // evita errores en los objetos
+    'react/prop-types': 'off',
+    'react-hooks/exhaustive-deps': 'off',
+    'camelcase': 'off'
   }
 };

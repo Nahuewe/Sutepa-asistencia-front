@@ -1,7 +1,7 @@
 /* eslint-disable array-callback-return */
 import React, { useEffect, useState } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
 import { Collapse } from 'react-collapse'
+import { NavLink, useLocation } from 'react-router-dom'
 import Icon from '@/components/ui/Icon'
 
 const Navmenu = ({ menus }) => {

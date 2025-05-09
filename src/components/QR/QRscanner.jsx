@@ -1,6 +1,6 @@
+import { Html5QrcodeScanner } from 'html5-qrcode'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Html5QrcodeScanner } from 'html5-qrcode'
 import { toast } from 'react-toastify'
 import { createEgreso, createIngreso } from '@/services/registroService'
 
@@ -66,7 +66,6 @@ const QRScanner = ({ tipo }) => {
         const msg = err.response?.data?.message || err.message || 'Error desconocido'
         toast.error(msg)
         setStatus(msg)
-        // Redirige de vuelta a la vista principal (reemplaza el historial para no volver al QR)
         navigate(`/${tipo}`, { replace: true })
       })
       .finally(() => {

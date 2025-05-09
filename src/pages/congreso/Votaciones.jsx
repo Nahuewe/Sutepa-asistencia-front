@@ -1,14 +1,13 @@
-/* eslint-disable camelcase */
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { getVotacion, createVoto, verificarVotoUsuario, getCantidadVotos, getUsuariosNoVotaron } from '@/services/votacionService'
-import { descargarVotacionesExcel, descargarVotosExcel } from '@/export/ExportarArchivos'
-import { UltimaVotacion } from '@/components/votacion/UltimaVotacion'
-import Loading from '@/components/ui/Loading'
 import ExportButton from '@/components/buttons/ExportButton'
+import Loading from '@/components/ui/Loading'
+import { UltimaVotacion } from '@/components/votacion/UltimaVotacion'
+import { descargarVotacionesExcel, descargarVotosExcel } from '@/export/ExportarArchivos'
+import { getVotacion, createVoto, verificarVotoUsuario, getCantidadVotos, getUsuariosNoVotaron } from '@/services/votacionService'
 
 const DURACION_VOTACION = 20
 

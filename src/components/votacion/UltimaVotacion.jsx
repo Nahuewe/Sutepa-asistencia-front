@@ -1,11 +1,11 @@
-import { TiempoRestante } from '@/components/votacion/TiempoRestante'
-import { VotoUsuario } from '@/components/votacion/VotoUsuario'
-import { VotacionStatusTable } from '@/components/votacion/VotacionStatusTable'
-import { ResultadoGanador } from '@/components/votacion/ResultadoGanador'
-import { NoVotantesTable } from '@/components/votacion/NoVotantesTable'
 import { VotoButton } from '@/components/buttons/VotoButton'
-import { GraficoTorta } from '@/pages/graficos/GraficoTorta'
+import { NoVotantesTable } from '@/components/votacion/NoVotantesTable'
+import { ResultadoGanador } from '@/components/votacion/ResultadoGanador'
+import { TiempoRestante } from '@/components/votacion/TiempoRestante'
+import { VotacionStatusTable } from '@/components/votacion/VotacionStatusTable'
+import { VotoUsuario } from '@/components/votacion/VotoUsuario'
 import { GraficoLinea } from '@/pages/graficos/GraficoLinea'
+import { GraficoTorta } from '@/pages/graficos/GraficoTorta'
 
 export const UltimaVotacion = ({
   votacion,

@@ -47,11 +47,11 @@ const Select = ({
             id={id}
             size={size}
           >
-            {/* Primera opción como placeholder */}
+
             <option value='' disabled>
               {placeholder}
             </option>
-            {/* Mapeo de opciones */}
+
             {options.map((option, i) => (
               <Fragment key={i}>
                 {option.value && option.label
@@ -69,7 +69,7 @@ const Select = ({
             ))}
           </select>
         )}
-        {/* icon */}
+
         <div className='flex text-xl absolute ltr:right-[14px] rtl:left-[14px] top-1/2 -translate-y-1/2 space-x-1 rtl:space-x-reverse'>
           <span className=' relative -right-2 inline-block text-slate-900 dark:text-slate-300 pointer-events-none'>
             <Icon icon='heroicons:chevron-down' />
@@ -87,7 +87,6 @@ const Select = ({
         </div>
       </div>
 
-      {/* error and success message */}
       {error && (
         <div
           className={` mt-2 ${msgTooltip ? ' inline-block bg-danger-500 text-white text-[10px] px-2 py-1 rounded' : ' text-danger-500 block text-sm'}`}
@@ -96,7 +95,6 @@ const Select = ({
         </div>
       )}
 
-      {/* validated and success message */}
       {validate && (
         <div
           className={` mt-2 ${msgTooltip ? ' inline-block bg-success-500 text-white text-[10px] px-2 py-1 rounded' : ' text-success-500 block text-sm'}`}
@@ -105,7 +103,6 @@ const Select = ({
         </div>
       )}
 
-      {/* only description */}
       {description && <span className='input-description'>{description}</span>}
     </div>
   )

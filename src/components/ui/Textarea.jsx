@@ -39,6 +39,7 @@ const Textarea = ({
           {label}
         </label>
       )}
+
       <div className={`relative ${horizontal ? 'flex-1' : ''}`}>
         {name && (
           <textarea
@@ -54,6 +55,7 @@ const Textarea = ({
             onChange={onChange}
           />
         )}
+
         {!name && (
           <textarea
             className={`${
@@ -69,7 +71,6 @@ const Textarea = ({
           />
         )}
 
-        {/* icon */}
         <div className='flex text-xl absolute ltr:right-[14px] rtl:left-[14px] top-1/2 -translate-y-1/2  space-x-1 rtl:space-x-reverse'>
           {error && (
             <span className='text-danger-500'>
@@ -83,7 +84,7 @@ const Textarea = ({
           )}
         </div>
       </div>
-      {/* error and success message */}
+
       {error && (
         <div
           className={` mt-2 ${
@@ -95,7 +96,7 @@ const Textarea = ({
           {error.message}
         </div>
       )}
-      {/* validated and success message */}
+
       {validate && (
         <div
           className={` mt-2 ${
@@ -107,7 +108,7 @@ const Textarea = ({
           {validate}
         </div>
       )}
-      {/* only description */}
+
       {description && <span className='input-description'>{description}</span>}
     </div>
   )

@@ -1,15 +1,14 @@
-/* eslint-disable react/no-children-prop */
+import { useQuery } from '@tanstack/react-query'
+import { TextInput } from 'flowbite-react'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
-import { getUser, searchUser } from '@/services/userService'
-import { TextInput } from 'flowbite-react'
 import EditButton from '@/components/buttons/EditButton'
 import Card from '@/components/ui/Card'
-import Pagination from '@/components/ui/Pagination'
 import Loading from '@/components/ui/Loading'
+import Pagination from '@/components/ui/Pagination'
 import columnUsuario from '@/json/columnUsuario'
+import { getUser, searchUser } from '@/services/userService'
 
 export const Users = () => {
   const { user } = useSelector((state) => state.auth)

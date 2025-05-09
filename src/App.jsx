@@ -1,20 +1,19 @@
-import React, { lazy, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
-import { useAuthStore } from '@/helpers/useAuthStore'
-import { Votaciones } from '@/pages/congreso/Votaciones'
-import { Ingreso } from '@/pages/gestion/Ingreso'
-import { Egreso } from '@/pages/gestion/Egreso'
-import { Users } from '@/pages/users/Users'
-import { CreateUser } from '@/pages/users/CreateUser'
-import { CreateVotaciones } from '@/pages/congreso/CreateVotaciones'
-import { OrdenesDiarias } from '@/pages/ordenes_diarias/OrdenesDiarias'
-import { CreateOrdenesDiarias } from '@/pages/ordenes_diarias/CreateOrdenesDiarias'
-import Layout from '@/layout/Layout'
-import Login from '@/pages/auth/Login'
-import Error from '@/pages/404'
-import Loading from '@/components/ui/Loading'
 import QRScanner from '@/components/QR/QRscanner'
-const Dashboard = lazy(() => import('@/pages/dashboard'))
+import Loading from '@/components/ui/Loading'
+import { useAuthStore } from '@/helpers/useAuthStore'
+import Layout from '@/layout/Layout'
+import Error from '@/pages/404'
+import Login from '@/pages/auth/Login'
+import { CreateVotaciones } from '@/pages/congreso/CreateVotaciones'
+import { Votaciones } from '@/pages/congreso/Votaciones'
+import { Egreso } from '@/pages/gestion/Egreso'
+import { Ingreso } from '@/pages/gestion/Ingreso'
+import { CreateOrdenesDiarias } from '@/pages/ordenes_diarias/CreateOrdenesDiarias'
+import { OrdenesDiarias } from '@/pages/ordenes_diarias/OrdenesDiarias'
+import { CreateUser } from '@/pages/users/CreateUser'
+import { Users } from '@/pages/users/Users'
 
 function App () {
   const { status, checkAuthToken } = useAuthStore()
@@ -46,7 +45,6 @@ function App () {
                 <Route path='/' element={<Navigate to='/votaciones' />} />
 
                 <Route path='/*' element={<Layout />}>
-                  <Route path='dashboard' element={<Dashboard />} />
                   <Route path='*' element={<Navigate to='/404' />} />
 
                   {/* Votacion */}

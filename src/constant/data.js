@@ -3,11 +3,6 @@ export const menuAdmin = [
     isHeadr: true,
     title: 'menu'
   },
-  // {
-  //   title: 'Dashboard',
-  //   icon: 'heroicons-outline:presentation-chart-bar',
-  //   link: 'dashboard'
-  // },
   {
     title: 'Votaciones',
     icon: 'heroicons-outline:pencil-square',

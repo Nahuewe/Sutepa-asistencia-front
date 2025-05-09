@@ -1,11 +1,11 @@
+import { yupResolver } from '@hookform/resolvers/yup'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
 import { useNavigate } from 'react-router-dom'
-import { useAuthStore } from '@/helpers'
+import * as yup from 'yup'
 import Textinput from '@/components/ui/Textinput'
 import Tooltip from '@/components/ui/Tooltip'
-import * as yup from 'yup'
+import { useAuthStore } from '@/helpers'
 
 const schema = yup
   .object({

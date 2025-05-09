@@ -1,17 +1,16 @@
-/* eslint-disable react/no-children-prop */
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { TextInput } from 'flowbite-react'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { createEgreso, getEgreso, searchRegistro } from '@/services/registroService'
-import { descargarEgresoExcel } from '@/export/ExportarArchivos'
-import { TextInput } from 'flowbite-react'
-import { formatearFechaArgentina } from '@/constant/datos-id'
+import ExportButton from '@/components/buttons/ExportButton'
 import Card from '@/components/ui/Card'
 import Loading from '@/components/ui/Loading'
-import columnRegistro from '@/json/columnRegistro'
 import Pagination from '@/components/ui/Pagination'
-import ExportButton from '@/components/buttons/ExportButton'
+import { formatearFechaArgentina } from '@/constant/datos-id'
+import { descargarEgresoExcel } from '@/export/ExportarArchivos'
+import columnRegistro from '@/json/columnRegistro'
+import { createEgreso, getEgreso, searchRegistro } from '@/services/registroService'
 
 export const Egreso = () => {
   const navigate = useNavigate()

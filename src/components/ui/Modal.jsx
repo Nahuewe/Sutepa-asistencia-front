@@ -14,9 +14,7 @@ const Modal = ({
   centered,
   scrollContent,
   themeClass = 'bg-slate-900 dark:bg-slate-800 dark:border-b dark:border-slate-700',
-  title = 'Basic Modal',
-  label = 'Basic Modal',
-  labelClass
+  title = 'Basic Modal'
 }) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useMemo } from 'react'
 import { LineChart } from '@mui/x-charts'
+import { useMemo } from 'react'
 import Loading from '@/components/ui/Loading'
 
 const lineParams = {

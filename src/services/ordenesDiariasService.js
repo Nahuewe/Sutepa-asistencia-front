@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { sutepaApi } from '@/api'
 
 export const fetchOrdenesDiarias = async (page = 1) => {

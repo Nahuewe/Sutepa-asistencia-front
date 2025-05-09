@@ -108,24 +108,12 @@ export const layoutSlice = createSlice({
       state.mobileMenu = action.payload
     },
 
-    handleShowModal: (state) => {
-      state.showModal = !state.showModal
-    },
-
     handleShowEdit: (state) => {
       state.showEdit = !state.showEdit
     },
 
     handleShowDelete: (state) => {
       state.showDelete = !state.showDelete
-    },
-
-    handleShowAuxModal: (state) => {
-      state.showAuxModal = !state.showAuxModal
-    },
-
-    handleShowConfirm: (state) => {
-      state.showConfirm = !state.showConfirm
     }
   }
 })
@@ -143,11 +131,8 @@ export const {
   handleNavBarType,
   handleFooterType,
   handleMobileMenu,
-  handleShowModal,
   handleShowEdit,
-  handleShowDelete,
-  handleShowAuxModal,
-  handleShowConfirm
+  handleShowDelete
 } = layoutSlice.actions
 
 export default layoutSlice.reducer

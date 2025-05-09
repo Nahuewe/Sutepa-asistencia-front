@@ -30,7 +30,6 @@ const NumberInput = ({
           onChange={onChange}
         />
       </div>
-      {/* error message */}
       {error && (
         <div className='mt-2 text-danger-500 text-sm'>
           {error.message}

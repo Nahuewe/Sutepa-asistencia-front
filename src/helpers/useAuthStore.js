@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { handleLogin, handleLogout, onChecking, setErrorMessage } from '@/store/auth'
 import { sutepaApi } from '../api'
+import { handleLogin, handleLogout, onChecking, setErrorMessage } from '@/store/auth'
 
 export const useAuthStore = () => {
   const { status, user } = useSelector(state => state.auth)

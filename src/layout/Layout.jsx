@@ -1,19 +1,19 @@
+import { motion } from 'framer-motion'
 import React, { Suspense } from 'react'
+import { useSelector } from 'react-redux'
 import { Outlet } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
-import { motion } from 'framer-motion'
-import { useSelector } from 'react-redux'
+import MobileMenu from '../components/partials/sidebar/MobileMenu'
+import Footer from '@/components/partials/footer'
 import Header from '@/components/partials/header'
 import Sidebar from '@/components/partials/sidebar'
-import useWidth from '@/hooks/useWidth'
-import useSidebar from '@/hooks/useSidebar'
-import useContentWidth from '@/hooks/useContentWidth'
-import useMenulayout from '@/hooks/useMenulayout'
-import useMenuHidden from '@/hooks/useMenuHidden'
-import Footer from '@/components/partials/footer'
-import MobileMenu from '../components/partials/sidebar/MobileMenu'
-import useMobileMenu from '@/hooks/useMobileMenu'
 import Loading from '@/components/ui/Loading'
+import useContentWidth from '@/hooks/useContentWidth'
+import useMenuHidden from '@/hooks/useMenuHidden'
+import useMenulayout from '@/hooks/useMenulayout'
+import useMobileMenu from '@/hooks/useMobileMenu'
+import useSidebar from '@/hooks/useSidebar'
+import useWidth from '@/hooks/useWidth'
 
 const Layout = () => {
   const { user } = useSelector(state => state.auth)
@@ -45,11 +45,10 @@ const Layout = () => {
 
       <MobileMenu
         user={user}
-        className={`${
-      width < breakpoints.xl && mobileMenu
-        ? 'left-0 visible opacity-100  z-[9999]'
-        : 'left-[-300px] invisible opacity-0  z-[-999] '
-    }`}
+        className={`${width < breakpoints.xl && mobileMenu
+          ? 'left-0 visible opacity-100  z-[9999]'
+          : 'left-[-300px] invisible opacity-0  z-[-999] '
+          }`}
       />
 
       {width < breakpoints.xl && mobileMenu && (
@@ -61,15 +60,14 @@ const Layout = () => {
 
       <div className='flex flex-col page-min-height'>
         <div
-          className={`content-wrapper transition-all duration-150 flex-1 ${
-        width > 1280 ? switchHeaderClass() : ''
-      }`}
+          className={`content-wrapper transition-all duration-150 flex-1 ${width > 1280 ? switchHeaderClass() : ''
+            }`}
         >
           <div className='page-content'>
             <div
               className={
-            contentWidth === 'boxed' ? 'container mx-auto' : 'container-fluid'
-          }
+                contentWidth === 'boxed' ? 'container mx-auto' : 'container-fluid'
+              }
             >
               <Suspense fallback={<Loading />}>
                 <motion.div

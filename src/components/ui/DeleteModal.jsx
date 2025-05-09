@@ -95,7 +95,6 @@ export const DeleteModal = ({
                       scrollContent ? 'overflow-y-auto max-h-[400px]' : ''
                     }`}
                   >
-                    {/* Content */}
                     <p className='text-center mb-4'>{message}</p>
                     <div className='flex justify-center gap-4'>
                       <button className='btn inline-flex justify-center btn-danger px-12' onClick={closeModal}>Cancelar</button>

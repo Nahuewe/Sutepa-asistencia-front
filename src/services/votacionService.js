@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { sutepaApi } from '@/api'
 
 export const getVotacion = async () => {

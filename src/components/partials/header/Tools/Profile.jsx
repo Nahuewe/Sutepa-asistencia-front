@@ -1,10 +1,10 @@
+import { Menu } from '@headlessui/react'
 import React from 'react'
+import { useSelector } from 'react-redux'
 import Dropdown from '@/components/ui/Dropdown'
 import Icon from '@/components/ui/Icon'
-import { Menu } from '@headlessui/react'
-import { useAuthStore } from '@/helpers/useAuthStore'
-import { useSelector } from 'react-redux'
 import { getTipoRoles } from '@/constant/datos-id'
+import { useAuthStore } from '@/helpers/useAuthStore'
 
 const profileLabel = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks

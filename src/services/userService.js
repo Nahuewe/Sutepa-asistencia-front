@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { sutepaApi } from '@/api'
 
 export const fetchUser = async (page = 1) => {

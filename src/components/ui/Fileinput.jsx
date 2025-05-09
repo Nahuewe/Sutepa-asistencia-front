@@ -12,7 +12,7 @@ const Fileinput = ({
   selectedFile,
   badge,
   selectedFiles,
-  accept // Agregado el atributo accept
+  accept
 }) => {
   return (
     <div>
@@ -26,7 +26,7 @@ const Fileinput = ({
             id={id}
             multiple={multiple}
             placeholder={placeholder}
-            accept={accept} // Agregado el atributo accept
+            accept={accept}
           />
           <div
             className={`w-full h-[40px] file-control flex items-center ${className}`}
@@ -66,10 +66,13 @@ const Fileinput = ({
                 )}
               </span>
             )}
+
             <span className='file-name flex-none cursor-pointer border-l px-4 border-slate-200 dark:border-slate-700 h-full inline-flex items-center bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 text-base rounded-tr rounded-br font-normal'>
               {label}
             </span>
+
           </div>
+
           {!multiple && preview && selectedFile && (
             <div className='w-[200px] h-[200px] mx-auto mt-6  '>
               <img
@@ -79,6 +82,7 @@ const Fileinput = ({
               />
             </div>
           )}
+
           {multiple && preview && selectedFiles.length > 0 && (
             <div className='flex flex-wrap space-x-5 rtl:space-x-reverse'>
               {selectedFiles.map((file, index) => (

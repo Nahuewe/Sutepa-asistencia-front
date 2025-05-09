@@ -27,14 +27,12 @@ const Pagination = ({
 
     const pageNumbers = []
 
-    // Crea las páginas anteriores a la actual
     if (currentPage > 1) {
       for (let j = currentPage - PREVIUS_PAGES_TO_SHOW; j < currentPage; j++) {
         if (j > 0) pageNumbers.push(j)
       }
     }
 
-    // Crea las páginas siguientes a la actual
     for (let i = currentPage; i < currentPage + totalPagesToShow; i++) {
       if (i > lastPage) break
       pageNumbers.push(i)
@@ -89,7 +87,6 @@ const Pagination = ({
               )}
         </li>
 
-        {/* Mostrar siempre la página 1 si hay más de 5 páginas */}
         {
           (currentPage > PAGES_TO_SHOW + 1) && (
             <li key={INITIAL_PAGE} className='flex'>
@@ -105,7 +102,6 @@ const Pagination = ({
           )
         }
 
-        {/* Páginas dinámicas */}
         {
           pages.map((page, index) => (
             <li key={index}>
@@ -120,7 +116,6 @@ const Pagination = ({
           ))
         }
 
-        {/* Mostrar siempre la última página si hay más de 5 páginas */}
         {
           (currentPage + PAGES_TO_SHOW < lastPage) && (
             <li className='flex'>

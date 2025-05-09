@@ -1,7 +1,7 @@
 /* eslint-disable react/no-children-prop */
-import Tooltip from '@/components/ui/Tooltip'
-import Modal from '@/components/ui/Modal'
 import React, { useState } from 'react'
+import Modal from '@/components/ui/Modal'
+import Tooltip from '@/components/ui/Tooltip'
 
 const DeleteButton = ({ evento, onDelete, refetch }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)

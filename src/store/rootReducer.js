@@ -1,5 +1,5 @@
-import layout from './layout'
 import auth from './auth'
+import layout from './layout'
 
 const rootReducer = {
   layout,

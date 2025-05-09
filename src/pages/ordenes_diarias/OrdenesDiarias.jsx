@@ -1,16 +1,15 @@
-/* eslint-disable react/no-children-prop */
+import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
-import { fetchOrdenesDiarias, deleteOrdenesDiarias } from '@/services/ordenesDiariasService'
 import { toast } from 'react-toastify'
+import DeleteButton from '@/components/buttons/DeleteButton'
 import EditButton from '@/components/buttons/EditButton'
 import Card from '@/components/ui/Card'
-import Pagination from '@/components/ui/Pagination'
 import Loading from '@/components/ui/Loading'
+import Pagination from '@/components/ui/Pagination'
 import columnOrdenDiaria from '@/json/columnOrdenDiaria'
-import DeleteButton from '@/components/buttons/DeleteButton'
+import { fetchOrdenesDiarias, deleteOrdenesDiarias } from '@/services/ordenesDiariasService'
 
 export const OrdenesDiarias = () => {
   const { user } = useSelector((state) => state.auth)

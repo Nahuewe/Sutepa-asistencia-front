@@ -1,8 +1,7 @@
-import React from 'react'
-import LoginForm from '@/auth/login-form'
+import iconosSutepa from '@/assets/images/auth/iconos.webp'
 import Illustration from '@/assets/images/auth/portada-sutepa.webp'
 import LogoSutepa from '@/assets/images/logo/logo.webp'
-import iconosSutepa from '@/assets/images/auth/iconos.webp'
+import LoginForm from '@/auth/login-form'
 
 const Login = () => {
   return (
@@ -24,7 +23,7 @@ const Login = () => {
               <div className='auth-box h-full flex flex-col justify-center'>
                 <div className='text-center 2xl:mb-10 mb-4'>
                   <img src={LogoSutepa} alt='Logo SUTEPA' className='w-36 md:w-52 pb-6 inline-block mx-auto pointer-events-none' />
-                  <h4 className='font-medium text-white'>Iniciar Sesión</h4>
+                  <h4 className='font-medium text-white dark:text-white'>Iniciar Sesión</h4>
                   <div className='text-white text-base'>
                     El usuario y la contraseña son tu numero de legajo.
                   </div>

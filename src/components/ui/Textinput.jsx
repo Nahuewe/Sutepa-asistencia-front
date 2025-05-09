@@ -51,6 +51,7 @@ const Textinput = ({
           {label}
         </label>
       )}
+
       <div className={`relative ${horizontal ? 'flex-1' : ''}`}>
         {name && !isMask && (
           <input
@@ -67,6 +68,7 @@ const Textinput = ({
             autoComplete={type === 'password' ? 'new-password' : 'off'}
           />
         )}
+
         {!name && !isMask && (
           <input
             type={type === 'password' && open === true ? 'text' : type}
@@ -80,6 +82,7 @@ const Textinput = ({
             autoComplete={type === 'password' ? 'new-password' : 'off'}
           />
         )}
+
         {name && isMask && (
           <Cleave
             {...register(name)}
@@ -96,6 +99,7 @@ const Textinput = ({
             onChange={onChange}
           />
         )}
+
         {!name && isMask && (
           <Cleave
             placeholder={placeholder}
@@ -110,7 +114,7 @@ const Textinput = ({
             onChange={onChange}
           />
         )}
-        {/* icon */}
+
         <div className='flex text-xl absolute ltr:right-[14px] rtl:left-[14px] top-1/2 -translate-y-1/2  space-x-1 rtl:space-x-reverse'>
           {hasicon && (
             <span
@@ -138,7 +142,7 @@ const Textinput = ({
           )}
         </div>
       </div>
-      {/* error and success message */}
+
       {error && (
         <div
           className={` mt-2 ${
@@ -150,7 +154,7 @@ const Textinput = ({
           {error.message}
         </div>
       )}
-      {/* validated and success message */}
+
       {validate && (
         <div
           className={` mt-2 ${
@@ -162,7 +166,7 @@ const Textinput = ({
           {validate}
         </div>
       )}
-      {/* only description */}
+
       {description && <span className='input-description'>{description}</span>}
     </div>
   )

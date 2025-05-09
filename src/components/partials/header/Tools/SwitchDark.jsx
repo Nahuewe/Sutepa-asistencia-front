@@ -1,7 +1,7 @@
 import React from 'react'
 import Icon from '@/components/ui/Icon'
-import useDarkMode from '@/hooks/useDarkMode'
 import Tooltip from '@/components/ui/Tooltip'
+import useDarkMode from '@/hooks/useDarkMode'
 
 const SwitchDark = () => {
   const [isDark, setDarkMode] = useDarkMode()

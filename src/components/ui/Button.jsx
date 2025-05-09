@@ -16,7 +16,7 @@ function Button ({
   link,
   onClick,
   div,
-  loadingText = 'Loading ...' // Agregado para personalizar el texto de carga
+  loadingText = 'Loading ...'
 }) {
   return (
     <>
@@ -28,13 +28,10 @@ function Button ({
             isLoading ? ' pointer-events-none' : ''
           } ${disabled ? ' opacity-40 cursor-not-allowed' : ''} ${className}`}
         >
-          {/* if has children and not loading */}
-          {children && !isLoading && children}
 
-          {/* if no children and loading */}
+          {children && !isLoading && children}
           {!children && !isLoading && (
             <span className='flex items-center'>
-              {/* if has icon */}
               {icon && (
                 <span
                   className={`
@@ -51,7 +48,6 @@ function Button ({
             </span>
           )}
 
-          {/* if loading */}
           {isLoading && (
             <>
               <svg
@@ -74,11 +70,12 @@ function Button ({
                   d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
                 />
               </svg>
-              <span>{loadingText}</span>  {/* Usando loadingText en lugar de "Loading ..." */}
+              <span>{loadingText}</span>
             </>
           )}
         </button>
       )}
+
       {!link && div && (
         <div
           onClick={onClick}
@@ -86,13 +83,11 @@ function Button ({
             isLoading ? ' pointer-events-none' : ''
           } ${disabled ? ' opacity-40 cursor-not-allowed' : ''} ${className}`}
         >
-          {/* if has children and not loading */}
+
           {children && !isLoading && children}
 
-          {/* if no children and loading */}
           {!children && !isLoading && (
             <span className='flex items-center'>
-              {/* if has icon */}
               {icon && (
                 <span
                   className={`
@@ -109,7 +104,6 @@ function Button ({
             </span>
           )}
 
-          {/* if loading */}
           {isLoading && (
             <>
               <svg
@@ -132,7 +126,7 @@ function Button ({
                   d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
                 />
               </svg>
-              <span>{loadingText}</span>  {/* Usando loadingText en lugar de "Loading ..." */}
+              <span>{loadingText}</span>
             </>
           )}
         </div>
@@ -144,13 +138,10 @@ function Button ({
             isLoading ? ' pointer-events-none' : ''
           } ${disabled ? ' opacity-40 cursor-not-allowed' : ''} ${className}`}
         >
-          {/* if has children and not loading */}
           {children && !isLoading && children}
 
-          {/* if no children and loading */}
           {!children && !isLoading && (
             <span className='flex items-center'>
-              {/* if has icon */}
               {icon && (
                 <span
                   className={`
@@ -167,7 +158,6 @@ function Button ({
             </span>
           )}
 
-          {/* if loading */}
           {isLoading && (
             <>
               <svg
