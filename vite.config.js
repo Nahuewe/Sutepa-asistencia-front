@@ -8,8 +8,11 @@ export default defineConfig({
     alias: [
       {
         find: '@',
-        replacement: path.resolve(__dirname, './src'),
-        '@mui/styled-engine': '@mui/styled-engine-sc'
+        replacement: path.resolve(__dirname, './src')
+      },
+      {
+        find: '@mui/styled-engine',
+        replacement: '@mui/styled-engine-sc'
       }
     ]
   },
