@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "host": "vite --host",
     "lint": "eslint . --ext js,jsx,ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "clean": "rm -rf node_modules/.vite dist && npm install"
@@ -55,14 +56,12 @@
     "react-modal": "^3.16.3",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.15.0",
-    "react-select": "^5.8.0",
     "react-table": "^7.8.0",
     "react-tailwindcss-datepicker": "^1.4.2",
     "react-toastify": "^9.1.1",
     "recharts": "^2.3.2",
     "sass": "^1.56.1",
     "simplebar-react": "^2.4.3",
-    "swiper": "^8.4.5",
     "yarn": "^1.22.19",
     "yup": "^0.32.11"
   },

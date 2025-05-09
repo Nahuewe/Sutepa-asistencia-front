@@ -17,6 +17,7 @@
       @apply bg-[#0f172a] text-slate-300;
     }
   }
+
   html,
   body {
     @apply h-full;
@@ -25,9 +26,11 @@
   .dashcode-app-wrapper {
     @apply relative;
   }
+
   .single-sidebar-menu .ReactCollapse--collapse {
     transition: height 400ms;
   }
+
   .space-xy-5 {
     > div,
     > button,
@@ -37,6 +40,7 @@
       @apply mr-2 mb-2;
     }
   }
+
   .space-xy-6 {
     > div,
     > button,
@@ -57,6 +61,7 @@
       }
     }
   }
+
   .dashcode-app {
     .leaflet-control {
       z-index: 0 !important;
@@ -76,44 +81,22 @@
     .recharts-tooltip-wrapper {
       border: none !important;
     }
-
-    // .recharts-cartesian-grid line,
-    // .recharts-polar-grid-angle line,
-    // .recharts-yAxis line,
-    // .recharts-xAxis line {
-    //   @apply stroke-black-200 dark:stroke-slate-700;
-    // }
   }
 }
 
 @layer components {
-  @import "components/table.scss";
-  @import "components/progress";
-  @import "components/tippy";
-  @import "components/swiper";
-  @import "components/alert";
-  @import "components/card";
   @import "components/auth";
   @import "components/button";
   @import "components/badge";
-  @import "components/typography";
+  @import "components/card";
   @import "components/form";
-  @import "components/input-group";
-  @import "components/react-select";
   @import "components/pagination";
-  @import "components/breadcrumbs";
+  @import "components/tippy";
+  @import "components/table";
+  @import "components/mix";
   @import "layout/header";
-  @import "layout/footer";
   @import "layout/sidebar";
   @import "layout/settings";
-  @import "utility/mix";
-  @import "utility/loading";
-  @import "utility/css-animation";
-  @import "utility/calander";
-  @import "utility/full-calender";
-  @import "components/print.scss";
-}
-@layer utilities {
 }
 
 .obligatorio {
@@ -143,13 +126,11 @@ textarea {
   height: 8px;
 }
 
-/* Define scrollbar thumb */
 ::-webkit-scrollbar-thumb {
-  background-color: #b22323;
+  background-color: #0e7490;
   border-radius: 6px; 
 }
 
-/* Define scrollbar track */
 ::-webkit-scrollbar-track {
   background-color: transparent;
 }

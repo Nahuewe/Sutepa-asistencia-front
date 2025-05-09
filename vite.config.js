@@ -28,7 +28,6 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        // Esto genera nombres de archivo con hashes para los archivos JS, CSS y otros assets
         entryFileNames: 'assets/[name].[hash].js',
         chunkFileNames: 'assets/[name].[hash].js',
         assetFileNames: 'assets/[name].[hash].[ext]'

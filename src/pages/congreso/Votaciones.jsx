@@ -2,10 +2,10 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { getVotacion, createVoto, verificarVotoUsuario, getCantidadVotos, getUsuariosNoVotaron } from '@/services/votacionService'
 import { descargarVotacionesExcel, descargarVotosExcel } from '@/export/ExportarArchivos'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { toast } from 'react-toastify'
 import { UltimaVotacion } from '@/components/votacion/UltimaVotacion'
 import Loading from '@/components/ui/Loading'
 import ExportButton from '@/components/buttons/ExportButton'
@@ -61,8 +61,7 @@ export const Votaciones = () => {
   const { data: usuariosQueVotaron = [] } = useQuery({
     queryKey: ['usuariosVotaron', ultimaVotacion?.id],
     queryFn: () => getCantidadVotos(ultimaVotacion.id),
-    enabled: !!ultimaVotacion?.id,
-    refetchInterval: tiempoRestante > 0 ? 1000 : false
+    enabled: !!ultimaVotacion?.id
   })
 
   const resultadoGanador = useMemo(() => {
