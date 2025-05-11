@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import ExportButton from '@/components/buttons/ExportButton'
 import Loading from '@/components/ui/Loading'
 import { UltimaVotacion } from '@/components/votacion/UltimaVotacion'
-import { descargarVotacionesExcel, descargarVotosExcel } from '@/export/ExportarArchivos'
+import { descargarVotacionesExcel, descargarVotosExcel } from '@/export/exportarArchivos'
 import { getVotacion, createVoto, verificarVotoUsuario, getCantidadVotos, getUsuariosNoVotaron } from '@/services/votacionService'
 
 const DURACION_VOTACION = 20
@@ -177,7 +177,7 @@ export const Votaciones = () => {
   return (
     <>
       {[1, 2].includes(user.roles_id) && (
-        <div className='flex flex-col gap-y-4 sm:flex-row sm:items-center sm:justify-between p-6 rounded-2xl shadow-md bg-white dark:bg-gray-800 space-y-6 mb-4'>
+        <div className='flex flex-col gap-y-4 sm:flex-row sm:items-center sm:justify-between p-6 rounded-2xl shadow-md bg-white dark:bg-gray-800 mb-4'>
           <h1 className='text-xl sm:text-2xl font-semibold text-gray-800 dark:text-white'>
             Listado de Votaciones
           </h1>
@@ -187,13 +187,13 @@ export const Votaciones = () => {
                 <ExportButton
                   descargaFn={descargarVotacionesExcel}
                   nombreArchivo='Votaciones'
-                  textoBoton='Exportar Excel de Votaciones'
+                  textoBoton='Exportar Votaciones'
                   textoExportando='Exportando Votaciones...'
                 />
                 <ExportButton
                   descargaFn={descargarVotosExcel}
                   nombreArchivo='Votos'
-                  textoBoton='Exportar Excel de Votos'
+                  textoBoton='Exportar Votos'
                   textoExportando='Exportando Votos...'
                   colors={{ normal: 'bg-yellow-600 hover:bg-yellow-800', exporting: 'bg-red-500 hover:bg-red-600' }}
                 />
@@ -203,7 +203,7 @@ export const Votaciones = () => {
               onClick={addVotacion}
               className='bg-indigo-600 hover:bg-indigo-800 text-white items-center text-center py-2 px-6 rounded-lg'
             >
-              Agregar
+              Crear Votacion
             </button>
           </div>
         </div>

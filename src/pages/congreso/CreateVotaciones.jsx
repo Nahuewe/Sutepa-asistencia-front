@@ -15,7 +15,8 @@ import { createVotacion, getVotacionById } from '@/services/votacionService'
 
 const tipos = [
   { id: 'ORDEN DEL DIA', nombre: 'ORDEN DEL DIA' },
-  { id: 'MOCION', nombre: 'MOCION' }
+  { id: 'MOCION', nombre: 'MOCION' },
+  { id: 'CIERRE DEL DÍA', nombre: 'CIERRE DEL DÍA' }
 ]
 
 export const CreateVotaciones = () => {
@@ -27,6 +28,7 @@ export const CreateVotaciones = () => {
   const [isLoading, setIsLoading] = useState(false)
   const { user } = useSelector((state) => state.auth)
   const navigate = useNavigate()
+  const [isCierreDelDia, setIsCierreDelDia] = useState(false)
 
   const { data: orden } = useQuery({
     queryKey: ['ordenDiaria', currentPage],
@@ -123,12 +125,17 @@ export const CreateVotaciones = () => {
                 options={tipos}
                 placeholder='Seleccione una opción'
                 error={errors.tipo}
+                onChange={(e) => {
+                  const tipoSeleccionado = e.target.value
+                  setValue('tipo', tipoSeleccionado)
+                  setIsCierreDelDia(tipoSeleccionado === 'CIERRE DEL DÍA')
+                }}
               />
             </div>
 
             <div>
               <label htmlFor='identificador' className='form-label block font-medium'>
-                Identificador (Ej: M1, P2, C3) <strong className='text-red-500'>(*)</strong>
+                Identificador <strong className='text-red-500'>(*)</strong>
               </label>
               <Textinput
                 name='identificador'
@@ -136,6 +143,7 @@ export const CreateVotaciones = () => {
                 placeholder='Ingrese el identificador de la votación...'
                 register={register}
                 error={errors.identificador}
+                disabled={isCierreDelDia}
               />
             </div>
 
@@ -149,6 +157,7 @@ export const CreateVotaciones = () => {
                 className='w-full border border-gray-300 rounded-lg p-2'
                 placeholder='Ingrese la descripción de la votación...'
                 register={register}
+                disabled={isCierreDelDia}
               />
               {errors.contenido && <p className='text-red-500 text-sm'>{errors.contenido.message}</p>}
             </div>

@@ -8,7 +8,7 @@ import Card from '@/components/ui/Card'
 import Loading from '@/components/ui/Loading'
 import Pagination from '@/components/ui/Pagination'
 import { formatearFechaArgentina } from '@/constant/datos-id'
-import { descargarIngresoExcel } from '@/export/ExportarArchivos'
+import { descargarIngresoExcel } from '@/export/exportarArchivos'
 import columnRegistro from '@/json/columnRegistro'
 import { createIngreso, getIngreso, searchRegistro } from '@/services/registroService'
 
@@ -92,7 +92,7 @@ export const Ingreso = () => {
             <>
               <Card>
                 <div className='mb-4 md:flex md:justify-between'>
-                  <h1 className='text-2xl font-semibold dark:text-white mb-4 md:mb-0'>Listado de Asistentes que Ingresaron</h1>
+                  <h1 className='text-2xl font-semibold dark:text-white mb-4 md:mb-0'>Listado de Ingresos</h1>
                   <div className='flex flex-col md:flex-row items-start md:items-center gap-4'>
                     <div className='relative'>
                       <TextInput
@@ -114,7 +114,7 @@ export const Ingreso = () => {
                       <ExportButton
                         descargaFn={descargarIngresoExcel}
                         nombreArchivo='Ingresos'
-                        textoBoton='Exportar Excel de Ingresos'
+                        textoBoton='Exportar Ingresos'
                         textoExportando='Exportando Ingresos...'
                       />
                     )}

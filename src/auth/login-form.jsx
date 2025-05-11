@@ -10,7 +10,7 @@ import { useAuthStore } from '@/helpers'
 const schema = yup
   .object({
     legajo: yup.string().required('El usuario es requerido'),
-    password: yup.string().required('La contraseña es requerida').min(2, 'La contraseña debe contener al menos 6 caracteres')
+    password: yup.string().required('La contraseña es requerida').min(2, 'La contraseña debe contener al menos 2 caracteres')
   })
   .required()
 

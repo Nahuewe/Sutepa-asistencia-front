@@ -84,14 +84,14 @@ const QRScanner = ({ tipo }) => {
   return (
     <div className='flex flex-col items-center p-6 max-w-md mx-auto'>
       <div className='bg-white dark:bg-gray-100 rounded-lg shadow-lg p-6 w-full'>
-        <h2 className='text-xl font-bold text-center mb-4 dark:text-black'>
+        <h2 className='text-xl font-bold text-center mb-4 dark:text-gray-700'>
           {tipo === 'ingreso' ? 'Registro de Ingreso' : 'Registro de Egreso'}
         </h2>
 
         <div className='mb-4'>
           <div
             id='qr-reader'
-            className='mx-auto rounded-lg overflow-hidden border-2 border-blue-500 text-black'
+            className='mx-auto rounded-lg overflow-hidden border-2 border-blue-500 text-black dark:text-gray-700'
             style={{ width: '300px', height: '300px' }}
             ref={scannerRef}
           />

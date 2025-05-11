@@ -77,7 +77,7 @@ export const GraficoTorta = ({ votos, noVotaron = [] }) => {
                 style={{ backgroundColor: colors[idx] }}
               />
               <span className='ml-3 text-lg font-medium text-gray-800 dark:text-gray-200'>
-                {item.label.charAt(0).toUpperCase() + item.label.slice(1)} ({item.value})
+                {item.label.charAt(0).toUpperCase() + item.label.slice(1)}({item.value})
               </span>
             </li>
           ))}

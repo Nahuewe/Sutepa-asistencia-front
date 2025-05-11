@@ -1,10 +1,11 @@
+import { useEffect, useRef } from 'react'
 import { VotoButton } from '@/components/buttons/VotoButton'
 import { NoVotantesTable } from '@/components/votacion/NoVotantesTable'
 import { ResultadoGanador } from '@/components/votacion/ResultadoGanador'
 import { TiempoRestante } from '@/components/votacion/TiempoRestante'
 import { VotacionStatusTable } from '@/components/votacion/VotacionStatusTable'
 import { VotoUsuario } from '@/components/votacion/VotoUsuario'
-import { GraficoLinea } from '@/pages/graficos/GraficoLinea'
+import { GraficoBarra } from '@/pages/graficos/GraficoBarra' // ✅ Nuevo
 import { GraficoTorta } from '@/pages/graficos/GraficoTorta'
 
 export const UltimaVotacion = ({
@@ -17,11 +18,19 @@ export const UltimaVotacion = ({
   votando,
   usuariosQueVotaron,
   usuariosSinVotar,
-  resultadoGanador,
-  inicioVotacion,
-  duracionVotacion
+  resultadoGanador
+  // inicioVotacion,
+  // duracionVotacion
 }) => {
-  if (!votacion) {
+  const graficosRef = useRef(null)
+
+  useEffect(() => {
+    if (tiempoRestante === 0 && usuariosSinVotar.length === 0 && graficosRef.current) {
+      graficosRef.current.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [tiempoRestante, usuariosSinVotar])
+
+  if (!votacion || votacion.tipo === 'CIERRE DEL DÍA') {
     return null
   }
 
@@ -69,9 +78,6 @@ export const UltimaVotacion = ({
         <>
           <h2 className='text-lg ml-1 font-semibold text-gray-800 dark:text-white mb-4'>Estado de la Votación</h2>
           <VotacionStatusTable usuariosQueVotaron={usuariosQueVotaron} usuariosSinVotar={usuariosSinVotar} />
-          {tiempoRestante === 0 && resultadoGanador && usuariosSinVotar.length === 0 && (
-            <ResultadoGanador resultadoGanador={resultadoGanador} usuariosQueVotaron={usuariosQueVotaron} />
-          )}
           {tiempoRestante === 0 && usuariosSinVotar.length > 0 && (
             <div>
               <h3 className='text-lg ml-1 font-semibold text-gray-800 dark:text-white mb-4'>
@@ -85,16 +91,16 @@ export const UltimaVotacion = ({
               />
             </div>
           )}
-          {tiempoRestante === 0 && usuariosSinVotar.length === 0
-            ? (
-              <div className='flex flex-wrap md:flex-nowrap justify-between gap-4'>
-                <GraficoTorta votos={usuariosQueVotaron} noVotaron={usuariosSinVotar} />
-                <GraficoLinea votos={usuariosQueVotaron} duracion={duracionVotacion} inicio={inicioVotacion} />
-              </div>
-              )
-            : (
-              <GraficoLinea votos={usuariosQueVotaron} duracion={duracionVotacion} inicio={inicioVotacion} />
-              )}
+          {tiempoRestante === 0 && resultadoGanador && usuariosSinVotar.length === 0 && (
+            <ResultadoGanador resultadoGanador={resultadoGanador} usuariosQueVotaron={usuariosQueVotaron} />
+          )}
+          {tiempoRestante === 0 && usuariosSinVotar.length === 0 && (
+            <div ref={graficosRef} className='flex flex-wrap md:flex-nowrap justify-between gap-4'>
+              <GraficoTorta votos={usuariosQueVotaron} noVotaron={usuariosSinVotar} />
+              {/* <GraficoLinea votos={usuariosQueVotaron} duracion={duracionVotacion} inicio={inicioVotacion} /> */}
+              <GraficoBarra votos={usuariosQueVotaron} />
+            </div>
+          )}
         </>
       )}
     </div>
