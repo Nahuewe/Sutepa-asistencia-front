@@ -3,9 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getCantidadVotos, getVotacion } from '@/services/votacionService'
 
 const barParams = {
-  grid: { vertical: false, stroke: '#555' },
-  legend: { hidden: false },
-  hideLegend: true
+  grid: { horizontal: true }
 }
 
 const getBarSize = () =>
@@ -83,17 +81,7 @@ export const GraficoBarra = () => {
         <BarChart
           xAxis={[{
             id: 'votaciones',
-            data: labels,
-            scaleType: 'band',
-            tickLabelStyle: {
-              transform: 'rotate(-30deg)',
-              textAnchor: 'end',
-              fontSize: '0.75rem'
-            }
-          }]}
-          yAxis={[{
-            scaleType: 'linear',
-            valueFormatter: (value) => Math.round(value).toString()
+            data: labels
           }]}
           series={[
             { label: 'Afirmativo', data: afirmativo, color: '#22c55e' },
