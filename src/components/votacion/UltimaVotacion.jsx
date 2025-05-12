@@ -5,7 +5,7 @@ import { ResultadoGanador } from '@/components/votacion/ResultadoGanador'
 import { TiempoRestante } from '@/components/votacion/TiempoRestante'
 import { VotacionStatusTable } from '@/components/votacion/VotacionStatusTable'
 import { VotoUsuario } from '@/components/votacion/VotoUsuario'
-import { GraficoBarra } from '@/pages/graficos/GraficoBarra' // ✅ Nuevo
+import { GraficoBarra } from '@/pages/graficos/GraficoBarra'
 import { GraficoTorta } from '@/pages/graficos/GraficoTorta'
 
 export const UltimaVotacion = ({
@@ -43,7 +43,7 @@ export const UltimaVotacion = ({
         )}
       </div>
 
-      {tiempoRestante !== null && tiempoRestante > 0 && !yaVoto && (
+      {tiempoRestante !== null && tiempoRestante > 0 && (
         <TiempoRestante tiempo={tiempoRestante} />
       )}
 
