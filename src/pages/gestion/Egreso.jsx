@@ -92,7 +92,7 @@ export const Egreso = () => {
             <>
               <Card>
                 <div className='mb-4 md:flex md:justify-between'>
-                  <h1 className='text-2xl font-semibold dark:text-white mb-4 md:mb-0'>Listado de Egresos</h1>
+                  <h1 className='text-2xl font-semibold dark:text-white mb-4 md:mb-0'>Listado de Egresos ({egresos?.meta?.total || 0})</h1>
                   <div className='flex flex-col md:flex-row items-start md:items-center gap-4'>
                     <div className='relative'>
                       <TextInput

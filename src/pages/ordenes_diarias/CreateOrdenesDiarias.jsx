@@ -28,9 +28,6 @@ export const CreateOrdenesDiarias = () => {
 
     try {
       if (id) {
-        if (!items.password) {
-          delete items.password
-        }
         await updateOrdenesDiarias(id, items)
         toast.info('Orden diaria editada exitosamente')
         navigate(`/ordenes-diarias?page=${currentPage}`)

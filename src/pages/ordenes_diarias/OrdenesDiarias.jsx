@@ -61,7 +61,7 @@ export const OrdenesDiarias = () => {
             <>
               <Card>
                 <div className='mb-4 md:flex md:justify-between'>
-                  <h1 className='text-2xl font-semibold dark:text-white mb-4 md:mb-0'>Listado de Ordenes Del Día</h1>
+                  <h1 className='text-2xl font-semibold dark:text-white mb-4 md:mb-0'>Listado de Ordenes Del Día ({ordenResponse?.meta?.total || 0})</h1>
                   <div className='flex flex-col md:flex-row items-start md:items-center gap-4'>
                     {[1, 2].includes(user.roles_id) && (
                       <div className='flex flex-col md:flex-row items-start md:items-center gap-4'>
