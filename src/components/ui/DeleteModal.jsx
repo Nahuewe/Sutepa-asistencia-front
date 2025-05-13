@@ -1,9 +1,9 @@
+import { Dialog, Transition } from '@headlessui/react'
 import React, { Fragment, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Dialog, Transition } from '@headlessui/react'
+import Button from './Button'
 import Icon from '@/components/ui/Icon'
 import { handleShowDelete } from '@/store/layout'
-import Button from './Button'
 
 export const DeleteModal = ({
   noFade,

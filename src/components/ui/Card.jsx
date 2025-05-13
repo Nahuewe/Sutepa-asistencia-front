@@ -1,4 +1,3 @@
-import React from 'react'
 import useSkin from '@/hooks/useSkin'
 
 const Card = ({
@@ -21,7 +20,7 @@ const Card = ({
             ? ' border border-slate-200 dark:border-slate-700'
             : 'shadow-base'
         }
-   
+
     ${className}
         `}
     >

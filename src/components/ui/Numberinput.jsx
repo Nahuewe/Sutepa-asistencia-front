@@ -1,4 +1,3 @@
-import React from 'react'
 import 'cleave.js/dist/addons/cleave-phone.us'
 
 const NumberInput = ({

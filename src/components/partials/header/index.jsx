@@ -1,15 +1,15 @@
 import React from 'react'
-import Icon from '@/components/ui/Icon'
-import SwitchDark from './Tools/SwitchDark'
-import useWidth from '@/hooks/useWidth'
-import useSidebar from '@/hooks/useSidebar'
-import useNavbarType from '@/hooks/useNavbarType'
-import useMenulayout from '@/hooks/useMenulayout'
-import useSkin from '@/hooks/useSkin'
 import Logo from './Tools/Logo'
 import Profile from './Tools/Profile'
-import useRtl from '@/hooks/useRtl'
+import SwitchDark from './Tools/SwitchDark'
+import Icon from '@/components/ui/Icon'
+import useMenulayout from '@/hooks/useMenulayout'
 import useMobileMenu from '@/hooks/useMobileMenu'
+import useNavbarType from '@/hooks/useNavbarType'
+import useRtl from '@/hooks/useRtl'
+import useSidebar from '@/hooks/useSidebar'
+import useSkin from '@/hooks/useSkin'
+import useWidth from '@/hooks/useWidth'
 
 const Header = ({ className = 'custom-class' }) => {
   const [collapsed, setMenuCollapsed] = useSidebar()

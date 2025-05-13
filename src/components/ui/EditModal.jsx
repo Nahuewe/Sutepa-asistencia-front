@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
+import { Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { handleShowEdit } from '@/store/layout'
 import { ToastContainer } from 'react-toastify'
 import Icon from '@/components/ui/Icon'
+import { handleShowEdit } from '@/store/layout'
 
 const EditModal = ({
   noFade,

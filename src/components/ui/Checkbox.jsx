@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux'
 import CheckImage from '@/assets/images/icon/ck-white.svg'
 import { onSelectMaterial } from '@/store/solicitud'
+
 const Checkbox = ({
   id,
   disabled,
@@ -36,7 +37,7 @@ const Checkbox = ({
       />
 
       <span
-        className={`h-4 w-4 border flex-none border-slate-100 dark:border-slate-800 rounded 
+        className={`h-4 w-4 border flex-none border-slate-100 dark:border-slate-800 rounded
         inline-flex ltr:mr-3 rtl:ml-3 relative transition-all duration-150
         ${
           value

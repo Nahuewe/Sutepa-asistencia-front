@@ -7,7 +7,7 @@ import { useAuthStore } from '@/helpers'
 
 const schema = yup
   .object({
-    legajo: yup.string().required('El usuario es requerido')
+    legajo: yup.string().required('El legajo es requerido')
   })
   .required()
 
@@ -36,7 +36,7 @@ function LoginForm () {
     <form onSubmit={handleSubmit(onSubmit)} className='relative space-y-2'>
       <div>
         <label htmlFor='default-picker' className='form-label text-white'>
-          Usuario
+          Legajo
         </label>
         <Textinput
           name='legajo'

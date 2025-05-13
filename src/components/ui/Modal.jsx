@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
-import React, { Fragment } from 'react'
-import Icon from '@/components/ui/Icon'
+import { Fragment } from 'react'
 import { ToastContainer } from 'react-toastify'
+import Icon from '@/components/ui/Icon'
 
 const Modal = ({
   isOpen,
