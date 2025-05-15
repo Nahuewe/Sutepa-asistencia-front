@@ -92,7 +92,7 @@ export const CreateVotaciones = () => {
           <form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
             <div>
               <label htmlFor='orden del dia' className='form-label block font-medium'>
-                Seleccionar orden del día
+                Seleccionar Orden del Día
               </label>
               <SelectForm
                 name='orden del dia'

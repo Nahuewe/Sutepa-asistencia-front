@@ -30,6 +30,11 @@ export const createVoto = async (form) => {
   return response.data
 }
 
+export const postDetenerVotacion = async (id) => {
+  const response = await sutepaApi.post(`/votaciones/${id}/detener`)
+  return response.data
+}
+
 export const verificarVotoUsuario = async ({ votacion_id, asistente_id }) => {
   const response = await sutepaApi.post('/votos/verificar', {
     votacion_id,

@@ -9,7 +9,7 @@ const barParams = {
 const getBarSize = () =>
   window.innerWidth < 768
     ? { height: 250, width: 270 }
-    : { height: 350, width: 870 }
+    : { height: 350, width: 920 }
 
 const fetchResultados = async () => {
   const { data: votaciones } = await getVotacion()
@@ -23,8 +23,12 @@ const fetchResultados = async () => {
     }
   }
 
+  const votacionesFiltradas = votaciones.filter(
+    (v) => v.tipo?.toUpperCase() !== 'CIERRE DEL DÍA'
+  )
+
   const respuestasData = await Promise.all(
-    votaciones.map(async (votos) => {
+    votacionesFiltradas.map(async (votos) => {
       const respuestas = await getCantidadVotos(votos.id)
       const label = `${votos?.tipo} - ${votos?.identificador}`
 
@@ -68,6 +72,15 @@ export const GraficoBarra = () => {
       <div className='bg-gray-50 dark:bg-gray-700 shadow-lg rounded-2xl p-8 text-center w-full'>
         <h3 className='text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100'>Resultados anteriores</h3>
         <p className='text-gray-600 dark:text-gray-300'>No hay datos de votaciones para mostrar o se están cargando.</p>
+      </div>
+    )
+  }
+
+  if (chartData.labels.length < 2) {
+    return (
+      <div className='bg-gray-50 dark:bg-gray-700 shadow-lg rounded-2xl p-8 text-center w-full'>
+        <h3 className='text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100'>Resultados anteriores</h3>
+        <p className='text-gray-600 dark:text-gray-300'>Se necesitan al menos 2 votaciones para mostrar el gráfico.</p>
       </div>
     )
   }

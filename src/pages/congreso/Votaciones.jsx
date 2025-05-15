@@ -7,9 +7,9 @@ import ExportButton from '@/components/buttons/ExportButton'
 import Loading from '@/components/ui/Loading'
 import { UltimaVotacion } from '@/components/votacion/UltimaVotacion'
 import { descargarVotacionesExcel, descargarVotosExcel } from '@/export/exportarArchivos'
-import { getVotacion, createVoto, verificarVotoUsuario, getCantidadVotos, getUsuariosNoVotaron } from '@/services/votacionService'
+import { getVotacion, createVoto, postDetenerVotacion, verificarVotoUsuario, getCantidadVotos, getUsuariosNoVotaron } from '@/services/votacionService'
 
-const DURACION_VOTACION = 20
+const DURACION_VOTACION = 120
 
 export const Votaciones = () => {
   const queryClient = useQueryClient()
@@ -104,6 +104,18 @@ export const Votaciones = () => {
     }
   }
 
+  const DetenerVoto = async (id) => {
+    try {
+      await postDetenerVotacion(id)
+      toast.success('Votación detenida correctamente')
+      invalidarVotacion(id)
+      refetchVotaciones()
+    } catch (error) {
+      console.error(error)
+      toast.error('No se pudo detener la votación')
+    }
+  }
+
   useEffect(() => {
     if (!yaVoto || respuestaVotada) return
 
@@ -138,7 +150,12 @@ export const Votaciones = () => {
 
     channel.listen('.nueva-votacion', () => {
       refetchVotaciones()
-      toast.info('¡Se ha creado una nueva votación!')
+
+      if (ultimaVotacion?.tipo !== 'CIERRE DEL DÍA') {
+        toast.info('¡Se ha creado una nueva votación!')
+      } else {
+        toast.warning('Se cerraron las votaciones')
+      }
     })
 
     channel.listen('.voto-registrado', (e) => {
@@ -152,7 +169,7 @@ export const Votaciones = () => {
       window.Echo.channel('votacions').stopListening('.voto-registrado')
       window.Echo.leave('votacions')
     }
-  }, [ultimaVotacion?.id, refetchVotaciones])
+  }, [ultimaVotacion?.id, ultimaVotacion?.tipo, refetchVotaciones])
 
   useEffect(() => {
     if (!ultimaVotacion) return
@@ -199,6 +216,15 @@ export const Votaciones = () => {
                 />
               </>
             )}
+            {ultimaVotacion && tiempoRestante > 0 && ultimaVotacion.tipo !== 'CIERRE DEL DÍA' && (
+              <button
+                onClick={() => DetenerVoto(ultimaVotacion.id)}
+                className='bg-red-600 hover:bg-red-800 text-white py-2 px-6 rounded-lg'
+              >
+                Detener Votación
+              </button>
+            )}
+
             <button
               onClick={addVotacion}
               className='bg-indigo-600 hover:bg-indigo-800 text-white items-center text-center py-2 px-6 rounded-lg'
