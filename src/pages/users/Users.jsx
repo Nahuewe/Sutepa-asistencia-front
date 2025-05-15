@@ -8,7 +8,7 @@ import Card from '@/components/ui/Card'
 import Loading from '@/components/ui/Loading'
 import Pagination from '@/components/ui/Pagination'
 import columnUsuario from '@/json/columnUsuario'
-import { getUser, searchUser } from '@/services/userService'
+import { getUsuario, searchUsuario } from '@/services/UsuarioService'
 
 export const Users = () => {
   const { user } = useSelector((state) => state.auth)
@@ -22,8 +22,8 @@ export const Users = () => {
 
   const fetchUsers = async () => {
     return debouncedSearch
-      ? searchUser(debouncedSearch, currentPage)
-      : getUser(currentPage)
+      ? searchUsuario(debouncedSearch, currentPage)
+      : getUsuario(currentPage)
   }
 
   const { data: usuarios, isLoading } = useQuery({

@@ -27,7 +27,11 @@ export default defineConfig({
     }),
     react()
   ],
-
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/setupTests.js'
+  },
   build: {
     rollupOptions: {
       output: {

@@ -10,7 +10,7 @@ import Numberinput from '@/components/ui/Numberinput'
 import Select from '@/components/ui/Select'
 import Textinput from '@/components/ui/Textinput'
 import { useGetParameters } from '@/helpers'
-import { createUser, getUserById, updateUser } from '@/services/userService'
+import { createUsuario, getUsuarioById, updateUsuario } from '@/services/UsuarioService'
 
 export const CreateUser = () => {
   const location = useLocation()
@@ -36,11 +36,11 @@ export const CreateUser = () => {
   const onSubmit = async (items) => {
     try {
       if (id) {
-        await updateUser(id, items)
+        await updateUsuario(id, items)
         toast.info('Usuario editado exitosamente')
         navigate(`/asistentes?page=${currentPage}`)
       } else {
-        await createUser(items)
+        await createUsuario(items)
         toast.success('Usuario creado exitosamente')
         navigate('/asistentes')
       }
@@ -99,7 +99,7 @@ export const CreateUser = () => {
     setSeccionales(seccionalesData)
     if (id) {
       try {
-        const response = await getUserById(id)
+        const response = await getUsuarioById(id)
         const usuario = response.data
         setValue('nombre', usuario.nombre)
         setValue('apellido', usuario.apellido)

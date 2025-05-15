@@ -9,7 +9,7 @@ import Card from '@/components/ui/Card'
 import Loading from '@/components/ui/Loading'
 import Pagination from '@/components/ui/Pagination'
 import columnOrdenDiaria from '@/json/columnOrdenDiaria'
-import { fetchOrdenesDiarias, deleteOrdenesDiarias } from '@/services/ordenesDiariasService'
+import { getOrdenesDiarias, deleteOrdenesDiarias } from '@/services/ordenesDiariasService'
 
 export const OrdenesDiarias = () => {
   const { user } = useSelector((state) => state.auth)
@@ -21,7 +21,7 @@ export const OrdenesDiarias = () => {
 
   const { data: ordenResponse, isLoading, refetch } = useQuery({
     queryKey: ['ordenDiaria', currentPage],
-    queryFn: () => fetchOrdenesDiarias(currentPage),
+    queryFn: () => getOrdenesDiarias(currentPage),
     keepPreviousData: true
   })
 

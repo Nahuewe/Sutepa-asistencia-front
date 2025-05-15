@@ -1,11 +1,11 @@
 import { sutepaApi } from '@/api'
 
-export const fetchOrdenesDiarias = async (page = 1) => {
+export const getOrdenesDiarias = async (page = 1) => {
   const response = await sutepaApi.get(`/ordenes-diarias?page=${page}`)
   return response.data
 }
 
-export const fetchOrdenesDiariasById = async (id) => {
+export const getOrdenesDiariasById = async (id) => {
   const response = await sutepaApi.get(`/ordenes-diarias/${id}`)
   return response.data
 }

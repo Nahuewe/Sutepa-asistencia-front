@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import Button from '@/components/ui/Button'
 import Loading from '@/components/ui/Loading'
 import Textinput from '@/components/ui/Textinput'
-import { createOrdenesDiarias, fetchOrdenesDiariasById, updateOrdenesDiarias } from '@/services/ordenesDiariasService'
+import { createOrdenesDiarias, getOrdenesDiariasById, updateOrdenesDiarias } from '@/services/ordenesDiariasService'
 
 export const CreateOrdenesDiarias = () => {
   const location = useLocation()
@@ -55,7 +55,7 @@ export const CreateOrdenesDiarias = () => {
     setIsLoading(true)
     if (id) {
       try {
-        const response = await fetchOrdenesDiariasById(id)
+        const response = await getOrdenesDiariasById(id)
         const ordenDiaria = response.data
         setValue('tipo', 'ORDEN DEL DÍA')
         setValue('identificador', ordenDiaria.identificador)

@@ -10,7 +10,7 @@ import Loading from '@/components/ui/Loading'
 import { SelectForm } from '@/components/ui/SelectForm'
 import Textarea from '@/components/ui/Textarea'
 import Textinput from '@/components/ui/Textinput'
-import { fetchOrdenesDiarias } from '@/services/ordenesDiariasService'
+import { getOrdenesDiarias } from '@/services/ordenesDiariasService'
 import { createVotacion, getVotacionById } from '@/services/votacionService'
 
 const tipos = [
@@ -32,7 +32,7 @@ export const CreateVotaciones = () => {
 
   const { data: orden } = useQuery({
     queryKey: ['ordenDiaria', currentPage],
-    queryFn: () => fetchOrdenesDiarias(currentPage),
+    queryFn: () => getOrdenesDiarias(currentPage),
     keepPreviousData: true
   })
 
