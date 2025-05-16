@@ -2,8 +2,7 @@
 module.exports = {
   content: [
     './index.html',
-    './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}'
+    './src/**/*.{js,ts,jsx,tsx}'
   ],
   mode: 'jit',
   darkMode: 'class',
@@ -164,6 +163,5 @@ module.exports = {
         tada: 'tada 1.5s ease-in-out infinite'
       }
     }
-  },
-  plugins: [require('flowbite/plugin')]
+  }
 }

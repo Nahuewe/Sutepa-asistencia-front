@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query'
-import { TextInput } from 'flowbite-react'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -7,8 +6,9 @@ import EditButton from '@/components/buttons/EditButton'
 import Card from '@/components/ui/Card'
 import Loading from '@/components/ui/Loading'
 import Pagination from '@/components/ui/Pagination'
+import SearchInput from '@/components/ui/SearchInput'
 import columnUsuario from '@/json/columnUsuario'
-import { getUsuario, searchUsuario } from '@/services/UsuarioService'
+import { getUsuario, searchUsuario } from '@/services/usuarioService'
 
 export const Users = () => {
   const { user } = useSelector((state) => state.auth)
@@ -73,7 +73,7 @@ export const Users = () => {
                   <h1 className='text-2xl font-semibold dark:text-white mb-4 md:mb-0'> Listado de Asistentes ({usuarios?.meta?.total || 0}) </h1>
                   <div className='flex flex-col md:flex-row items-start md:items-center gap-4'>
                     <div className='relative'>
-                      <TextInput
+                      <SearchInput
                         name='search'
                         type='text'
                         placeholder='Buscar'

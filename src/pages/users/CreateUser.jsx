@@ -1,16 +1,16 @@
-import { Card } from 'flowbite-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Button from '@/components/ui/Button'
+import Card from '@/components/ui/Card'
 import Loading from '@/components/ui/Loading'
 import Numberinput from '@/components/ui/Numberinput'
 import Select from '@/components/ui/Select'
 import Textinput from '@/components/ui/Textinput'
 import { useGetParameters } from '@/helpers'
-import { createUsuario, getUsuarioById, updateUsuario } from '@/services/UsuarioService'
+import { createUsuario, getUsuarioById, updateUsuario } from '@/services/usuarioService'
 
 export const CreateUser = () => {
   const location = useLocation()

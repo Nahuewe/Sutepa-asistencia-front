@@ -30,7 +30,6 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react-refresh": "^0.4.7",
-    "flowbite-react": "^0.9.0",
     "framer-motion": "^10.12.12",
     "html5-qrcode": "^2.3.8",
     "laravel-echo": "^2.1.0",

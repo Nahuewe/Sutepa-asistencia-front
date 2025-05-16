@@ -15,7 +15,7 @@ const Card = ({
   return (
     <div
       className={`
-        card rounded-md bg-white dark:bg-slate-800   ${
+        card rounded-2xl shadow-lg bg-white dark:bg-slate-800   ${
           skin === 'bordered'
             ? ' border border-slate-200 dark:border-slate-700'
             : 'shadow-base'

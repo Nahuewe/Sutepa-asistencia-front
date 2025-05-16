@@ -1,5 +1,4 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { TextInput } from 'flowbite-react'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -7,6 +6,7 @@ import ExportButton from '@/components/buttons/ExportButton'
 import Card from '@/components/ui/Card'
 import Loading from '@/components/ui/Loading'
 import Pagination from '@/components/ui/Pagination'
+import SearchInput from '@/components/ui/SearchInput'
 import { formatearFechaArgentina } from '@/constant/datos-id'
 import { descargarIngresoExcel } from '@/export/exportarArchivos'
 import columnRegistro from '@/json/columnRegistro'
@@ -95,7 +95,7 @@ export const Ingreso = () => {
                   <h1 className='text-2xl font-semibold dark:text-white mb-4 md:mb-0'>Listado de Ingresos ({ingresos?.meta?.total || 0})</h1>
                   <div className='flex flex-col md:flex-row items-start md:items-center gap-4'>
                     <div className='relative'>
-                      <TextInput
+                      <SearchInput
                         name='search'
                         placeholder='Buscar'
                         onChange={onSearch}
