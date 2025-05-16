@@ -25,7 +25,7 @@ const Login = () => {
                   <img src={LogoSutepa} alt='Logo SUTEPA' className='w-36 md:w-52 pb-6 inline-block mx-auto pointer-events-none' />
                   <h4 className='font-medium text-white dark:text-white'>Iniciar Sesión</h4>
                   <div className='text-white text-base dark:text-white'>
-                    El usuario es tu numero de legajo.
+                    Escribe tu número de legajo para ingresar al sistema.
                   </div>
                 </div>
                 <LoginForm />

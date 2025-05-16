@@ -1,5 +1,5 @@
 /* eslint-disable react/no-children-prop */
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Modal from '@/components/ui/Modal'
 import Tooltip from '@/components/ui/Tooltip'
 

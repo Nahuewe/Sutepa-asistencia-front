@@ -1,6 +1,6 @@
 # 🗳️ Sistema de Gestión de Asistencia a Elecciones - SUTEPA
 
-Este sistema fue desarrollado para modernizar el control de asistencia y votación durante las elecciones del **Sindicato Unido de Trabajadores y Empleados del PAMI (SUTEPA)**.  
+Este sistema fue desarrollado para modernizar el control de asistencia y votación durante las elecciones del **Sindicato Unido de Trabajadores y Empleados del PAMI (SUTEPA)**.
 Permite validar la asistencia de afiliados mediante códigos QR, registrar ingresos y egresos, gestionar votaciones en tiempo real y supervisar todo el proceso desde un panel administrativo distribuido por roles específicos.
 
 ---
@@ -24,7 +24,7 @@ Permite validar la asistencia de afiliados mediante códigos QR, registrar ingre
 | Frontend      | React + Vite + TailwindCSS |
 | Backend       | Laravel + MySQL        |
 | Autenticación | Sistema propio (Laravel Sanctum / JWT) |
-| Comunicación  | WebSockets (Laravel Echo + Pusher u otro driver) |
+| Comunicación  | WebSockets (Laravel Echo + Pusher) |
 | Estado global | TanStack Query v5      |
 | Exportación   | Laravel Excel (`maatwebsite/excel`) |
 

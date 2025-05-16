@@ -1,4 +1,3 @@
-import React from 'react'
 import Tooltip from '@/components/ui/Tooltip'
 
 const EditButton = ({ evento, onEdit }) => {

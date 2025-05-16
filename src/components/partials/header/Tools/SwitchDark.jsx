@@ -1,4 +1,3 @@
-import React from 'react'
 import Icon from '@/components/ui/Icon'
 import Tooltip from '@/components/ui/Tooltip'
 import useDarkMode from '@/hooks/useDarkMode'
