@@ -146,7 +146,7 @@ export const Votaciones = () => {
   }, [ultimaVotacion, queryClient])
 
   useEffect(() => {
-    const channel = window.Echo.channel('votacions')
+    const channel = window.Echo.channel('votaciones')
 
     channel.listen('.nueva-votacion', () => {
       refetchVotaciones()
@@ -165,9 +165,9 @@ export const Votaciones = () => {
     })
 
     return () => {
-      window.Echo.channel('votacions').stopListening('.nueva-votacion')
-      window.Echo.channel('votacions').stopListening('.voto-registrado')
-      window.Echo.leave('votacions')
+      window.Echo.channel('votaciones').stopListening('.nueva-votacion')
+      window.Echo.channel('votaciones').stopListening('.voto-registrado')
+      window.Echo.leave('votaciones')
     }
   }, [ultimaVotacion?.id, ultimaVotacion?.tipo, refetchVotaciones])
 
