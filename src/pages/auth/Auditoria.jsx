@@ -1,7 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { sutepaApi } from '@/api'
+import ExportButton from '@/components/buttons/ExportButton'
 import { renderizarJson } from '@/components/buttons/RenderizarJson'
 import Card from '@/components/ui/Card'
 import Loading from '@/components/ui/Loading'
@@ -10,6 +12,7 @@ import { formatearFechaArgentina } from '@/constant/datos-id'
 import columnAuditoria from '@/json/columnAuditoria'
 
 export const Auditoria = () => {
+  const { user } = useSelector((state) => state.auth)
   const navigate = useNavigate()
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
@@ -30,6 +33,29 @@ export const Auditoria = () => {
   const auditorias = auditoria?.data || []
   const pagination = auditoria?.meta || {}
 
+  const getAuditoriaExcel = async () => {
+    const response = await sutepaApi.get('/auditoria/exportar', {
+      responseType: 'blob'
+    })
+    return response.data
+  }
+
+  const descargarAuditoriaExcel = async () => {
+    try {
+      const blob = await getAuditoriaExcel()
+      const url = window.URL.createObjectURL(new Blob([blob]))
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', 'auditoria.xlsx')
+      document.body.appendChild(link)
+      link.click()
+      link.parentNode.removeChild(link)
+      window.URL.revokeObjectURL(url)
+    } catch (error) {
+      console.error('Error descargando Excel:', error)
+    }
+  }
+
   const onPageChange = (page) => {
     setCurrentPage(page)
     navigate(`?page=${page}`)
@@ -45,6 +71,18 @@ export const Auditoria = () => {
               <Card>
                 <div className='mb-4 md:flex md:justify-between'>
                   <h1 className='text-2xl font-semibold dark:text-white mb-4 md:mb-0'>Auditoria</h1>
+                  <div className='flex flex-col sm:flex-row gap-2 sm:gap-4'>
+                    {user.roles_id === 1 && (
+                      <>
+                        <ExportButton
+                          descargaFn={descargarAuditoriaExcel}
+                          nombreArchivo='Auditoria'
+                          textoBoton='Exportar Auditoria'
+                          textoExportando='Exportando Auditoria...'
+                        />
+                      </>
+                    )}
+                  </div>
                 </div>
               </Card>
 
