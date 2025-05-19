@@ -2,13 +2,15 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import DeleteButton from '@/components/buttons/DeleteButton'
 import EditButton from '@/components/buttons/EditButton'
 import Card from '@/components/ui/Card'
 import Loading from '@/components/ui/Loading'
 import Pagination from '@/components/ui/Pagination'
 import SearchInput from '@/components/ui/SearchInput'
 import columnUsuario from '@/json/columnUsuario'
-import { getUsuario, searchUsuario } from '@/services/usuarioService'
+import { deleteUsuario, getUsuario, searchUsuario } from '@/services/usuarioService'
 
 export const Users = () => {
   const { user } = useSelector((state) => state.auth)
@@ -26,7 +28,7 @@ export const Users = () => {
       : getUsuario(currentPage)
   }
 
-  const { data: usuarios, isLoading } = useQuery({
+  const { data: usuarios, isLoading, refetch } = useQuery({
     queryKey: ['user', currentPage, debouncedSearch],
     queryFn: () => fetchUsers(currentPage),
     keepPreviousData: true
@@ -45,6 +47,17 @@ export const Users = () => {
 
   async function onEdit (id) {
     navigate(`/asistentes/editar/${id}?page=${currentPage}`)
+  }
+
+  async function onDelete (id) {
+    try {
+      await deleteUsuario(id)
+      toast.success('El asistente se eliminó')
+      await refetch()
+    } catch (error) {
+      console.error(error)
+      toast.error('Hubo un error al intentar eliminar')
+    }
   }
 
   const onSearch = (event) => {
@@ -137,6 +150,7 @@ export const Users = () => {
                                   <td className='table-td'>{usuario.rol || '-'}</td>
                                   <td className='table-td flex justify-start gap-2'>
                                     <EditButton evento={usuario} onEdit={onEdit} />
+                                    <DeleteButton evento={usuario} onDelete={onDelete} refetch={refetch} />
                                   </td>
                                 </tr>
                                 )))

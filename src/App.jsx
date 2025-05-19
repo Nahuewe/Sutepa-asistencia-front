@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
+import { Auditoria } from './pages/auth/Auditoria'
 import QRScanner from '@/components/QR/QRscanner'
 import Loading from '@/components/ui/Loading'
 import { useAuthStore } from '@/helpers/useAuthStore'
@@ -46,6 +47,9 @@ function App () {
 
                 <Route path='/*' element={<Layout />}>
                   <Route path='*' element={<Navigate to='/404' />} />
+
+                  {/* Auditoria */}
+                  <Route path='auditoria' element={<Auditoria />} />
 
                   {/* Votacion */}
                   <Route path='votaciones' element={<Votaciones />} />

@@ -27,6 +27,11 @@ export const menuAdmin = [
     title: 'Asistentes',
     icon: 'heroicons-outline:user-group',
     link: 'asistentes'
+  },
+  {
+    title: 'Auditoria',
+    icon: 'heroicons-outline:document-text',
+    link: 'auditoria'
   }
 ]
 

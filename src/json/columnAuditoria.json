@@ -1,0 +1,22 @@
+[
+    {
+        "label": "Usuario",
+        "field": "user"
+    },
+    {
+        "label": "Accion",
+        "field": "accion"
+    },
+    {
+        "label": "Modelo",
+        "field": "modelo"
+    },
+    {
+        "label": "Datos",
+        "field": "datos"
+    },
+    {
+        "label": "Creado",
+        "field": "created_at"
+    }
+]
