@@ -15,6 +15,11 @@ export const getCantidadVotos = async (id) => {
   return response.data
 }
 
+export const getCantidadVotosMultiples = async (ids) => {
+  const response = await sutepaApi.post('/votos/respuestas-multiples', { ids })
+  return response.data
+}
+
 export const getUsuariosNoVotaron = async (votacionId) => {
   const response = await sutepaApi.get(`/votaciones/${votacionId}/no-votaron`)
   return response.data

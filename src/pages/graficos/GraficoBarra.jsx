@@ -1,6 +1,6 @@
 import { BarChart } from '@mui/x-charts'
 import { useQuery } from '@tanstack/react-query'
-import { getCantidadVotos, getVotacion } from '@/services/votacionService'
+import { getCantidadVotosMultiples, getVotacion } from '@/services/votacionService'
 
 const barParams = {
   grid: { horizontal: true }
@@ -9,7 +9,7 @@ const barParams = {
 const getBarSize = () =>
   window.innerWidth < 768
     ? { height: 250, width: 270 }
-    : { height: 350, width: 920 }
+    : { height: 350, width: 870 }
 
 const fetchResultados = async () => {
   const { data: votaciones } = await getVotacion()
@@ -27,36 +27,29 @@ const fetchResultados = async () => {
     (v) => v.tipo?.toUpperCase() !== 'CIERRE DEL DÍA'
   )
 
-  const respuestasData = await Promise.all(
-    votacionesFiltradas.map(async (votos) => {
-      const respuestas = await getCantidadVotos(votos.id)
-      const label = `${votos?.tipo} - ${votos?.identificador}`
+  const ids = votacionesFiltradas.map((v) => v.id)
+  const respuestas = await getCantidadVotosMultiples(ids)
 
-      const conteo = respuestas?.reduce(
-        (acc, r) => {
-          if (r && typeof r.respuesta === 'string') {
-            const tipo = r.respuesta.toLowerCase()
-            acc[tipo] = (acc[tipo] || 0) + 1
-          }
-          return acc
-        },
-        { afirmativo: 0, negativo: 0, abstencion: 0 }
-      )
+  const resultados = votacionesFiltradas.map((v) => {
+    const conteo = respuestas[v.id] || {
+      afirmativo: 0,
+      negativo: 0,
+      abstencion: 0
+    }
 
-      return {
-        label,
-        afirmativo: conteo?.afirmativo || 0,
-        negativo: conteo?.negativo || 0,
-        abstencion: conteo?.abstencion || 0
-      }
-    })
-  )
+    return {
+      label: `${v.tipo} - ${v.identificador}`,
+      afirmativo: conteo.afirmativo,
+      negativo: conteo.negativo,
+      abstencion: conteo.abstencion
+    }
+  })
 
   return {
-    afirmativo: respuestasData.map((r) => r.afirmativo),
-    negativo: respuestasData.map((r) => r.negativo),
-    abstencion: respuestasData.map((r) => r.abstencion),
-    labels: respuestasData.map((r) => r.label)
+    afirmativo: resultados.map((r) => r.afirmativo),
+    negativo: resultados.map((r) => r.negativo),
+    abstencion: resultados.map((r) => r.abstencion),
+    labels: resultados.map((r) => r.label)
   }
 }
 

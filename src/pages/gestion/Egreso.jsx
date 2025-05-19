@@ -141,7 +141,7 @@ export const Egreso = () => {
                 </div>
               </Card>
 
-              <Card noborder>
+              <Card noborder className='mt-4'>
                 <div className='overflow-x-auto -mx-6'>
                   <div className='inline-block min-w-full align-middle'>
                     <div className='overflow-hidden'>
