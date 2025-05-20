@@ -1,26 +1,37 @@
-import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import * as yup from 'yup'
 import Textinput from '@/components/ui/Textinput'
 import { useAuthStore } from '@/helpers'
-
-const schema = yup
-  .object({
-    legajo: yup.string().required('El legajo es requerido')
-  })
-  .required()
 
 function LoginForm () {
   const navigate = useNavigate()
   const { startLogin } = useAuthStore()
-  const {
-    formState: { errors },
-    handleSubmit,
-    setValue,
-    register
-  } = useForm({
-    resolver: yupResolver(schema)
+
+  const validateForm = (values) => {
+    const errors = {}
+
+    if (!values.legajo) {
+      errors.legajo = 'El legajo es requerido'
+    }
+
+    return errors
+  }
+
+  const { formState: { errors }, handleSubmit, setValue, register } = useForm({
+    defaultValues: {
+      legajo: ''
+    },
+    resolver: async (data) => {
+      const errors = validateForm(data)
+
+      return {
+        values: Object.keys(errors).length === 0 ? data : {},
+        errors: Object.keys(errors).reduce((acc, key) => {
+          acc[key] = { type: 'custom', message: errors[key] }
+          return acc
+        }, {})
+      }
+    }
   })
 
   const onSubmit = async (data) => {
@@ -50,8 +61,9 @@ function LoginForm () {
           }}
         />
       </div>
-
-      <button className='btn bg-indigo-600 hover:bg-indigo-800 block w-full text-center mt-2 text-white'>Iniciar Sesión</button>
+      <button className='btn bg-indigo-600 hover:bg-indigo-800 block w-full text-center mt-2 text-white'>
+        Iniciar Sesión
+      </button>
     </form>
   )
 }

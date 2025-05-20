@@ -1,3 +1,17 @@
+@use "components/auth";
+@use "components/animation";
+@use "components/button";
+@use "components/badge";
+@use "components/card";
+@use "components/form";
+@use "components/pagination";
+@use "components/tippy";
+@use "components/table";
+@use "components/mix";
+@use "layout/header";
+@use "layout/sidebar";
+@use "layout/settings";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -82,22 +96,6 @@
       border: none !important;
     }
   }
-}
-
-@layer components {
-  @import "components/auth";
-  @import "components/animation";
-  @import "components/button";
-  @import "components/badge";
-  @import "components/card";
-  @import "components/form";
-  @import "components/pagination";
-  @import "components/tippy";
-  @import "components/table";
-  @import "components/mix";
-  @import "layout/header";
-  @import "layout/sidebar";
-  @import "layout/settings";
 }
 
 .obligatorio {
